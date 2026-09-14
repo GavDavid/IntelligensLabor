@@ -1,1 +1,1 @@
-Az Intelligens Beágyazott Rendszerek Labor 4 méréséhez tartozó anyagok
+Az Intelligens Beágyazott Rendszerek Labor méréseihez tartozó anyagok
