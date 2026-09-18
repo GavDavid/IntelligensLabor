@@ -1,0 +1,246 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{marvosym}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{multicol}
+\hypersetup{colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black}
+\usepackage{pdfpages}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{chemfig}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage[magyar]{babel}
+\usepackage{bm}
+\usepackage{tikz, tcolorbox}
+\usepackage{verbatim}
+\usepackage{amsmath,esint}
+\usepackage{setspace}
+\usepackage{qtree}
+\usepackage{multido}
+\usepackage{mathptmx} % Times New Roman betűtípus
+\newcommand{\Pointilles}[1]{%
+\par\nobreak
+\noindent\rule{0pt}{1.5\baselineskip}% Provides a larger gap between the
+\multido{}{#1}{\noindent\makebox[\linewidth]{\dotfill}\endgraf}
+\bigskip% Gap between dots and next paragraph
+}
+\newcommand{\feladat}[1]{%
+\phantomsection
+\subsection*{#1. feladat}%
+\addcontentsline{toc}{subsection}{#1. feladat}%
+}
+\usepackage{pgfplots}
+\pgfplotsset{height = 10cm, width=15cm,compat=1.9}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0em}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage. oldal}
+
+% Másfeles sorköz beállítása
+\onehalfspacing
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+
+\includegraphics[width=.8\textwidth]{bme_logo_nagy.jpg}
+
+\vspace{1em}
+
+{
+\large
+BUDAPESTI MŰSZAKI ÉS GAZDASÁGTUDOMÁNYI EGYETEM\\ VILLAMOSMÉRNÖKI ÉS INFORMATIKAI KAR\\ MESTERSÉGES INTELLIGENCIA ÉS RENDSZERTERVEZÉS TANSZÉK
+}
+
+\vspace{6em}
+
+{
+\Huge
+\textbf{Rezgésanalízis}
+}
+
+\vspace{3em}
+
+{
+\huge
+Intelligens beágyazott rendszerek laboratórium\\
+
+\vspace{.2em}
+
+\large
+(BMEVIMIMA21)
+}
+
+\vspace{9em}
+
+{
+\Large
+\textit{Készítette:}\\
+\vspace{.5em}
+\textbf{Pál Patrik, Gavallér Dávid}\\
+\vspace{.5em}
+\textbf{AIQTQW, blank}
+}
+
+\vspace{12em}
+
+{
+\large
+BUDAPEST, \today
+}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Bevezetés}
+
+\subsection*{A mérés célja}
+A mérés során egy piezoelektromos gyorsulásérzékelő segítségével rögzítjük egy ventilátor, illetve egy hangsugárzóval gerjesztett mechanikai rendszer rezgéseit, az Audacity program segítségével, majd MATLAB környezetben elemezzük ezeket. Ezek a mérések és elemzések valódi ipari felhasználások során lehetővé teszik a rezgő mechanikai rendszerek vizsgálatát, lehetővé téve így a hibák gyorsabb felismerését és adott esetben megelőzését.
+
+%kell?
+%A mérés során állandósult és változó frekvenciájú jelek spektrumát, továbbá egy mechanikai rendszer amplitúdómenetét vizsgáljuk. A feladatok között szerepel a ventilátor rezgésének elemzése, az aszinkron motor fordulatszám-változásának és slipjének meghatározása, valamint egy káros mechanikai jelenség felismerésére alkalmas mérési módszer kidolgozása. Kiegészítő feladatként egy csengőhang főbb spektrális komponenseit és lecsengését is meghatározzuk, majd a mért eredmények alapján a hangot újra előállítjuk.
+
+\section{Mérési feladatok}
+
+\feladat{1}
+
+\subsubsection*{Feladat rövid megfogalmazása}
+
+Helyezze el a rezgésérzékelőt a ventilátor mellett. Helyezze üzembe a ventilátort névleges feszültségen. Az Audacity programmal rögzítse a jelet, és MATLAB alatt analizálja! Állapítsa meg az optimális mintavételi frekvenciát! A gyorsulásérzékelő érzékenysége és az erősítés alapján határozza meg a rezgésjel nagyságát \(\mathrm{m/s^2}\) egységben is!
+
+\subsubsection*{Feladat megoldása}
+
+\paragraph{Ideális mintavételi frekvencia meghatározása}
+Első lépésben elhelyeztük a piezoelektromos gyorsulásérzékelőt a ventillátor mellé, majd a mérőeszközt az erősítőhöz kötöttük, amit pedig a számítógéphez csatlakoztattunk. Az erősítőt a piezoelektromos rezgésmérő kalibrációs leírása alapján a megfelelő értékűre állítottuk, majd a ventillátorról leolvasva annak névleges feszültségét üzembe helyeztük. Az Audacity program segítségével egy felvételt készítettünk névleges feszültségen, majd a felvételt mentettük. A rögzített felvételt Matlab segítségével tudtuk elemezni, ahol az \texttt{audioread} függvényt használtuk.\\
+
+Első lépésként a jel időben változó frekvenciatartalmát vizsgáltuk, a \texttt{spectogram} függvény segítségével. Ebből le tudtuk olvasni a legmagasabb mérendő frekvencia komponenst, amely alapján az ideális mintavételi frekvencia is meghatározható.\\
+
+Ahogy az első ábrán látható, $f_{max}$ értéke $0,85 khz$ körül található, és a Nyquist-tétel alapján az ideális mintavételi frekvencia $f_s > 2 \cdot f_{max} = 1,7 kHz$. A mérés során ennél magasabb mintavételi frekvenciát használtunk, hogy a magasabb felharmónikusokat is tudjuk vizsgálni szükséges esetben.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Spektogram.jpg}
+\caption{A ventilátor rezgésjelének spektrogramja.}
+\label{fig:meres1-spektrogram}
+\end{figure}
+
+
+\paragraph{A gyorsulásjel meghatározása}
+
+A mért jelet a töltéserősítő erősítésével és az érzékelő kalibrációs adataival gyorsulásértékké számítottuk át. Ehhez az alábbi összefüggést alkalmaztuk: % ide felirhatnank a behelyettesites elotti kepleteket is
+
+\begin{equation}
+a[n] = \frac{x[n]}{0{,}1 \cdot 0{,}998} \cdot \frac{0{,}04}{0{,}0054},
+\label{eq:meres1-acc}
+\end{equation}
+
+ahol $x[n]$ a beolvasott mérési jel, $a[n]$ pedig az átszámított gyorsulásjel. Az így kapott értékeket a program a minta sorszámának függvényében ábrázolja. %Csúcs érték rms vagy valami?
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Rezgesjel_ms2.jpg}
+\caption{A rezgésjel nagysága.}
+\label{fig:meres1-gyorsulas}
+\end{figure}
+
+\paragraph{A feladat megoldásához használt kód:} % Majd a végére
+
+\begin{verbatim}
+clear;
+close all;
+clc;
+
+Sensi = 9.8; % [pC/g] / 0.998 [pC/ms-2]
+Gain = 0.1; % [Volt/Unit out]
+MeasName = 'meres1_mono.wav';
+
+[MeasData, MeasRate] = audioread(MeasName);
+
+%% Spektrogram
+windowLength = 15000;
+[~, Frequency, Time, Power] = spectrogram(...
+	MeasData, windowLength, [], windowLength, MeasRate);
+
+figure(1)
+imagesc(Time, Frequency / 1000, 10 * log10(Power));
+axis xy
+xlabel('Idő [s]')
+ylabel('Frekvencia [kHz]')
+title('A ventilátor rezgésjelének spektrogramja')
+colorbar
+clim([-150 -70])
+ylim([0 3])
+grid on
+
+
+%% A mérési jel átszámítása gyorsulásértékre
+AccData = MeasData / (Gain * 0.998) * (0.04 / 0.0054);
+TimeAcc = (0:length(AccData) - 1) / MeasRate;
+
+figure(2)
+plot(TimeAcc, AccData)
+xlabel('Idő [s]')
+ylabel('Gyorsulás [m/s^2]')
+title('A rezgésjel nagysága')
+grid on
+\end{verbatim}
+
+\feladat{2}
+
+\subsubsection*{Feladat rövid megfogalmazása}
+
+A toroid transzformátor kimenő feszültségének változtatásával változtassa a fordulatszámot, és készítsen több felvételt is! Azonosítsa a 0..500 Hz tartományban detektálható komponenseket! Határozza meg az aszinkron motor slipjét névleges feszültségen! Ügyeljen a DFT pontszámának megválasztására!
+
+\subsubsection*{Feladat megoldása}
+\Pointilles{10}
+
+\feladat{3}
+
+\subsubsection*{Feladat rövid megfogalmazása}
+
+Helyezze el a rezgésérzékelőt a doboz oldalán, és vezessen változó frekvenciájú szinuszos jelet a hangsugárzóra! Az „L” alakú lemez beállításával érje el, hogy bizonyos frekvenciákon „megzörgesse” a lemezt. A zörgés jelenségét mellőzve mérje meg a bemeneti feszültség és a gyorsulásjel közötti amplitúdómenetet! Ehhez MATLAB-ban generáljon megfelelő időtartamú fehérzajt! Értelmezze a végeredményt, indokolja meg a fontosabb töréspontokat, maximum- és minimumhelyeket!
+
+\subsubsection*{Feladat megoldása}
+\Pointilles{10}
+
+\feladat{4}
+
+\subsubsection*{Feladat rövid megfogalmazása}
+
+Milyen gerjesztést és analízist alkalmazna, amellyel észlelhető, ha az „L” alakú lemez túl közel kerül a dobozhoz, azaz káros mechanikai jelenség lép fel? A mérés során csak a „megfelelő” és a „nem megfelelő” állapot megkülönböztetésére alkalmas mérési módszert kell kidolgozni és demonstrálni, az állapot automatikus felismerése nem feladat.
+
+\subsubsection*{Feladat megoldása}
+\Pointilles{10}
+
+\feladat{5}
+
+\subsubsection*{Feladat rövid megfogalmazása}
+
+\textit{(kiegészítő mérési feladat)} Gyorsulásérzékelőt használva rögzítse a megütött csengőhangját! Határozza meg a főbb komponenseket, és azok lecsengésének időállandóját!
+
+\subsubsection*{Feladat megoldása}
+\Pointilles{10}
+
+\feladat{6}
+
+\subsubsection*{Feladat rövid megfogalmazása}
+
+\textit{(kiegészítő mérési feladat)} Az előző feladat eredményeinek felhasználásával generáljon „csengőhangot”! A jelet hallgassa meg hangszórón, és értékelje az eredményt!
+
+\subsubsection*{Feladat megoldása}
+\Pointilles{10}
+
+
+\end{document}
