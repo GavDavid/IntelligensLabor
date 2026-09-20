@@ -1,11 +1,12 @@
-\select@language {magyar} \contentsline {section}{\numberline {1}Bevezetés}{2}{section.1}%
-\select@language {magyar} \contentsline {section}{\numberline {2}Mérési feladatok}{2}{section.2}%
-\select@language {magyar} \contentsline {subsection}{1. feladat}{2}{section*.4}%
-\select@language {magyar} \contentsline {paragraph}{Ideális mintavételi frekvencia meghatározása}{2}{section*.7}%
-\select@language {magyar} \contentsline {paragraph}{A gyorsulásjel meghatározása}{3}{section*.8}%
-\select@language {magyar} \contentsline {paragraph}{A feladat megoldásához használt kód:}{4}{section*.9}%
-\select@language {magyar} \contentsline {subsection}{2. feladat}{5}{section*.11}%
-\select@language {magyar} \contentsline {subsection}{3. feladat}{6}{section*.15}%
-\select@language {magyar} \contentsline {subsection}{4. feladat}{6}{section*.19}%
-\select@language {magyar} \contentsline {subsection}{5. feladat}{7}{section*.23}%
-\select@language {magyar} \contentsline {subsection}{6. feladat}{7}{section*.27}%
+\babel@toc {magyar}{}\relax 
+\contentsline {section}{\numberline {1}Bevezetés}{2}{section.1}%
+\contentsline {section}{\numberline {2}Mérési feladatok}{2}{section.2}%
+\contentsline {subsection}{1. feladat}{2}{section*.4}%
+\contentsline {paragraph}{Ideális mintavételi frekvencia meghatározása}{2}{section*.7}%
+\contentsline {paragraph}{A gyorsulásjel meghatározása}{4}{section*.8}%
+\contentsline {paragraph}{A feladat megoldásához használt kód:}{5}{section*.9}%
+\contentsline {subsection}{2. feladat}{6}{section*.11}%
+\contentsline {subsection}{3. feladat}{7}{section*.15}%
+\contentsline {subsection}{4. feladat}{7}{section*.19}%
+\contentsline {subsection}{5. feladat}{8}{section*.23}%
+\contentsline {subsection}{6. feladat}{8}{section*.27}%

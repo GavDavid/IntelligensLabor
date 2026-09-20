@@ -25,6 +25,8 @@
 \usepackage{qtree}
 \usepackage{multido}
 \usepackage{mathptmx} % Times New Roman betűtípus
+\renewcommand{\figureautorefname}{ábra}
+\newcommand{\abrara}[1]{\hyperref[#1]{\ref*{#1}.~ábra}}
 \newcommand{\Pointilles}[1]{%
 \par\nobreak
 \noindent\rule{0pt}{1.5\baselineskip}% Provides a larger gap between the
@@ -89,7 +91,7 @@ Intelligens beágyazott rendszerek laboratórium\\
 \vspace{.5em}
 \textbf{Pál Patrik, Gavallér Dávid}\\
 \vspace{.5em}
-\textbf{AIQTQW, blank}
+\textbf{AIQTQW, ES02RO}
 }
 
 \vspace{12em}
@@ -123,7 +125,26 @@ Helyezze el a rezgésérzékelőt a ventilátor mellett. Helyezze üzembe a vent
 \subsubsection*{Feladat megoldása}
 
 \paragraph{Ideális mintavételi frekvencia meghatározása}
-Első lépésben elhelyeztük a piezoelektromos gyorsulásérzékelőt a ventillátor mellé, majd a mérőeszközt az erősítőhöz kötöttük, amit pedig a számítógéphez csatlakoztattunk. Az erősítőt a piezoelektromos rezgésmérő kalibrációs leírása alapján a megfelelő értékűre állítottuk, majd a ventillátorról leolvasva annak névleges feszültségét üzembe helyeztük. Az Audacity program segítségével egy felvételt készítettünk névleges feszültségen, majd a felvételt mentettük. A rögzített felvételt Matlab segítségével tudtuk elemezni, ahol az \texttt{audioread} függvényt használtuk.\\
+Első lépésben elhelyeztük a piezoelektromos gyorsulásérzékelőt a ventillátor mellé, majd a mérőeszközt az erősítőhöz kötöttük, amit pedig a számítógéphez csatlakoztattunk. (\abrara{fig:meresi-elrendezes})
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 300px, angle = 180]{../../Kepek/20260914_142213.jpg}	
+	\caption{A mérési elrendezés.}
+	\label{fig:meresi-elrendezes}
+\end{figure}
+
+\newpage
+Az erősítőt a piezoelektromos rezgésmérő kalibrációs leírása alapján a megfelelő értékűre állítottuk (\abrara{fig:erosito-beallitas}), majd a ventillátorról leolvasva annak névleges feszültségét üzembe helyeztük.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 300px, angle = 270]{../../Kepek/20260914_144113.jpg}	
+	\caption{A beállított erősítő.}
+	\label{fig:erosito-beallitas}
+\end{figure}
+
+Az Audacity program segítségével egy felvételt készítettünk névleges feszültségen, majd a felvételt mentettük. A rögzített felvételt Matlab segítségével tudtuk elemezni, ahol az \texttt{audioread} függvényt használtuk.\\
 
 Első lépésként a jel időben változó frekvenciatartalmát vizsgáltuk, a \texttt{spectogram} függvény segítségével. Ebből le tudtuk olvasni a legmagasabb mérendő frekvencia komponenst, amely alapján az ideális mintavételi frekvencia is meghatározható.\\
 
