@@ -114,6 +114,7 @@ A mérés során egy piezoelektromos gyorsulásérzékelő segítségével rögz
 %kell?
 %A mérés során állandósult és változó frekvenciájú jelek spektrumát, továbbá egy mechanikai rendszer amplitúdómenetét vizsgáljuk. A feladatok között szerepel a ventilátor rezgésének elemzése, az aszinkron motor fordulatszám-változásának és slipjének meghatározása, valamint egy káros mechanikai jelenség felismerésére alkalmas mérési módszer kidolgozása. Kiegészítő feladatként egy csengőhang főbb spektrális komponenseit és lecsengését is meghatározzuk, majd a mért eredmények alapján a hangot újra előállítjuk.
 
+%Írhhatjuk még az általános adatokat a műszerekről
 \section{Mérési feladatok}
 
 \feladat{1}
@@ -177,7 +178,7 @@ ahol $x[n]$ a beolvasott mérési jel, $a[n]$ pedig az átszámított gyorsulás
 \end{figure}
 
 \paragraph{A feladat megoldásához használt kód:} % Majd a végére
-
+\iffalse
 \begin{verbatim}
 clear;
 close all;
@@ -217,6 +218,7 @@ ylabel('Gyorsulás [m/s^2]')
 title('A rezgésjel nagysága')
 grid on
 \end{verbatim}
+\fi
 
 \feladat{2}
 
@@ -225,7 +227,42 @@ grid on
 A toroid transzformátor kimenő feszültségének változtatásával változtassa a fordulatszámot, és készítsen több felvételt is! Azonosítsa a 0..500 Hz tartományban detektálható komponenseket! Határozza meg az aszinkron motor slipjét névleges feszültségen! Ügyeljen a DFT pontszámának megválasztására!
 
 \subsubsection*{Feladat megoldása}
-\Pointilles{10}
+A második feladat során a mérést a ventillátor bekapcsolása előtt indítottuk, majd a toroid transzformátor kimenő feszültségének változtatásával a ventilátor névléges feszültségre kapcsoltuk, és végül a feszültséget ismét 0 Voltra kapcsoltuk.
+\newpage
+
+A mérés során szintén a \texttt{spectogram} függvény segítségével olvastuk le a 0..500 Hz tartományba detektálható komponenseket.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Spektogram_2.jpg}
+\caption{A ventilátor rezgésének spektrogramja}
+\label{fig:meres2-Spektogram}
+\end{figure}
+
+A spektogramról látható, hogy az 50 Hz-es hálózati frekvencia dominánsan megjelenik konstans értékként. Ezen felül ennek a frekvenciának a felharmónikusai is megjelennekek a spektrumon, a jel nemlineáris torzulásából és a forgó mechanikai rendszer periodikus mozgásából eredően, az 50 Hz többszörösein.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Ventillator_frekvenciaja.jpg}
+\caption{A ventillátor forgási frekvenciája}
+\label{fig:meres2-Spektogram}
+\end{figure}
+
+A 4. ábrán megfigyelhető, hogy a ventilátor működésének domináns frekvenciakomponense körülbelül $43{,}74\,\mathrm{Hz}$ érték körül helyezkedik el. Ennek és az ismert hálózati frekvencia ($50\,\mathrm{Hz}$) ismeretének a segítségével ki tudtuk számítani a ventillátor slipjét az alábbi képlet segítségével:
+
+\begin{equation}
+	\text{Slip} = \frac{f_{\text{hálózat}} - f_{\text{ventilátor}}}{f_{\text{hálózat}}} \cdot 100\%
+\end{equation}
+
+Behelyettesítve:
+
+\begin{equation}
+	\text{Slip} = \frac{50 - 43{,}74}{50} \cdot 100\% \approx 12{,}52\%
+\end{equation}
+
+%Moduláció?
+
+
 
 \feladat{3}
 
