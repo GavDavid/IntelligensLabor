@@ -6,9 +6,12 @@ MeasName = 'meres2.wav';
 
 [MeasData, MeasRate] = audioread(MeasName);
 
-%%Spectogram
+%% Spectrogram
 figure(1)
-spectrogram(MeasData, 8000, [], [], MeasRate, 'yaxis')
+spectrogram(MeasData, 40000, [], [], MeasRate, 'yaxis')
+title('Spektrogram – mérés 2')
+xlabel('Idő [s]')
+ylabel('Frekvencia [Hz]')
 
 VentFreq = 43.74; % [Hz]
 
