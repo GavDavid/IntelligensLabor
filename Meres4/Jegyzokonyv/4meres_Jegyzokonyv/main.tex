@@ -19,12 +19,44 @@
 \usepackage[magyar]{babel}
 \usepackage{bm}
 \usepackage{tikz, tcolorbox}
+\usetikzlibrary{positioning}
 \usepackage{verbatim}
 \usepackage{amsmath,esint}
 \usepackage{setspace}
 \usepackage{qtree}
 \usepackage{multido}
 \usepackage{mathptmx} % Times New Roman betűtípus
+\usepackage{listings}
+
+\lstset{
+    language=Matlab,
+    inputencoding=utf8,
+    extendedchars=true,
+    basicstyle=\ttfamily\small,
+    frame=single,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny,
+    literate=
+        {á}{{\'a}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ö}{{\"o}}1
+        {ő}{{\H{o}}}1
+        {ú}{{\'u}}1
+        {ü}{{\"u}}1
+        {ű}{{\H{u}}}1
+        {Á}{{\'A}}1
+        {É}{{\'E}}1
+        {Í}{{\'I}}1
+        {Ó}{{\'O}}1
+        {Ö}{{\"O}}1
+        {Ő}{{\H{O}}}1
+        {Ú}{{\'U}}1
+        {Ü}{{\"U}}1
+        {Ű}{{\H{U}}}1
+}
 \renewcommand{\figureautorefname}{ábra}
 \newcommand{\abrara}[1]{\hyperref[#1]{\ref*{#1}.~ábra}}
 \newcommand{\Pointilles}[1]{%
@@ -115,18 +147,28 @@ A mérés során egy piezoelektromos gyorsulásérzékelő segítségével rögz
 %A mérés során állandósult és változó frekvenciájú jelek spektrumát, továbbá egy mechanikai rendszer amplitúdómenetét vizsgáljuk. A feladatok között szerepel a ventilátor rezgésének elemzése, az aszinkron motor fordulatszám-változásának és slipjének meghatározása, valamint egy káros mechanikai jelenség felismerésére alkalmas mérési módszer kidolgozása. Kiegészítő feladatként egy csengőhang főbb spektrális komponenseit és lecsengését is meghatározzuk, majd a mért eredmények alapján a hangot újra előállítjuk.
 
 %Írhhatjuk még az általános adatokat a műszerekről
+
+\subsection*{A méréshez használt eszközök}
+\begin{itemize}
+	\item Piezoelektromos gyorsulásérzékelő
+	\item Töltéserősítő
+	\item Oszcilloszkóp
+	\item Számítógép
+\end{itemize}
+
+\newpage
+
 \section{Mérési feladatok}
 
 \feladat{1}
 
-\subsubsection*{Feladat rövid megfogalmazása}
+\subsubsection*{Feladat leírása}
 
 Helyezze el a rezgésérzékelőt a ventilátor mellett. Helyezze üzembe a ventilátort névleges feszültségen. Az Audacity programmal rögzítse a jelet, és MATLAB alatt analizálja! Állapítsa meg az optimális mintavételi frekvenciát! A gyorsulásérzékelő érzékenysége és az erősítés alapján határozza meg a rezgésjel nagyságát \(\mathrm{m/s^2}\) egységben is!
 
 \subsubsection*{Feladat megoldása}
 
-\paragraph{Ideális mintavételi frekvencia meghatározása}
-Első lépésben elhelyeztük a piezoelektromos gyorsulásérzékelőt a ventillátor mellé, majd a mérőeszközt az erősítőhöz kötöttük, amit pedig a számítógéphez csatlakoztattunk. (\abrara{fig:meresi-elrendezes})
+Első lépésben elhelyeztük a piezoelektromos gyorsulásérzékelőt a ventillátor mellé, majd a mérőeszközt az erősítőhöz kötöttük, amit pedig a számítógéphez és az oszcilloszkóphoz csatlakoztattunk. (\abrara{fig:meresi-elrendezes})
 
 \begin{figure}[H]
 	\centering
@@ -136,7 +178,15 @@ Első lépésben elhelyeztük a piezoelektromos gyorsulásérzékelőt a ventill
 \end{figure}
 
 \newpage
-Az erősítőt a piezoelektromos rezgésmérő kalibrációs leírása alapján a megfelelő értékűre állítottuk (\abrara{fig:erosito-beallitas}), majd a ventillátorról leolvasva annak névleges feszültségét üzembe helyeztük.
+Az erősítőt a piezoelektromos rezgésmérő leírása alapján (\abrara{fig:erosito-leiras}) a megfelelő értékűre állítottuk (\abrara{fig:erosito-beallitas}), majd a ventillátorról leolvasva (\abrara{fig:ventillator_hatulja}) annak névleges feszültségét, üzembe helyeztük 230 [V]-ot ráadva.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 300px, angle = 180]{../../Kepek/20260914_142447.jpg}	
+	\caption{A beállított erősítő.}
+	\label{fig:erosito-leiras}
+\end{figure}
 
 \begin{figure}[H]
 	\centering
@@ -145,11 +195,19 @@ Az erősítőt a piezoelektromos rezgésmérő kalibrációs leírása alapján 
 	\label{fig:erosito-beallitas}
 \end{figure}
 
-Az Audacity program segítségével egy felvételt készítettünk névleges feszültségen, majd a felvételt mentettük. A rögzített felvételt Matlab segítségével tudtuk elemezni, ahol az \texttt{audioread} függvényt használtuk.\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 300px, angle = 270]{../../Kepek/20260914_142201.jpg}	
+	\caption{A beállított erősítő.}
+	\label{fig:ventillator_hatulja}
+\end{figure}
+
+
+Az Audacity program segítségével egy felvételt készítettünk ezen a feszültségen, majd a felvételt mentettük. A rögzített felvételt Matlabba betöltve tudtuk elemezni, erre az \texttt{audioread} függvényt használtuk.\\
 
 Első lépésként a jel időben változó frekvenciatartalmát vizsgáltuk, a \texttt{spectogram} függvény segítségével. Ebből le tudtuk olvasni a legmagasabb mérendő frekvencia komponenst, amely alapján az ideális mintavételi frekvencia is meghatározható.\\
 
-Ahogy az első ábrán látható, $f_{max}$ értéke $0,85 khz$ körül található, és a Nyquist-tétel alapján az ideális mintavételi frekvencia $f_s > 2 \cdot f_{max} = 1,7 kHz$. A mérés során ennél magasabb mintavételi frekvenciát használtunk, hogy a magasabb felharmónikusokat is tudjuk vizsgálni szükséges esetben.
+Ahogy a(z) \abrara{fig:meres1-spektrogram} szemlélteti, $f_{max}$ értéke $0,85$ [kHz] körül található, és a Nyquist-tétel alapján az ideális mintavételi frekvencia $f_s > 2 \cdot f_{max} = 1,7$  [kHz]. Így megállapítható, hogy a mintavételi frekvenciát már biztosan elegendő lenne 2 [kHz] környékére állítani, de az esetlegesen megjelenő magasabb frekvenciakomponensek detektálása érdekében a következő mérések során, 44100 [Hz]-es mintatvételi frekvenciát használtunk továbbra is.
 
 \begin{figure}[H]
 \centering
@@ -157,18 +215,35 @@ Ahogy az első ábrán látható, $f_{max}$ értéke $0,85 khz$ körül találha
 \caption{A ventilátor rezgésjelének spektrogramja.}
 \label{fig:meres1-spektrogram}
 \end{figure}
+\par
+
+A mért jelet ezt követően a töltéserősítő erősítésével és az érzékelő kalibrációs adataival gyorsulásértékké számítottuk át a következő folyamatábrát figyelembe véve a jel alakulásáról:
 
 
-\paragraph{A gyorsulásjel meghatározása}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=0.4cm, >=stealth]
+	\node[draw, rounded corners, minimum width=2.3cm, minimum height=0.9cm] (gyorsulas) {Gyorsulás};
+	\node[draw, rounded corners, minimum width=2.3cm, minimum height=0.9cm, right=0.4cm of gyorsulas] (toltes) {Töltés};
+	\node[draw, rounded corners, minimum width=2.3cm, minimum height=0.9cm, right=0.4cm of toltes] (erosito) {Erősítő};
+	\node[draw, rounded corners, minimum width=2.3cm, minimum height=0.9cm, right=0.4cm of erosito] (feszultseg) {Feszültség};
+	\node[draw, rounded corners, minimum width=2.3cm, minimum height=0.9cm, right=0.4cm of feszultseg] (audacity) {Audacity};
+	\draw[->] (gyorsulas) -- (toltes);
+	\draw[->] (toltes) -- (erosito);
+	\draw[->] (erosito) -- (feszultseg);
+	\draw[->] (feszultseg) -- (audacity);
+\end{tikzpicture}
+\caption{A jel útja a gyorsulásérzékelőtől a feszültségjelig.}
+\label{fig:meres1-folyamatabra}
+\end{figure}
 
-A mért jelet a töltéserősítő erősítésével és az érzékelő kalibrációs adataival gyorsulásértékké számítottuk át. Ehhez az alábbi összefüggést alkalmaztuk: % ide felirhatnank a behelyettesites elotti kepleteket is
 
 \begin{equation}
 a[n] = \frac{x[n]}{0{,}1 \cdot 0{,}998} \cdot \frac{0{,}04}{0{,}0054},
 \label{eq:meres1-acc}
 \end{equation}
 
-ahol $x[n]$ a beolvasott mérési jel, $a[n]$ pedig az átszámított gyorsulásjel. Az így kapott értékeket a program a minta sorszámának függvényében ábrázolja. %Csúcs érték rms vagy valami?
+ahol $x[n]$ a beolvasott mérési jel, $a[n]$ pedig az átszámított gyorsulásjel.  A konstans értékeket a következő képpen származtattuk: a töltéserősítő erősítése $0{,}1$ [V/Unit out], az érzékelő kalibrációs adata $0{,}998$ [pC/ms-2], az oszcilloszkóp peak-to-peak értéke $0{,}04$ [V], az audacityben rögzített jel peak-to-peak értéke $0{,}0054$ [-]. Az így kapott gyorsulásértékeket a(z) \abrara{fig:meres1-gyorsulas} szemlélteti\\
 
 \begin{figure}[H]
 \centering
@@ -177,48 +252,7 @@ ahol $x[n]$ a beolvasott mérési jel, $a[n]$ pedig az átszámított gyorsulás
 \label{fig:meres1-gyorsulas}
 \end{figure}
 
-\paragraph{A feladat megoldásához használt kód:} % Majd a végére
-\iffalse
-\begin{verbatim}
-clear;
-close all;
-clc;
-
-Sensi = 9.8; % [pC/g] / 0.998 [pC/ms-2]
-Gain = 0.1; % [Volt/Unit out]
-MeasName = 'meres1_mono.wav';
-
-[MeasData, MeasRate] = audioread(MeasName);
-
-%% Spektrogram
-windowLength = 15000;
-[~, Frequency, Time, Power] = spectrogram(...
-	MeasData, windowLength, [], windowLength, MeasRate);
-
-figure(1)
-imagesc(Time, Frequency / 1000, 10 * log10(Power));
-axis xy
-xlabel('Idő [s]')
-ylabel('Frekvencia [kHz]')
-title('A ventilátor rezgésjelének spektrogramja')
-colorbar
-clim([-150 -70])
-ylim([0 3])
-grid on
-
-
-%% A mérési jel átszámítása gyorsulásértékre
-AccData = MeasData / (Gain * 0.998) * (0.04 / 0.0054);
-TimeAcc = (0:length(AccData) - 1) / MeasRate;
-
-figure(2)
-plot(TimeAcc, AccData)
-xlabel('Idő [s]')
-ylabel('Gyorsulás [m/s^2]')
-title('A rezgésjel nagysága')
-grid on
-\end{verbatim}
-\fi
+\newpage
 
 \feladat{2}
 
@@ -299,6 +333,14 @@ Milyen gerjesztést és analízist alkalmazna, amellyel észlelhető, ha az „L
 
 \subsubsection*{Feladat megoldása}
 \Pointilles{10}
+
+\section*{Függelék}
+\subsection*{MATLAB kódok}
+
+\lstinputlisting[
+    caption={Az első mérés MATLAB-kódja},
+    label={lst:meres1-matlab}
+]{../../MATLAB/meres1.m}
 
 
 \end{document}
