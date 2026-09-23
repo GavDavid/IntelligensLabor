@@ -87,7 +87,7 @@
 \begin{titlepage}
 \centering
 
-\includegraphics[width=.8\textwidth]{bme_logo_nagy.jpg}
+\includegraphics[width=.8\textwidth]{../../Kepek/bme_logo_nagy.jpg}
 
 \vspace{1em}
 
@@ -252,7 +252,6 @@ ahol $x[n]$ a beolvasott mérési jel, $a[n]$ pedig az átszámított gyorsulás
 \label{fig:meres1-gyorsulas}
 \end{figure}
 
-\newpage
 
 \feladat{2}
 
@@ -261,8 +260,7 @@ ahol $x[n]$ a beolvasott mérési jel, $a[n]$ pedig az átszámított gyorsulás
 A toroid transzformátor kimenő feszültségének változtatásával változtassa a fordulatszámot, és készítsen több felvételt is! Azonosítsa a 0..500 Hz tartományban detektálható komponenseket! Határozza meg az aszinkron motor slipjét névleges feszültségen! Ügyeljen a DFT pontszámának megválasztására!
 
 \subsubsection*{Feladat megoldása}
-A második feladat során a mérést a ventillátor bekapcsolása előtt indítottuk, majd a toroid transzformátor kimenő feszültségének változtatásával a ventilátor névléges feszültségre kapcsoltuk, és végül a feszültséget ismét 0 Voltra kapcsoltuk.
-\newpage
+A második feladat során a mérést a ventillátor bekapcsolása előtt indítottuk, majd a toroid transzformátor kimenő feszültségének változtatásával a ventilátor névléges feszültségre kapcsoltuk, és végül a feszültséget ismét 0 [V]-ra kapcsoltuk.
 
 A mérés során szintén a \texttt{spectogram} függvény segítségével olvastuk le a 0..500 Hz tartományba detektálható komponenseket.\\
 
@@ -273,16 +271,16 @@ A mérés során szintén a \texttt{spectogram} függvény segítségével olvas
 \label{fig:meres2-Spektogram}
 \end{figure}
 
-A spektogramról látható, hogy az 50 Hz-es hálózati frekvencia dominánsan megjelenik konstans értékként. Ezen felül ennek a frekvenciának a felharmónikusai is megjelennekek a spektrumon, a jel nemlineáris torzulásából és a forgó mechanikai rendszer periodikus mozgásából eredően, az 50 Hz többszörösein.
+Ahogy a(z) \abrara{fig:meres2-Spektogram} mutatja, az 50 Hz-es hálózati frekvencia dominánsan megjelenik konstans értékként. Ezen felül ennek a frekvenciának a felharmónikusai is megjelennekek a spektrumon.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{../../Kepek/Ventillator_frekvenciaja.jpg}
 \caption{A ventillátor forgási frekvenciája}
-\label{fig:ventillator-frekvencia}
+\label{fig:meres2-Forgas}
 \end{figure}
 
-A 4. ábrán megfigyelhető, hogy a ventilátor működésének domináns frekvenciakomponense körülbelül $43{,}74\,\mathrm{Hz}$ érték körül helyezkedik el. Ennek és az ismert hálózati frekvencia ($50\,\mathrm{Hz}$) ismeretének a segítségével ki tudtuk számítani a ventillátor slipjét az alábbi képlet segítségével:
+A(z) \abrara{fig:meres2-Forgas} szemlélteti, hogy a ventilátor működésének domináns frekvenciakomponense körülbelül $43{,}74$ [Hz]-nél helyezkedik el. Ennek és az ismert hálózati frekvenciának ($50$ [Hz]) ismeretében ki tudtuk számítani a ventillátor slipjét az alábbi képlet segítségével:
 
 \begin{equation}
 	\text{Slip} = \frac{f_{\text{hálózat}} - f_{\text{ventilátor}}}{f_{\text{hálózat}}} \cdot 100\%
@@ -305,7 +303,17 @@ Behelyettesítve:
 Helyezze el a rezgésérzékelőt a doboz oldalán, és vezessen változó frekvenciájú szinuszos jelet a hangsugárzóra! Az „L” alakú lemez beállításával érje el, hogy bizonyos frekvenciákon „megzörgesse” a lemezt. A zörgés jelenségét mellőzve mérje meg a bemeneti feszültség és a gyorsulásjel közötti amplitúdómenetet! Ehhez MATLAB-ban generáljon megfelelő időtartamú fehérzajt! Értelmezze a végeredményt, indokolja meg a fontosabb töréspontokat, maximum- és minimumhelyeket!
 
 \subsubsection*{Feladat megoldása}
-\Pointilles{10}
+Első lépésben a piezoelektromos gyorsulásérzékelőt a doboz oldalára helyeztük, majd a mérőeszközt az erősítőhöz kötöttük, amit pedig a számítógéphez és az oszcilloszkóphoz csatlakoztattunk. (\abrara{fig:meres3-elrendezes})
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=275px, angle = 270]{../../Kepek/20260921_142552.jpg}
+\caption{Az új mérési elrendezés}
+\label{fig:meres3-elrendezes}
+\end{figure}
+
+
 
 \feladat{4}
 
@@ -314,7 +322,34 @@ Helyezze el a rezgésérzékelőt a doboz oldalán, és vezessen változó frekv
 Milyen gerjesztést és analízist alkalmazna, amellyel észlelhető, ha az „L” alakú lemez túl közel kerül a dobozhoz, azaz káros mechanikai jelenség lép fel? A mérés során csak a „megfelelő” és a „nem megfelelő” állapot megkülönböztetésére alkalmas mérési módszert kell kidolgozni és demonstrálni, az állapot automatikus felismerése nem feladat.
 
 \subsubsection*{Feladat megoldása}
-\Pointilles{10}
+A mérésvezető javaslata alapján elkezdtünk 400 [Hz]-es szinusz jelet játszani a hangsugárzón és addig helyezgettük az „L” alakú lemezt, amíg a zörgés jelensége meg nem jelent. \\
+
+Következő lépésként változó frekvenciájú (1-1000 [Hz]) szinuszos jelet vezettünk a hangsugárzóra és készítettünk egy mérést. Az eredmény-t a(z) \abrara{fig:meres3-spektogram} szemlélteti.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth, angle = 0]{../../Kepek/Spektogram_3.jpg}
+\caption{Az új mérési elrendezés}
+\label{fig:meres3-spektogram}
+\end{figure}
+
+A spektogramból a következők állapíthatóak meg: Látható, ahogy a változó szinuszos jel frekvenciája lineárisan növekszik az idő függvényében és a ~400 [Hz]-et elérve számos frekvenciakomponens jelenik meg a spektrumon, amely a zörgés jelenségét mutatja. Az is szépen látható, hogy a jelenség ~600 [Hz]-nél megszűnik. Láthatóak a spektogramon még olyan frekvencciakomponensek amelyek úgy néznek ki, mintha az origó körül elforgatnánk a gerjesztő szinuszos jelet, ezek valószínűleg elektromos zavarások, amelyeket a mérés során nem tudtunk kiküszöbölni.\\
+
+A mérésből arra következtethetünk, hogy valami olyan mérési módszert kell kidolgozni, amely a ~400 [Hz]-től ~600 [Hz]-ig terjedő gerjesztésre kialakuló magasabb frekvenciakomponenseket képes detektálni és a jelenség megszűnését is képes lesz érzékelni.\\
+
+Így az ötletünk az volt, hogy csináljunk egy felüláteresztő szűrőt, amely a 10000 [Hz]-nél magasabb frekvenciakomponenseket engedi át, majd a szűrt jel RMS értékét számoljuk ki. Ha a RMS érték egy bizonyos küszöbértéket meghalad, akkor a zörgés jelensége jelen van, ha nem, akkor nincs.\\
+
+A küszöbérték meghatározásához egy csúszóablakos módszert alkalmaztunk, amely a szűrt jel RMS értékét számolja ki 1000 minta hosszú ablakokban. A küszöbértéknek pedig ennek az alaknak az átlagát válaszottuk.\\
+
+Az így kapott "megfelelő" és "nem megfelelő" állapotokat a(z) \abrara{fig:meres3-alarm} szemlélteti. A 0 jelenti a megfelelő állapotot, az 1 pedig a nem megfelelő állapotot.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth, angle = 0]{../../Kepek/meres3-alarm.jpg}
+\caption{Kiértékelő algoritmus}
+\label{fig:meres3-alarm}
+\end{figure}
+
 
 \feladat{5}
 
@@ -383,6 +418,16 @@ Az előállított hangot a MATLAB \texttt{sound} függvényével hallgattuk meg,
     caption={Az első mérés MATLAB-kódja},
     label={lst:meres1-matlab}
 ]{../../MATLAB/meres1.m}
+
+\lstinputlisting[
+    caption={A második mérés MATLAB-kódja},
+    label={lst:meres2-matlab}
+]{../../MATLAB/meres2_v2.m}
+
+\lstinputlisting[
+    caption={A harmadik mérés MATLAB-kódja},
+    label={lst:meres3-matlab}
+]{../../MATLAB/meres3.m}
 
 
 \end{document}

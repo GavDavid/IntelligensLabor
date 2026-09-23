@@ -1,6 +1,6 @@
 clear;
 
-MeasName = 'meres3_10sec_AfterBoxSet.wav';
+MeasName = 'meres3-4_10sec_AfterBoxSet.wav';
 %MeasName = 'meres3_10sec.wav';
 
 [MeasData, MeasRate] = audioread(MeasName);
@@ -8,10 +8,10 @@ MeasName = 'meres3_10sec_AfterBoxSet.wav';
 %% Spectrogram
 figure(1)
 spectrogram(MeasData, 2500, [], [], MeasRate, 'yaxis')
-title('10 sec')
+title('Mérés 3')
 xlabel('Time [s]')
 ylabel('Frekvencia [kHz]')
-
+ylim([0,5]);
 t = 0:1/MeasRate:(length(MeasData)/MeasRate)-1*(1/MeasRate);
 
 %% Szuro
@@ -37,3 +37,4 @@ figure(2);
 plot(t, rms);
 figure(3);
 plot(t,alarm);
+ylim([-0.1,1.1]);

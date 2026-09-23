@@ -8,10 +8,11 @@ MeasName = 'meres2.wav';
 
 %% Spectrogram
 figure(1)
-spectrogram(MeasData, 40000, [], [], MeasRate, 'yaxis')
-title('Spektrogram – mérés 2')
+spectrogram(MeasData, 45000, [], [], MeasRate, 'yaxis')
+title('Spektrogram  mérés 2')
 xlabel('Idő [s]')
-ylabel('Frekvencia [Hz]')
+ylabel('Frekvencia [kHz]')
+ylim([0, 0.07]);
 
 VentFreq = 43.74; % [Hz]
 
