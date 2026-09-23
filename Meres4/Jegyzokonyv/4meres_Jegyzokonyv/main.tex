@@ -211,7 +211,7 @@ Ahogy a(z) \abrara{fig:meres1-spektrogram} szemlélteti, $f_{max}$ értéke $0,8
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{Spektogram.jpg}
+\includegraphics[width=\textwidth]{../../Kepek/Spektogram.jpg}
 \caption{A ventilátor rezgésjelének spektrogramja.}
 \label{fig:meres1-spektrogram}
 \end{figure}
@@ -247,7 +247,7 @@ ahol $x[n]$ a beolvasott mérési jel, $a[n]$ pedig az átszámított gyorsulás
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{Rezgesjel_ms2.jpg}
+\includegraphics[width=\textwidth]{../../Kepek/Rezgesjel_ms2.jpg}
 \caption{A rezgésjel nagysága.}
 \label{fig:meres1-gyorsulas}
 \end{figure}
@@ -268,7 +268,7 @@ A mérés során szintén a \texttt{spectogram} függvény segítségével olvas
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{Spektogram_2.jpg}
+\includegraphics[width=\textwidth]{../../Kepek/Spektogram_2.jpg}
 \caption{A ventilátor rezgésének spektrogramja}
 \label{fig:meres2-Spektogram}
 \end{figure}
@@ -277,9 +277,9 @@ A spektogramról látható, hogy az 50 Hz-es hálózati frekvencia dominánsan m
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{Ventillator_frekvenciaja.jpg}
+\includegraphics[width=\textwidth]{../../Kepek/Ventillator_frekvenciaja.jpg}
 \caption{A ventillátor forgási frekvenciája}
-\label{fig:meres2-Spektogram}
+\label{fig:ventillator-frekvencia}
 \end{figure}
 
 A 4. ábrán megfigyelhető, hogy a ventilátor működésének domináns frekvenciakomponense körülbelül $43{,}74\,\mathrm{Hz}$ érték körül helyezkedik el. Ennek és az ismert hálózati frekvencia ($50\,\mathrm{Hz}$) ismeretének a segítségével ki tudtuk számítani a ventillátor slipjét az alábbi képlet segítségével:
@@ -323,7 +323,32 @@ Milyen gerjesztést és analízist alkalmazna, amellyel észlelhető, ha az „L
 \textit{(kiegészítő mérési feladat)} Gyorsulásérzékelőt használva rögzítse a megütött csengőhangját! Határozza meg a főbb komponenseket, és azok lecsengésének időállandóját!
 
 \subsubsection*{Feladat megoldása}
-\Pointilles{10}
+A mérés során az alábbi x.ábrán látható módon helyeztük el a gyorsulásérzékelőt a csengő mellé, majd a csengőt megütve rögzítettük annak a lecsengését. A rögzített felvételt a korábbi feladatokban leírt módon feldolgoztuk, majd a spektogramját vizsgáltuk, ami az alábbi x. ábrán látható.
+
+%\begin{figure}[H] ezt majd tedd be
+%\centering
+%\includegraphics[width=\textwidth]{Rezgesjel_ms2.jpg}
+%\caption{Mérési összeállítás}
+%\label{fig:meres-osszeallitas}
+%\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../../Kepek/Csengo_hangja.jpg}
+\caption{A csengő hangjának spektogramja.}
+\label{fig:csengo-hangja}
+\end{figure}
+
+A spektogramról leolvashatóak a főbb komponensei a csengésnek, illetve ezeknek az időállandói is meghatározhatóak. Az időállandók leolvasásához megnéztük a csengő megütésnek pillanatában az adott frekvenciasáv intenzitását az oldalsó színskála alapján, majd megkerestük azt az értéket ahol a színskála körülbelül 9 dB-lel halványabb értéket mutatott. A csengő hangjának mesterséges előállításához az alábbi frekvenciákat használtuk fel, a hozzájuk választott időállandókkal:
+\newpage
+
+\begin{itemize}
+	\item $1400\,\mathrm{Hz}$, $\tau = 3.5\,\mathrm{s}$
+	\item $3400\,\mathrm{Hz}$, $\tau = 1.2\,\mathrm{s}$
+	\item $5600\,\mathrm{Hz}$, $\tau = 0.6\,\mathrm{s}$
+	\item $6900\,\mathrm{Hz}$, $\tau = 0.4\,\mathrm{s}$
+\end{itemize}
+
 
 \feladat{6}
 
@@ -332,7 +357,24 @@ Milyen gerjesztést és analízist alkalmazna, amellyel észlelhető, ha az „L
 \textit{(kiegészítő mérési feladat)} Az előző feladat eredményeinek felhasználásával generáljon „csengőhangot”! A jelet hallgassa meg hangszórón, és értékelje az eredményt!
 
 \subsubsection*{Feladat megoldása}
-\Pointilles{10}
+A csengőhang rekonstruálása során a négy domináns frekvenciához exponenciálisan lecsengő szinuszos kompnenseket hoztunk létre, az alábbi összefüggés szerint:
+
+\begin{equation}
+	x(t)_i = A_i \cdot e^{-\frac{t}{\tau_i}} \cdot \sin(2\pi f_i t)
+\end{equation}
+
+Az egyes részhangokat szuperpozícióval összegeztük egy közös kimeneti vektorban. Mivel a komponensek összeadódása miatt a hullámforma amplitúdója meghaladhatja az egységet, a kód végén csúcsértékre történő normalizálást hajtottunk végre, elkerülve az audiolejátszás során fellépő túlvezérlést.
+
+A rekonstruált csengőhang spektogramja az alábbi x. ábrán látható.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../../Kepek/Csengo_hangja_eloallitva.jpg}
+\caption{A csengő általunk előállított hangjának spektogramja.}
+\label{fig:csengo-hangja_mestersges}
+\end{figure}
+
+Az előállított hangot a MATLAB \texttt{sound} függvényével hallgattuk meg, és a hangzás alapján megállapítható, hogy a csengőhangot sikerült megfelelően rekonstruálni.
 
 \section*{Függelék}
 \subsection*{MATLAB kódok}
