@@ -8,7 +8,7 @@ MeasName = 'meres5.wav';
 %% Spectrogram
 figure(1)
 spectrogram(MeasData, 4000, [], [], MeasRate, 'yaxis')
-title('Spektrogram – Csengő hangja')
+title('Spektrogram Csengő hangja')
 xlabel('Idő [s]')
 ylabel('Frekvencia [kHz]')
 
@@ -42,7 +42,7 @@ end
 x = x/max(abs(x));
 figure(2);
 spectrogram(x, 4000, [], [], MeasRate, 'yaxis')
-title('Spektrogram – Csengő hangja előállítva')
+title('Spektrogram Csengő hangja előállítva')
 xlabel('Idő [s]')
 ylabel('Frekvencia [kHz]')
 sound(x,fs);

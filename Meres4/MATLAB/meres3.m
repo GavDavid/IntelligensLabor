@@ -1,40 +1,33 @@
-clear;
 
-MeasName = 'meres3-4_10sec_AfterBoxSet.wav';
-%MeasName = 'meres3_10sec.wav';
+[inputSignalData, inputSignalFs] = audioread('bemenet_10sec.wav');
+[accelData, accelFs] = audioread('meres3-4_10sec.wav');
 
-[MeasData, MeasRate] = audioread(MeasName);
+minLen = min(length(inputSignalData), length(accelData));
+inputSignal = inputSignalData(1:minLen);
+accelSignal = accelData(1:minLen);
 
-%% Spectrogram
-figure(1)
-spectrogram(MeasData, 2500, [], [], MeasRate, 'yaxis')
-title('Mérés 3')
-xlabel('Time [s]')
-ylabel('Frekvencia [kHz]')
-ylim([0,5]);
-t = 0:1/MeasRate:(length(MeasData)/MeasRate)-1*(1/MeasRate);
+inputSignal = inputSignal - mean(inputSignal);
+accelSignal = accelSignal - mean(accelSignal);
 
-%% Szuro
-f = 10000;
-[b,a] = butter(4, f/(MeasRate/2), "high" );
-filtered = filtfilt(b, a, MeasData);
+f = (0:minLen-1) * (inputSignalFs / minLen);
 
-%% RMS
-window = 1000;
-rms = sqrt(movmean(filtered.^2,window));
-median = mean(rms);
+fftInput = fft(inputSignal);
+fftAccel = fft(accelSignal);
 
-alarm = zeros(length(MeasData),1);
+ampInput = abs(fftInput) / minLen;
+ampAccel = abs(fftAccel) / minLen;
 
-for i = 1: length(MeasData)
-    if rms(i) > median
-        alarm(i) = true;
-    else
-        alarm(i) = false;
-    end
-end
-figure(2);
-plot(t, rms);
-figure(3);
-plot(t,alarm);
-ylim([-0.1,1.1]);
+idx = 1:floor(minLen/2);
+
+ampRatio = ampAccel(idx) ./ ampInput(idx);
+
+figure;
+plot(f(idx), ampRatio);
+grid on;
+xlim([0 1000]);
+xlabel('Frekvencia (Hz)');
+ylabel('Amplitúdómenet');
+title('Bemeneti feszültség és gyorsulásjel közötti amplitúdómenet');
+
+
+

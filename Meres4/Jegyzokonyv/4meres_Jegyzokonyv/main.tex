@@ -313,6 +313,16 @@ Első lépésben a piezoelektromos gyorsulásérzékelőt a doboz oldalára hely
 \label{fig:meres3-elrendezes}
 \end{figure}
 
+Ezt követően egy 10 másodperces 1-1000 [Hz] közötti változó frekvenciájú szinuszos jelet vezettünk a hangsugárzóra. Az így visszamért gyorsulás segítségével számoltuk ki a bemeneti feszültség és a gyorsulásjel közötti amplitúdómenetet, amelyet a(z) \abrara{fig:meres3-amplitudomenet} szemléltet.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth, angle = 0]{../../Kepek/meres3-amplitudomenet.jpg}
+\caption{Az új mérési elrendezés}
+\label{fig:meres3-amplitudomenet}
+\end{figure}
+
+Az amplitudómenetből megállapítható, hogy a maximum ~78 [Hz]-nél található, amely nagy valószínűséggel a doboz sajátfrekvenciája. 300 és 550 [Hz] között nagyon zajos átviteli karakterisztikát kapunk, amely a zörgés jelenségét mutatja. Az amplitudómenet ezt követően letisztul és 0-hoz tart, ezzel az átvitel megszűnését jelzi. 
 
 
 \feladat{4}
@@ -428,6 +438,16 @@ Az előállított hangot a MATLAB \texttt{sound} függvényével hallgattuk meg,
     caption={A harmadik mérés MATLAB-kódja},
     label={lst:meres3-matlab}
 ]{../../MATLAB/meres3.m}
+
+\lstinputlisting[
+    caption={A negyedik mérés MATLAB-kódja},
+    label={lst:meres4-matlab}
+]{../../MATLAB/meres4.m}
+
+\lstinputlisting[
+    caption={Az ötödik és hatodik mérés MATLAB-kódja},
+    label={lst:meres5-matlab}
+]{../../MATLAB/meres5.m}
 
 
 \end{document}
