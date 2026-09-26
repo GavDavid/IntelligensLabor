@@ -141,12 +141,11 @@ BUDAPEST, \today
 \section{Bevezetés}
 
 \subsection*{A mérés célja}
-A mérés során egy piezoelektromos gyorsulásérzékelő segítségével rögzítjük egy ventilátor, illetve egy hangsugárzóval gerjesztett mechanikai rendszer rezgéseit, az Audacity program segítségével, majd MATLAB környezetben elemezzük ezeket. Ezek a mérések és elemzések valódi ipari felhasználások során lehetővé teszik a rezgő mechanikai rendszerek vizsgálatát, lehetővé téve így a hibák gyorsabb felismerését és adott esetben megelőzését.
+A mérés során egy piezoelektromos gyorsulásérzékelő segítségével rögzítjük egy ventilátor, egy hangsugárzóval gerjesztett mechanikai rendszer, illetve egy csengő rezgéseit az Audacity program segítségével, majd MATLAB környezetben elemezzük ezeket.\\
 
-%kell?
-%A mérés során állandósult és változó frekvenciájú jelek spektrumát, továbbá egy mechanikai rendszer amplitúdómenetét vizsgáljuk. A feladatok között szerepel a ventilátor rezgésének elemzése, az aszinkron motor fordulatszám-változásának és slipjének meghatározása, valamint egy káros mechanikai jelenség felismerésére alkalmas mérési módszer kidolgozása. Kiegészítő feladatként egy csengőhang főbb spektrális komponenseit és lecsengését is meghatározzuk, majd a mért eredmények alapján a hangot újra előállítjuk.
 
-%Írhhatjuk még az általános adatokat a műszerekről
+ A feladatok között szerepel a ventilátor rezgésének elemzése, az aszinkron motor fordulatszám-változásának és slipjének meghatározása, egy káros mechanikai jelenség felismerésére alkalmas mérési módszer kidolgozása, valamint egy csengő hangjának rekonstruálása. 
+
 
 \subsection*{A méréshez használt eszközök}
 \begin{itemize}
@@ -184,7 +183,7 @@ Az erősítőt a piezoelektromos rezgésmérő leírása alapján (\abrara{fig:e
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = 300px, angle = 180]{../../Kepek/20260914_142447.jpg}	
-	\caption{A beállított erősítő.}
+	\caption{Az erősítő leírása.}
 	\label{fig:erosito-leiras}
 \end{figure}
 
@@ -198,12 +197,12 @@ Az erősítőt a piezoelektromos rezgésmérő leírása alapján (\abrara{fig:e
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = 300px, angle = 270]{../../Kepek/20260914_142201.jpg}	
-	\caption{A beállított erősítő.}
+	\caption{A ventillátor hátulja.}
 	\label{fig:ventillator_hatulja}
 \end{figure}
 
 
-Az Audacity program segítségével egy felvételt készítettünk ezen a feszültségen, majd a felvételt mentettük. A rögzített felvételt Matlabba betöltve tudtuk elemezni, erre az \texttt{audioread} függvényt használtuk.\\
+Az Audacity program segítségével egy felvételt készítettünk ezen a feszültségen, majd a felvételt mentettük. A rögzített felvételt MATLAB-ba betöltve tudtuk elemezni, erre az \texttt{audioread} függvényt használtuk.\\
 
 Első lépésként a jel időben változó frekvenciatartalmát vizsgáltuk, a \texttt{spectogram} függvény segítségével. Ebből le tudtuk olvasni a legmagasabb mérendő frekvencia komponenst, amely alapján az ideális mintavételi frekvencia is meghatározható.\\
 
@@ -349,7 +348,7 @@ A mérésből arra következtethetünk, hogy valami olyan mérési módszert kel
 
 Így az ötletünk az volt, hogy csináljunk egy felüláteresztő szűrőt, amely a 10000 [Hz]-nél magasabb frekvenciakomponenseket engedi át, majd a szűrt jel RMS értékét számoljuk ki. Ha a RMS érték egy bizonyos küszöbértéket meghalad, akkor a zörgés jelensége jelen van, ha nem, akkor nincs.\\
 
-A küszöbérték meghatározásához egy csúszóablakos módszert alkalmaztunk, amely a szűrt jel RMS értékét számolja ki 1000 minta hosszú ablakokban. A küszöbértéknek pedig ennek az alaknak az átlagát válaszottuk.\\
+A küszöbérték meghatározásához egy csúszóablakos módszert alkalmaztunk, amely a szűrt jel RMS értékét számolja ki 1000 minta hosszú ablakokban. A küszöbértéknek pedig ennek az ablaknak az átlagát válaszottuk.\\
 
 Az így kapott "megfelelő" és "nem megfelelő" állapotokat a(z) \abrara{fig:meres3-alarm} szemlélteti. A 0 jelenti a megfelelő állapotot, az 1 pedig a nem megfelelő állapotot.\\
 
@@ -368,18 +367,18 @@ Az így kapott "megfelelő" és "nem megfelelő" állapotokat a(z) \abrara{fig:m
 \textit{(kiegészítő mérési feladat)} Gyorsulásérzékelőt használva rögzítse a megütött csengőhangját! Határozza meg a főbb komponenseket, és azok lecsengésének időállandóját!
 
 \subsubsection*{Feladat megoldása}
-A mérés során az alábbi x.ábrán látható módon helyeztük el a gyorsulásérzékelőt a csengő mellé, majd a csengőt megütve rögzítettük annak a lecsengését. A rögzített felvételt a korábbi feladatokban leírt módon feldolgoztuk, majd a spektogramját vizsgáltuk, ami az alábbi x. ábrán látható.
-
-%\begin{figure}[H] ezt majd tedd be
-%\centering
-%\includegraphics[width=\textwidth]{Rezgesjel_ms2.jpg}
-%\caption{Mérési összeállítás}
-%\label{fig:meres-osszeallitas}
-%\end{figure}
+A mérés során az alábbi \abrara{fig:csengoMeres-osszeallitas} által látható módon helyeztük el a gyorsulásérzékelőt a csengő mellé, majd a csengőt megütve rögzítettük annak a lecsengését. A rögzített felvételt a korábbi feladatokban leírt módon feldolgoztuk, majd a spektogramját vizsgáltuk, ami az alábbi \abrara{fig:csengo-hangja}-n látható.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{../../Kepek/Csengo_hangja.jpg}
+\includegraphics[width=300px, angle = 270]{../../Kepek/20260921_164840.jpg}
+\caption{Csengő mérési összeállítás}
+\label{fig:csengoMeres-osszeallitas}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=300px]{../../Kepek/Csengo_hangja.jpg}
 \caption{A csengő hangjának spektogramja.}
 \label{fig:csengo-hangja}
 \end{figure}
@@ -410,11 +409,11 @@ A csengőhang rekonstruálása során a négy domináns frekvenciához exponenci
 
 Az egyes részhangokat szuperpozícióval összegeztük egy közös kimeneti vektorban. Mivel a komponensek összeadódása miatt a hullámforma amplitúdója meghaladhatja az egységet, a kód végén csúcsértékre történő normalizálást hajtottunk végre, elkerülve az audiolejátszás során fellépő túlvezérlést.
 
-A rekonstruált csengőhang spektogramja az alábbi x. ábrán látható.
+A rekonstruált csengőhang spektogramja az alábbi \abrara{fig:csengo-hangja_mestersges}-n látható.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{../../Kepek/Csengo_hangja_eloallitva.jpg}
+\includegraphics[width=300px]{../../Kepek/Csengo_hangja_eloallitva.jpg}
 \caption{A csengő általunk előállított hangjának spektogramja.}
 \label{fig:csengo-hangja_mestersges}
 \end{figure}
