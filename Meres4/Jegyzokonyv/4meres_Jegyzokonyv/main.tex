@@ -27,6 +27,8 @@
 \usepackage{multido}
 \usepackage{mathptmx} % Times New Roman betűtípus
 \usepackage{listings}
+\usepackage{caption}
+\captionsetup[lstlisting]{labelformat=empty}
 
 \lstset{
     language=Matlab,
@@ -153,6 +155,10 @@ A mérés során egy piezoelektromos gyorsulásérzékelő segítségével rögz
 	\item Töltéserősítő
 	\item Oszcilloszkóp
 	\item Számítógép
+	\item Ventillátor
+	\item Toroid transzformátor
+	\item Hangszóró
+	\item Csengő
 \end{itemize}
 
 \newpage
@@ -206,7 +212,7 @@ Az Audacity program segítségével egy felvételt készítettünk ezen a feszü
 
 Első lépésként a jel időben változó frekvenciatartalmát vizsgáltuk, a \texttt{spectogram} függvény segítségével. Ebből le tudtuk olvasni a legmagasabb mérendő frekvencia komponenst, amely alapján az ideális mintavételi frekvencia is meghatározható.\\
 
-Ahogy a(z) \abrara{fig:meres1-spektrogram} szemlélteti, $f_{max}$ értéke $0,85$ [kHz] körül található, és a Nyquist-tétel alapján az ideális mintavételi frekvencia $f_s > 2 \cdot f_{max} = 1,7$  [kHz]. Így megállapítható, hogy a mintavételi frekvenciát már biztosan elegendő lenne 2 [kHz] környékére állítani, de az esetlegesen megjelenő magasabb frekvenciakomponensek detektálása érdekében a következő mérések során, 44100 [Hz]-es mintatvételi frekvenciát használtunk továbbra is.
+Ahogy a(z) \abrara{fig:meres1-spektrogram} szemlélteti, $f_{max}$ értéke $0,85$ [kHz] körül található, és a Nyquist-tétel alapján az ideális mintavételi frekvencia $f_s > 2 \cdot f_{max} = 1,7$  [kHz]. Így megállapítható, hogy a mintavételi frekvenciát már biztosan elegendő lenne 2 [kHz] környékére állítani, de az esetlegesen megjelenő magasabb frekvenciakomponensek detektálása érdekében a következő mérések során továbbra is 44100 [Hz]-es mintatvételi frekvenciát használtunk.
 
 \begin{figure}[H]
 \centering
@@ -321,7 +327,7 @@ Ezt követően egy 10 másodperces 1-1000 [Hz] közötti változó frekvenciáj�
 \label{fig:meres3-amplitudomenet}
 \end{figure}
 
-Az amplitudómenetből megállapítható, hogy a maximum ~78 [Hz]-nél található, amely nagy valószínűséggel a doboz sajátfrekvenciája. 300 és 550 [Hz] között nagyon zajos átviteli karakterisztikát kapunk, amely a zörgés jelenségét mutatja. Az amplitudómenet ezt követően letisztul és 0-hoz tart, ezzel az átvitel megszűnését jelzi. 
+Az amplitudómenetből megállapítható, hogy a maximum ~78 [Hz]-nél található, amely a doboz sajátfrekvenciájának tekinthető. 300 és 550 [Hz] között nagyon zajos átviteli karakterisztikát kapunk, amely a zörgés jelenségét mutatja. Az amplitudómenet ezt követően letisztul és 0-hoz tart, ezzel az átvitel megszűnését jelzi. 
 
 
 \feladat{4}
@@ -367,7 +373,7 @@ Az így kapott "megfelelő" és "nem megfelelő" állapotokat a(z) \abrara{fig:m
 \textit{(kiegészítő mérési feladat)} Gyorsulásérzékelőt használva rögzítse a megütött csengőhangját! Határozza meg a főbb komponenseket, és azok lecsengésének időállandóját!
 
 \subsubsection*{Feladat megoldása}
-A mérés során az alábbi \abrara{fig:csengoMeres-osszeallitas} által látható módon helyeztük el a gyorsulásérzékelőt a csengő mellé, majd a csengőt megütve rögzítettük annak a lecsengését. A rögzített felvételt a korábbi feladatokban leírt módon feldolgoztuk, majd a spektogramját vizsgáltuk, ami az alábbi \abrara{fig:csengo-hangja}-n látható.
+A mérés során az alábbi 14. ábrán látható módon helyeztük el a gyorsulásérzékelőt a csengő mellé, majd a csengőt megütve rögzítettük annak a lecsengését. A rögzített felvételt a korábbi feladatokban leírt módon feldolgoztuk, majd a spektogramját vizsgáltuk, ami az alábbi 15. ábrán látható.
 
 \begin{figure}[H]
 \centering
@@ -409,7 +415,7 @@ A csengőhang rekonstruálása során a négy domináns frekvenciához exponenci
 
 Az egyes részhangokat szuperpozícióval összegeztük egy közös kimeneti vektorban. Mivel a komponensek összeadódása miatt a hullámforma amplitúdója meghaladhatja az egységet, a kód végén csúcsértékre történő normalizálást hajtottunk végre, elkerülve az audiolejátszás során fellépő túlvezérlést.
 
-A rekonstruált csengőhang spektogramja az alábbi \abrara{fig:csengo-hangja_mestersges}-n látható.
+A rekonstruált csengőhang spektogramja az alábbi 16. ábránlátható.
 
 \begin{figure}[H]
 \centering
