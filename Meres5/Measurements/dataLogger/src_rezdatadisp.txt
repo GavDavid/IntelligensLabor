@@ -1,0 +1,9 @@
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\ComplexNumber.java
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\ResonatorParamsCompl.java
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\InterpretComplexNumber.java
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\SimpleSerialSend.java
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\RezdataColl.java
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\myCustomCanvas.java
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\FileBackupClass.java
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\ModeSelector.java
+G:\users\orosz\Oktatas\MScInfromFeldolg\utmutato\kidolgozas\dataLogger_20230713\dataLogger\MDFileHandler.java
