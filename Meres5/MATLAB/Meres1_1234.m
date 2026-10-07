@@ -25,26 +25,37 @@ stmpSyncSens = stmpSync(:, 2);
 clearvars stmpSync;
 
 %% Plotting the raw data
-figure;
-plot(sensorDataX, sensorDataY);
-hold on;
-plot(gwySampX, gwySampY);
-title("Raw Sensor Data 50 [Hz]");
+% figure;
+% plot(sensorDataX, sensorDataY);
+% hold on;
+% plot(gwySampX, gwySampY);
+% xlabel("Idõ [s]");
+% ylabel("Mérési érték [ADC]");
+% title("Nyers szenzor- és gateway-adatok (50 Hz)");
+% legend("Szenzor", "Gateway", "Location", "best");
+% grid on;
 
 figure;
 plot(stmpSyncGwy, stmpSyncSens);
-title("Sync Raw Data 50 [Hz]");
+xlabel("Gateway idõbélyege [s]");
+ylabel("Szenzor idõbélyege [s]");
+title("Nyers szinkronizációs idõbélyegek (50 Hz)");
+grid on;
 
-%% Id?bélyeg transzformáció
+%% Idobelyeg transzformáció
 idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-offseteltGwySampX = polyval(idobelyegPoli, gwySampX);
+GwyToSensorTime  = polyval(idobelyegPoli, gwySampX);
 
 %% Plot offset data
 figure;
 plot(sensorDataX, sensorDataY);
 hold on;
-plot(offseteltGwySampX, gwySampY);
-title("Offsetelt Data 50 [Hz]");
+plot(GwyToSensorTime , gwySampY);
+xlabel("Idõ [s]");
+ylabel("Mérési érték [ADC]");
+title("Idõbélyeggel Összehangolt adatok (50 Hz)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
 %% Clearing workspace
 clearvars;
@@ -67,31 +78,42 @@ stmpSyncSens = stmpSync(:, 2);
 clearvars stmpSync;
 
 %% Plotting the raw data
-figure;
-plot(sensorDataX, sensorDataY);
-hold on;
-plot(gwySampX, gwySampY);
-title("Raw Sensor Data 500 [Hz]");
+% figure;
+% plot(sensorDataX, sensorDataY);
+% hold on;
+% plot(gwySampX, gwySampY);
+% xlabel("Idõ [s]");
+% ylabel("Mérési érték [ADC]");
+% title("Nyers szenzor- és gateway-adatok (500 Hz)");
+% legend("Szenzor", "Gateway", "Location", "best");
+% grid on;
 
-figure;
-plot(stmpSyncGwy, stmpSyncSens);
-title("Sync Raw Data 500 [Hz]");
+% figure;
+% plot(stmpSyncGwy, stmpSyncSens);
+% xlabel("Gateway idõbélyege [s]");
+% ylabel("Szenzor idõbélyege [s]");
+% title("Nyers szinkronizációs idõbélyegek (500 Hz)");
+% grid on;
 
-%% Id?bélyeg transzformáció
-idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-offseteltGwySampX = polyval(idobelyegPoli, gwySampX);
+%% Idobelyeg transzformáció
+idobelyegPoli2 = polyfit(stmpSyncGwy, stmpSyncSens, 1);
+GwyToSensorTime  = polyval(idobelyegPoli2, gwySampX);
 
 %% Plot offset data
 figure;
 plot(sensorDataX, sensorDataY);
 hold on;
-plot(offseteltGwySampX, gwySampY);
-title("Offsetelt Data 500 [Hz]");
+plot(GwyToSensorTime , gwySampY);
+xlabel("Idõ [s]");
+ylabel("Mérési érték [ADC]");
+title("Idõbélyeggel Összehangolt adatok (500 Hz)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
 %% Clearing workspace
 clearvars;
 
-%% Loading measurement files and parameters for 500 [Hz] measurement
+%% Loading measurement files and parameters for 50 [Hz] measurement with changing amplitudes
 gwySampFull = load("Measurements/ElsoFeladat50HzChangingAmplitudes/pre_gwySampFull.dat");
 sensorDataFull = load("Measurements/ElsoFeladat50HzChangingAmplitudes/pre_sensorDataFull.dat");
 stmpSync = load("Measurements/ElsoFeladat50HzChangingAmplitudes/pre_stmpSync.dat");
@@ -109,57 +131,76 @@ stmpSyncSens = stmpSync(:, 2);
 clearvars stmpSync;
 
 %% Plotting the raw data
-figure;
-plot(sensorDataX, sensorDataY);
-hold on;
-plot(gwySampX, gwySampY);
-title("Raw Sensor Data 50 [Hz] Changing Amplitudes");
+% figure;
+% plot(sensorDataX, sensorDataY);
+% hold on;
+% plot(gwySampX, gwySampY);
+% xlabel("Idõ [s]");
+% ylabel("Mérési érték [ADC]");
+% title("Nyers szenzor- és gateway-adatok (50 Hz, változó amplitúdó)");
+% legend("Szenzor", "Gateway", "Location", "best");
+% grid on;
 
 figure;
 plot(stmpSyncGwy, stmpSyncSens);
-title("Sync Raw Data 50 [Hz] Changing Amplitudes");
+xlabel("Gateway idõbélyege [s]");
+ylabel("Szenzor idõbélyege [s]");
+title("Nyers szinkronizációs idõbélyegek (50 Hz, változó amplitúdó)");
+grid on;
 
-%% Id?bélyeg transzformáció
+%% Idobelyeg transzformáció
 idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-offseteltGwySampX = polyval(idobelyegPoli, gwySampX);
+GwyToSensorTime = polyval(idobelyegPoli, gwySampX);
 
 %% Plot offset data
 figure;
 plot(sensorDataX, sensorDataY);
 hold on;
-plot(offseteltGwySampX, gwySampY);
-title("Offsetelt Data 50 [Hz] Changing Amplitudes");
+plot(GwyToSensorTime , gwySampY);
+xlabel("Idõ [s]");
+ylabel("Mérési érték [ADC]");
+title("Idõbélyeggel Összehangolt adatok (50 Hz, változó amplitúdó)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
 %% Pseudoinvers calc
 
 X = [stmpSyncGwy, ones(size(stmpSyncGwy))];
 Y = stmpSyncSens;
 cond(X)
-idobelyegPoliPseudo = inv(X' * X) *  X' * Y;
-offseteltGwySampX_pseudo = polyval(idobelyegPoli, gwySampX);
+idobelyegPoliPseudo = pinv(X) * Y;
+GwyToSensorTime _pseudo = polyval(idobelyegPoliPseudo, gwySampX);
 
 %% Plot offset data
 figure;
 plot(sensorDataX, sensorDataY);
 hold on;
-plot(offseteltGwySampX_pseudo, gwySampY);
-title("Offsetelt Data 50 [Hz] Changing Amplitudes with Pseudoinverse");
+plot(GwyToSensorTime _pseudo, gwySampY);
+xlabel("Idõ [s]");
+ylabel("Mérési érték [ADC]");
+title("Összehangolt adatok pszeudoinverzzel (50 Hz, változó amplitúdó)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
 %% Szinkronizációs pont eltolás
 stmpSyncGwy = stmpSyncGwy + 10^6;
-%stmpSyncSens = stmpSyncSens + 10^6;
+gwySampX_shifted = gwySampX + 10^6;
 
 %% Pseudoinvers calc
 
 X = [stmpSyncGwy, ones(size(stmpSyncGwy))];
 Y = stmpSyncSens;
 cond(X)
-idobelyegPoliPseudo = inv(X' * X) *  X' * Y;
-offseteltGwySampX_pseudo = polyval(idobelyegPoli, gwySampX);
+idobelyegPoliPseudo = pinv(X) * Y;
+GwyToSensorTime _pseudo = polyval(idobelyegPoliPseudo, gwySampX_shifted);
 
 %% Plot offset data
 figure;
 plot(sensorDataX, sensorDataY);
 hold on;
-plot(offseteltGwySampX_pseudo, gwySampY);
-title("Offsetelt Data 50 [Hz] Changing Amplitudes with Pseudoinverse with sync time offset by 10^6");
+plot(GwyToSensorTime _pseudo, gwySampY);
+xlabel("Idõ [s]");
+ylabel("Mérési érték [ADC]");
+title("Pszeudoinverzes Összehangolás 10^6 s idõeltolással");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;

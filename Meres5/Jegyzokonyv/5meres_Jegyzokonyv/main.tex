@@ -1,0 +1,228 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{marvosym}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{multicol}
+\hypersetup{colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black}
+\usepackage{pdfpages}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{chemfig}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage[magyar]{babel}
+\usepackage{bm}
+\usepackage{tikz, tcolorbox}
+\usetikzlibrary{positioning}
+\usepackage{verbatim}
+\usepackage{amsmath,esint}
+\usepackage{setspace}
+\usepackage{qtree}
+\usepackage{multido}
+\usepackage{mathptmx} % Times New Roman betűtípus
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{xparse}
+\captionsetup[lstlisting]{labelformat=empty}
+
+\lstset{
+    language=Matlab,
+    inputencoding=utf8,
+    extendedchars=true,
+    basicstyle=\ttfamily\small,
+    frame=single,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny,
+    literate=
+        {á}{{\'a}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ö}{{\"o}}1
+        {ő}{{\H{o}}}1
+        {ú}{{\'u}}1
+        {ü}{{\"u}}1
+        {ű}{{\H{u}}}1
+        {Á}{{\'A}}1
+        {É}{{\'E}}1
+        {Í}{{\'I}}1
+        {Ó}{{\'O}}1
+        {Ö}{{\"O}}1
+        {Ő}{{\H{O}}}1
+        {Ú}{{\'U}}1
+        {Ü}{{\"U}}1
+        {Ű}{{\H{U}}}1
+}
+\renewcommand{\figureautorefname}{ábra}
+\newcommand{\abrara}[1]{\hyperref[#1]{\ref*{#1}.~ábra}}
+\NewDocumentCommand{\kep}{O{300px} O{0} m m m}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=#1, angle=#2]{#3}
+    \caption{#4}
+    \label{fig:#5}
+\end{figure}%
+}
+\newcommand{\Pointilles}[1]{%
+\par\nobreak
+\noindent\rule{0pt}{1.5\baselineskip}% Provides a larger gap between the
+\multido{}{#1}{\noindent\makebox[\linewidth]{\dotfill}\endgraf}
+\bigskip% Gap between dots and next paragraph
+}
+\newcommand{\feladat}[1]{%
+\phantomsection
+\subsection*{#1. feladat}%
+\addcontentsline{toc}{subsection}{#1. feladat}%
+}
+\usepackage{pgfplots}
+\pgfplotsset{height = 10cm, width=15cm,compat=1.9}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0em}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage. oldal}
+
+% Másfeles sorköz beállítása
+\onehalfspacing
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+
+\includegraphics[width=.8\textwidth]{../../Kepek/bme_logo_nagy.jpg}
+
+\vspace{1em}
+
+{
+\large
+BUDAPESTI MŰSZAKI ÉS GAZDASÁGTUDOMÁNYI EGYETEM\\ VILLAMOSMÉRNÖKI ÉS INFORMATIKAI KAR\\ MESTERSÉGES INTELLIGENCIA ÉS RENDSZERTERVEZÉS TANSZÉK
+}
+
+\vspace{6em}
+
+{
+\Huge
+\textbf{Elosztott adatgyűjtő rendszerek}
+}
+
+\vspace{3em}
+
+{
+\huge
+Intelligens beágyazott rendszerek laboratórium\\
+
+\vspace{.2em}
+
+\large
+(BMEVIMIMA21)
+}
+
+\vspace{9em}
+
+{
+\Large
+\textit{Készítette:}\\
+\vspace{.5em}
+\textbf{Pál Patrik, Gavallér Dávid}\\
+\vspace{.5em}
+\textbf{AIQTQW, ES02RO}
+}
+
+\vspace{12em}
+
+{
+\large
+BUDAPEST, \today
+}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Bevezetés}
+
+\subsection*{A mérés célja}
+
+\subsection*{A méréshez használt eszközök}
+\begin{itemize}
+	\item blank
+\end{itemize}
+
+\newpage
+
+\section{Mérési feladatok}
+
+\feladat{1}
+
+Az első feladat célja a különálló mérőegységek által rögzített adatok időbeli
+összehangolása. A feladat során először beolvassuk és ábrázoljuk a szenzor, az
+adatgyűjtő, valamint a szinkronizációs mérések nyers adatait. A szinkronizációs
+pontokra illesztett lineáris időbélyeg-transzformáció segítségével az
+adatgyűjtő időskáláját a szenzor időskálájára alakítjuk, majd megvizsgáljuk az
+így kapott jelek egyezését. Az összehangolt adatokból lineáris interpolációval
+becsüljük a szenzorértékeket az adatgyűjtő mintavételi időpontjaiban.
+Az elemzést 50~Hz-es, 500~Hz-es, valamint változó amplitúdójú mérésre is
+elvégeztük.
+
+\feladat{1.1}
+
+Az első feladat első pontja a mérési összeállítás elkészítése volt. Külső jelként egy függvénygenerátort használtunk, amit a Low Pass Filter bemenetére kötöttünk. Az LPS kimenetét az ellenállásokon keresztül a szenzor és a gateway bemenetére kapcsoltunk, ide csatlakoztatva egy oszcilloszkópot is, a jel valós idejű ellenőrzésének céljából. A gateway-t végül a számítógéphez csatlakozattuk, hogy a méréseket tudjuk rögzíteni és kiértékelni. A DIP kapcsolókat a mérési útmutatóban leírt módon beállítottuk, majd a jelet megvizsgáltuk az oszcilloszkópon és matlabban is. Az összeállítás az alábbi blank. ábrán látható:
+
+%\kep{../../Kepek/20260914_142213.jpg}{A mérési elrendezés.}{meresi-elrendezes}
+
+\feladat{1.2}
+A következő feladat a mérési regisztrátum készítése volt. A mérés rögzítéséhez a mérési jegyzőkönyvben leírt programot használtuk, majd a \texttt{preprocessSampleFiles.m} script futtáatása után kapott, egyszerűen feldolgozható fájlokat vizsgáltuk. A mérést elvégeztük 50~Hz-es és 500~Hz-es szinuszos jelekre is, úgy, hogy mérés közben ki és bekapcsoltuk a jelgenerátort. A jelek amplitúdóját mind a kettő esetben 2 V-ra állítottuk, ezzel kitöltve a mérési tartományt. A mérési eredmények 50~Hz-es és 500~Hz-es jelekre az alábbi blank. ábrákon láthatóak:
+
+%y tengely felirat? mit mertunk
+
+\kep{../../Kepek/Nyers_Szezor_50hz.jpg}{Nyers szenzoradatok (50 Hz).}{nyers-szenzoradatok-50hz}
+
+\kep{../../Kepek/Nyers_Szenzor_500hz.jpg}{Nyers szenzoradatok (500 Hz).}{nyers-szenzoradatok-500hz}
+
+\feladat{1.3}
+A harmadik feladatban az volt a célunk, hogy a szenzor és a gateway által rögzített jeleket időben összehangoljuk. Az időbeli eltérést az eszközöknél kezdeti időeltérés a két belső óra skáláján és a két órajel mintavételi frekvenciája közötti elrétés is okozhatta. Ennek a megoldására egy olyan lineáris transzformációt kerestünk, ami a gateway időskáláját a szenzor időskálájára alakítja.\\
+
+Ehhez az \texttt{stmpSync} fájlt használtuk fel, amiben nem mérési értékek, hanem szinkronizációs időbélyeg párok szerepelek. Ez azt jelenti, hogy ezek az adatok két eszköz által rögzített, azonos eseményekhez tartozó időbélyegek. A Matlab \texttt{polyfit} függvényével ezekre az időbélyegekre lineáris függvényt illesztettünk, ami az alábbi ábrákon látható 50~Hz-es és 500~Hz-es jelekre:
+
+\kep{../../Kepek/Szinkronizacios_idobelyeg_50Hz.jpg}{Szinkronizációs időbélyegek (50 Hz).}{Szinkronizacios-idobelyeg-50Hz}
+
+\kep{../../Kepek/Szinkronizacios_idobelyeg_500Hz.jpg}{Szinkronizációs időbélyegek (500 Hz).}{Szinkronizacios-idobelyeg-500Hz}
+
+A \texttt{polyfit} függvény az illesztett elsőfokú polinom együtthatóit adja
+vissza. A méréshez tartozó szinkronizációs pontokra az illesztés eredménye közelítőleg
+\begin{equation}
+    \texttt{idobelyegPoli}=[1,\,-14{,}9512]
+\end{equation}
+
+Mivel elsőfokú polinomot illesztettünk, az első érték a meredekség, a második pedig a tengelymetszet. Ezért a gateway időbélyegét a következő összefüggéssel alakítottuk át a szenzor időskálájára:
+
+\begin{equation}
+    t_{\mathrm{szenzor}} = 1 \cdot t_{\mathrm{gateway}} - 14{,}9512
+\end{equation}
+
+A tengelymetszet pedig azt a kezdeti időeltérést írja le, amely a két eszköz időbélyegei között fennáll.
+
+Az illesztési együtthatókat a \texttt{polyval} függvénnyel alkalmaztuk \texttt{gwySampX} minden elemére, így kiszámítva az illesztés alapján kapott szenzoridőket.
+
+
+
+
+\section*{Függelék}
+\subsection*{MATLAB kódok}
+
+%\lstinputlisting[
+%    caption={Az első mérés MATLAB-kódja},
+%    label={lst:meres1-matlab}
+%]{../../MATLAB/meres1.m}
+
+\end{document}
