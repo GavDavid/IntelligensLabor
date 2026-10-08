@@ -35,27 +35,27 @@ clearvars stmpSync;
 % legend("Szenzor", "Gateway", "Location", "best");
 % grid on;
 
-figure;
-plot(stmpSyncGwy, stmpSyncSens);
-xlabel("Gateway idõbélyege [s]");
-ylabel("Szenzor idõbélyege [s]");
-title("Nyers szinkronizációs idõbélyegek (50 Hz)");
-grid on;
+% figure;
+% plot(stmpSyncGwy, stmpSyncSens);
+% xlabel("Gateway idõbélyege [s]");
+% ylabel("Szenzor idõbélyege [s]");
+% title("Nyers szinkronizációs idõbélyegek (50 Hz)");
+% grid on;
 
-%% Idobelyeg transzformáció
-idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-GwyToSensorTime  = polyval(idobelyegPoli, gwySampX);
-
-%% Plot offset data
-figure;
-plot(sensorDataX, sensorDataY);
-hold on;
-plot(GwyToSensorTime , gwySampY);
-xlabel("Idõ [s]");
-ylabel("Mérési érték [ADC]");
-title("Idõbélyeggel Összehangolt adatok (50 Hz)");
-legend("Szenzor", "Gateway", "Location", "best");
-grid on;
+% %% Idobelyeg transzformáció
+% idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
+% GwyToSensorTime  = polyval(idobelyegPoli, gwySampX);
+% 
+% %% Plot offset data
+% figure;
+% plot(sensorDataX, sensorDataY);
+% hold on;
+% plot(GwyToSensorTime , gwySampY);
+% xlabel("Idõ [s]");
+% ylabel("Mérési érték [ADC]");
+% title("Idõbélyeggel Összehangolt adatok (50 Hz)");
+% legend("Szenzor", "Gateway", "Location", "best");
+% grid on;
 
 %% Clearing workspace
 clearvars;
@@ -95,20 +95,20 @@ clearvars stmpSync;
 % title("Nyers szinkronizációs idõbélyegek (500 Hz)");
 % grid on;
 
-%% Idobelyeg transzformáció
-idobelyegPoli2 = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-GwyToSensorTime  = polyval(idobelyegPoli2, gwySampX);
-
-%% Plot offset data
-figure;
-plot(sensorDataX, sensorDataY);
-hold on;
-plot(GwyToSensorTime , gwySampY);
-xlabel("Idõ [s]");
-ylabel("Mérési érték [ADC]");
-title("Idõbélyeggel Összehangolt adatok (500 Hz)");
-legend("Szenzor", "Gateway", "Location", "best");
-grid on;
+% %% Idobelyeg transzformáció
+% idobelyegPoli2 = polyfit(stmpSyncGwy, stmpSyncSens, 1);
+% GwyToSensorTime  = polyval(idobelyegPoli2, gwySampX);
+% 
+% %% Plot offset data
+% figure;
+% plot(sensorDataX, sensorDataY);
+% hold on;
+% plot(GwyToSensorTime , gwySampY);
+% xlabel("Idõ [s]");
+% ylabel("Mérési érték [ADC]");
+% title("Idõbélyeggel Összehangolt adatok (500 Hz)");
+% legend("Szenzor", "Gateway", "Location", "best");
+% grid on;
 
 %% Clearing workspace
 clearvars;
@@ -141,27 +141,27 @@ clearvars stmpSync;
 % legend("Szenzor", "Gateway", "Location", "best");
 % grid on;
 
-figure;
-plot(stmpSyncGwy, stmpSyncSens);
-xlabel("Gateway idõbélyege [s]");
-ylabel("Szenzor idõbélyege [s]");
-title("Nyers szinkronizációs idõbélyegek (50 Hz, változó amplitúdó)");
-grid on;
+% figure;
+% plot(stmpSyncGwy, stmpSyncSens);
+% xlabel("Gateway idõbélyege [s]");
+% ylabel("Szenzor idõbélyege [s]");
+% title("Nyers szinkronizációs idõbélyegek (50 Hz, változó amplitúdó)");
+% grid on;
 
 %% Idobelyeg transzformáció
-idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-GwyToSensorTime = polyval(idobelyegPoli, gwySampX);
-
-%% Plot offset data
-figure;
-plot(sensorDataX, sensorDataY);
-hold on;
-plot(GwyToSensorTime , gwySampY);
-xlabel("Idõ [s]");
-ylabel("Mérési érték [ADC]");
-title("Idõbélyeggel Összehangolt adatok (50 Hz, változó amplitúdó)");
-legend("Szenzor", "Gateway", "Location", "best");
-grid on;
+% idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
+% GwyToSensorTime = polyval(idobelyegPoli, gwySampX);
+% 
+% %% Plot offset data
+% figure;
+% plot(sensorDataX, sensorDataY);
+% hold on;
+% plot(GwyToSensorTime , gwySampY);
+% xlabel("Idõ [s]");
+% ylabel("Mérési érték [ADC]");
+% title("Idõbélyeggel Összehangolt adatok (50 Hz, változó amplitúdó)");
+% legend("Szenzor", "Gateway", "Location", "best");
+% grid on;
 
 %% Pseudoinvers calc
 
@@ -169,18 +169,18 @@ X = [stmpSyncGwy, ones(size(stmpSyncGwy))];
 Y = stmpSyncSens;
 cond(X)
 idobelyegPoliPseudo = pinv(X) * Y;
-GwyToSensorTime _pseudo = polyval(idobelyegPoliPseudo, gwySampX);
+GwyToSensorTime_pseudo = polyval(idobelyegPoliPseudo, gwySampX);
 
-%% Plot offset data
-figure;
-plot(sensorDataX, sensorDataY);
-hold on;
-plot(GwyToSensorTime _pseudo, gwySampY);
-xlabel("Idõ [s]");
-ylabel("Mérési érték [ADC]");
-title("Összehangolt adatok pszeudoinverzzel (50 Hz, változó amplitúdó)");
-legend("Szenzor", "Gateway", "Location", "best");
-grid on;
+% %% Plot offset data
+% figure;
+% plot(sensorDataX, sensorDataY);
+% hold on;
+% plot(GwyToSensorTime_pseudo, gwySampY);
+% xlabel("Idõ [s]");
+% ylabel("Mérési érték [ADC]");
+% title("Összehangolt adatok pszeudoinverzzel (50 Hz, változó amplitúdó)");
+% legend("Szenzor", "Gateway", "Location", "best");
+% grid on;
 
 %% Szinkronizációs pont eltolás
 stmpSyncGwy = stmpSyncGwy + 10^6;
@@ -192,13 +192,13 @@ X = [stmpSyncGwy, ones(size(stmpSyncGwy))];
 Y = stmpSyncSens;
 cond(X)
 idobelyegPoliPseudo = pinv(X) * Y;
-GwyToSensorTime _pseudo = polyval(idobelyegPoliPseudo, gwySampX_shifted);
+GwyToSensorTime_pseudo = polyval(idobelyegPoliPseudo, gwySampX_shifted);
 
 %% Plot offset data
 figure;
 plot(sensorDataX, sensorDataY);
 hold on;
-plot(GwyToSensorTime _pseudo, gwySampY);
+plot(GwyToSensorTime_pseudo, gwySampY);
 xlabel("Idõ [s]");
 ylabel("Mérési érték [ADC]");
 title("Pszeudoinverzes Összehangolás 10^6 s idõeltolással");

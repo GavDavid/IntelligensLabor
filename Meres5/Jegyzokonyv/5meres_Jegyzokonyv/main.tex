@@ -192,7 +192,7 @@ A következő feladat a mérési regisztrátum készítése volt. A mérés rög
 \feladat{1.3}
 A harmadik feladatban az volt a célunk, hogy a szenzor és a gateway által rögzített jeleket időben összehangoljuk. Az időbeli eltérést az eszközöknél kezdeti időeltérés a két belső óra skáláján és a két órajel mintavételi frekvenciája közötti elrétés is okozhatta. Ennek a megoldására egy olyan lineáris transzformációt kerestünk, ami a gateway időskáláját a szenzor időskálájára alakítja.\\
 
-Ehhez az \texttt{stmpSync} fájlt használtuk fel, amiben nem mérési értékek, hanem szinkronizációs időbélyeg párok szerepelek. Ez azt jelenti, hogy ezek az adatok két eszköz által rögzített, azonos eseményekhez tartozó időbélyegek. A Matlab \texttt{polyfit} függvényével ezekre az időbélyegekre lineáris függvényt illesztettünk, ami az alábbi ábrákon látható 50~Hz-es és 500~Hz-es jelekre:
+Ehhez az \texttt{stmpSync} fájlt használtuk fel, amiben szinkronizációs időbélyeg párok szerepelek. Ez azt jelenti, hogy ezek az adatok két eszköz által rögzített, azonos eseményekhez tartozó időbélyegek. A Matlab \texttt{polyfit} függvényével ezekre az időbélyegekre lineáris függvényt illesztettünk, ami az alábbi ábrákon látható 50~Hz-es és 500~Hz-es jelekre:
 
 \kep{../../Kepek/Szinkronizacios_idobelyeg_50Hz.jpg}{Szinkronizációs időbélyegek (50 Hz).}{Szinkronizacios-idobelyeg-50Hz}
 
@@ -212,10 +212,31 @@ Mivel elsőfokú polinomot illesztettünk, az első érték a meredekség, a má
 
 A tengelymetszet pedig azt a kezdeti időeltérést írja le, amely a két eszköz időbélyegei között fennáll.
 
-Az illesztési együtthatókat a \texttt{polyval} függvénnyel alkalmaztuk \texttt{gwySampX} minden elemére, így kiszámítva az illesztés alapján kapott szenzoridőket.
+Az illesztési együtthatókat a \texttt{polyval} függvénnyel alkalmaztuk \texttt{gwySampX} minden elemére, így kiszámítva az illesztett polinom által becsült, a szenzor időskálájára átszámított időbélyegeket, amik az alábbi ábrákon láthatóak 50~Hz-es és 500~Hz-es jelek esetén:
 
+\kep{../../Kepek/Idobelyeg_50hz.jpg}{Időbélyeggel összehangolt jelek (50 Hz).}{idobelyeg-50Hz}
 
+\kep{../../Kepek/Idobelyeg_500hz.jpg}{Időbélyeggel összehangolt jelek (500 Hz).}{idobelyeg-500Hz}
 
+Ezt követően egy mérési regisztrátumot készítettünk, amelyben a jel amplitúdóját az indulástól kezdve folyamatosan növeltük, majd elvégeztük rá a korábbi feladatokban leírt összehangolását. Ez alatt a mérés alatt 50~Hz-es frekvencián mértünk. Az alábbi ábrákon látható a nyers mérési regisztrátum, a szinkronizációs időbélyegek, valamint az összehangolt jelek:
+
+\kep{../../Kepek/Nyers_szenzor_valtozo.jpg}{Nyers szenzor jelek változó amplitúdóval.}{nyers-szenzor-valtozo}
+
+\kep{../../Kepek/Szinkronizacios_idobelyeg_valtozo.jpg}{Szinkronizációs időbélyegek változó amplitúdóval.}{szinkronizacios-idobelyeg-valtozo}
+
+\kep{../../Kepek/Idobelyeg_valtozo.jpg}{Időbélyeggel összehangolt jelek változó amplitúdóval.}{idobelyeg-valtozo}
+
+\feladat{1.4}
+
+A negyedik feladatban az előző feladatban bemutatott időbélyeg transzformációt végeztük el újra, LS becslés segítsgével. Felépítettük az \textbf{X} mátrixot, amely első oszlopa a gateway szinkronizációs időbélyegeit, második oszlopa pedig egyeseket tartalmazott. Az \textbf{y} vektor a szenzor szinkronizációs időbélyegeit tartalmazta. A számításhoz a Moore-Penrose pszeudoinverzet használtuk, aminek képlete:
+
+\begin{equation}
+    p = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y}
+\end{equation}
+
+A Matlab beépített függvényei között megtalálható a \texttt{pinv} függvény, amivel ez a pszeudoinverz számítható. Az pszeudóinverzel összehangolt jelek az alábbi ábrán láthatóak:
+
+\kep{../../Kepek/Pszeudoinverz.jpg}{Pszeudoinverz segítségével összehangolt jelek változó amplitúdóval.}{Pszeudoinverz}
 
 \section*{Függelék}
 \subsection*{MATLAB kódok}
