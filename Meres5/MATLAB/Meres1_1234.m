@@ -1,5 +1,5 @@
 %%TODO
-%EgÈszben javÌtani a meredeksÈget
+% Eg√©szben jav√≠tani a meredeks√©get
 
 %% Clearing wokspace
 clear;
@@ -25,37 +25,37 @@ stmpSyncSens = stmpSync(:, 2);
 clearvars stmpSync;
 
 %% Plotting the raw data
-% figure;
-% plot(sensorDataX, sensorDataY);
-% hold on;
-% plot(gwySampX, gwySampY);
-% xlabel("Idı [s]");
-% ylabel("MÈrÈsi ÈrtÈk [ADC]");
-% title("Nyers szenzor- Ès gateway-adatok (50 Hz)");
-% legend("Szenzor", "Gateway", "Location", "best");
-% grid on;
+figure;
+plot(sensorDataX, sensorDataY);
+hold on;
+plot(gwySampX, gwySampY);
+xlabel("Id≈ë [s]");
+ylabel("M√©r√©si √©rt√©k [ADC]");
+title("Nyers szenzor- √©s gateway-adatok (50 Hz)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
-% figure;
-% plot(stmpSyncGwy, stmpSyncSens);
-% xlabel("Gateway idıbÈlyege [s]");
-% ylabel("Szenzor idıbÈlyege [s]");
-% title("Nyers szinkroniz·ciÛs idıbÈlyegek (50 Hz)");
-% grid on;
+figure;
+plot(stmpSyncGwy, stmpSyncSens);
+xlabel("Gateway id≈ëb√©lyege [s]");
+ylabel("Szenzor id≈ëb√©lyege [s]");
+title("Nyers szinkroniz√°ci√≥s id≈ëb√©lyegek (50 Hz)");
+grid on;
 
-% %% Idobelyeg transzform·ciÛ
-% idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-% GwyToSensorTime  = polyval(idobelyegPoli, gwySampX);
-% 
-% %% Plot offset data
-% figure;
-% plot(sensorDataX, sensorDataY);
-% hold on;
-% plot(GwyToSensorTime , gwySampY);
-% xlabel("Idı [s]");
-% ylabel("MÈrÈsi ÈrtÈk [ADC]");
-% title("IdıbÈlyeggel ÷sszehangolt adatok (50 Hz)");
-% legend("Szenzor", "Gateway", "Location", "best");
-% grid on;
+%% Id≈ëb√©lyeg-transzform√°ci√≥
+idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
+GwyToSensorTime  = polyval(idobelyegPoli, gwySampX);
+
+%% Plot offset data
+figure;
+plot(sensorDataX, sensorDataY);
+hold on;
+plot(GwyToSensorTime , gwySampY);
+xlabel("Id≈ë [s]");
+ylabel("M√©r√©si √©rt√©k [ADC]");
+title("Id≈ëb√©lyeggel √∂sszehangolt adatok (50 Hz)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
 %% Clearing workspace
 clearvars;
@@ -78,37 +78,37 @@ stmpSyncSens = stmpSync(:, 2);
 clearvars stmpSync;
 
 %% Plotting the raw data
-% figure;
-% plot(sensorDataX, sensorDataY);
-% hold on;
-% plot(gwySampX, gwySampY);
-% xlabel("Idı [s]");
-% ylabel("MÈrÈsi ÈrtÈk [ADC]");
-% title("Nyers szenzor- Ès gateway-adatok (500 Hz)");
-% legend("Szenzor", "Gateway", "Location", "best");
-% grid on;
+figure;
+plot(sensorDataX, sensorDataY);
+hold on;
+plot(gwySampX, gwySampY);
+xlabel("Id≈ë [s]");
+ylabel("M√©r√©si √©rt√©k [ADC]");
+title("Nyers szenzor- √©s gateway-adatok (500 Hz)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
-% figure;
-% plot(stmpSyncGwy, stmpSyncSens);
-% xlabel("Gateway idıbÈlyege [s]");
-% ylabel("Szenzor idıbÈlyege [s]");
-% title("Nyers szinkroniz·ciÛs idıbÈlyegek (500 Hz)");
-% grid on;
+figure;
+plot(stmpSyncGwy, stmpSyncSens);
+xlabel("Gateway id≈ëb√©lyege [s]");
+ylabel("Szenzor id≈ëb√©lyege [s]");
+title("Nyers szinkroniz√°ci√≥s id≈ëb√©lyegek (500 Hz)");
+grid on;
 
-% %% Idobelyeg transzform·ciÛ
-% idobelyegPoli2 = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-% GwyToSensorTime  = polyval(idobelyegPoli2, gwySampX);
-% 
-% %% Plot offset data
-% figure;
-% plot(sensorDataX, sensorDataY);
-% hold on;
-% plot(GwyToSensorTime , gwySampY);
-% xlabel("Idı [s]");
-% ylabel("MÈrÈsi ÈrtÈk [ADC]");
-% title("IdıbÈlyeggel ÷sszehangolt adatok (500 Hz)");
-% legend("Szenzor", "Gateway", "Location", "best");
-% grid on;
+%% Id≈ëb√©lyeg-transzform√°ci√≥
+idobelyegPoli2 = polyfit(stmpSyncGwy, stmpSyncSens, 1);
+GwyToSensorTime  = polyval(idobelyegPoli2, gwySampX);
+
+%% Plot offset data
+figure;
+plot(sensorDataX, sensorDataY);
+hold on;
+plot(GwyToSensorTime , gwySampY);
+xlabel("Id≈ë [s]");
+ylabel("M√©r√©si √©rt√©k [ADC]");
+title("Id≈ëb√©lyeggel √∂sszehangolt adatok (500 Hz)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
 %% Clearing workspace
 clearvars;
@@ -131,37 +131,37 @@ stmpSyncSens = stmpSync(:, 2);
 clearvars stmpSync;
 
 %% Plotting the raw data
-% figure;
-% plot(sensorDataX, sensorDataY);
-% hold on;
-% plot(gwySampX, gwySampY);
-% xlabel("Idı [s]");
-% ylabel("MÈrÈsi ÈrtÈk [ADC]");
-% title("Nyers szenzor- Ès gateway-adatok (50 Hz, v·ltozÛ amplit˙dÛ)");
-% legend("Szenzor", "Gateway", "Location", "best");
-% grid on;
+figure;
+plot(sensorDataX, sensorDataY);
+hold on;
+plot(gwySampX, gwySampY);
+xlabel("Id≈ë [s]");
+ylabel("M√©r√©si √©rt√©k [ADC]");
+title("Nyers szenzor- √©s gateway-adatok (50 Hz, v√°ltoz√≥ amplit√∫d√≥)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
-% figure;
-% plot(stmpSyncGwy, stmpSyncSens);
-% xlabel("Gateway idıbÈlyege [s]");
-% ylabel("Szenzor idıbÈlyege [s]");
-% title("Nyers szinkroniz·ciÛs idıbÈlyegek (50 Hz, v·ltozÛ amplit˙dÛ)");
-% grid on;
+figure;
+plot(stmpSyncGwy, stmpSyncSens);
+xlabel("Gateway id≈ëb√©lyege [s]");
+ylabel("Szenzor id≈ëb√©lyege [s]");
+title("Nyers szinkroniz√°ci√≥s id≈ëb√©lyegek (50 Hz, v√°ltoz√≥ amplit√∫d√≥)");
+grid on;
 
-%% Idobelyeg transzform·ciÛ
-% idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-% GwyToSensorTime = polyval(idobelyegPoli, gwySampX);
-% 
-% %% Plot offset data
-% figure;
-% plot(sensorDataX, sensorDataY);
-% hold on;
-% plot(GwyToSensorTime , gwySampY);
-% xlabel("Idı [s]");
-% ylabel("MÈrÈsi ÈrtÈk [ADC]");
-% title("IdıbÈlyeggel ÷sszehangolt adatok (50 Hz, v·ltozÛ amplit˙dÛ)");
-% legend("Szenzor", "Gateway", "Location", "best");
-% grid on;
+%% Id≈ëb√©lyeg-transzform√°ci√≥
+idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
+GwyToSensorTime = polyval(idobelyegPoli, gwySampX);
+
+%% Plot offset data
+figure;
+plot(sensorDataX, sensorDataY);
+hold on;
+plot(GwyToSensorTime , gwySampY);
+xlabel("Id≈ë [s]");
+ylabel("M√©r√©si √©rt√©k [ADC]");
+title("Id≈ëb√©lyeggel √∂sszehangolt adatok (50 Hz, v√°ltoz√≥ amplit√∫d√≥)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
 %% Pseudoinvers calc
 
@@ -171,36 +171,41 @@ cond(X)
 idobelyegPoliPseudo = pinv(X) * Y;
 GwyToSensorTime_pseudo = polyval(idobelyegPoliPseudo, gwySampX);
 
-% %% Plot offset data
-% figure;
-% plot(sensorDataX, sensorDataY);
-% hold on;
-% plot(GwyToSensorTime_pseudo, gwySampY);
-% xlabel("Idı [s]");
-% ylabel("MÈrÈsi ÈrtÈk [ADC]");
-% title("÷sszehangolt adatok pszeudoinverzzel (50 Hz, v·ltozÛ amplit˙dÛ)");
-% legend("Szenzor", "Gateway", "Location", "best");
-% grid on;
+%% Plot offset data
+figure;
+plot(sensorDataX, sensorDataY);
+hold on;
+plot(GwyToSensorTime_pseudo, gwySampY);
+xlabel("Id≈ë [s]");
+ylabel("M√©r√©si √©rt√©k [ADC]");
+title("√ñsszehangolt adatok pszeudoinverzzel (50 Hz, v√°ltoz√≥ amplit√∫d√≥)");
+legend("Szenzor", "Gateway", "Location", "best");
+grid on;
 
-%% Szinkroniz·ciÛs pont eltol·s
+%% Szinkroniz√°ci√≥s pont eltol√°s
 stmpSyncGwy = stmpSyncGwy + 10^6;
 gwySampX_shifted = gwySampX + 10^6;
 
 %% Pseudoinvers calc
 
-X = [stmpSyncGwy, ones(size(stmpSyncGwy))];
 Y = stmpSyncSens;
-cond(X)
-idobelyegPoliPseudo = pinv(X) * Y;
-GwyToSensorTime_pseudo = polyval(idobelyegPoliPseudo, gwySampX_shifted);
+X_shifted = [stmpSyncGwy, ones(size(stmpSyncGwy))];
+cond(X_shifted)
+
+% Az adatok k√∂zpontos√≠t√°sa jav√≠tja a m√°trix kondicion√°lts√°g√°t.
+timeMean = mean(stmpSyncGwy);
+X_centered = [stmpSyncGwy - timeMean, ones(size(stmpSyncGwy))];
+cond(X_centered)
+idobelyegPoliPseudo = pinv(X_centered) * Y;
+GwyToSensorTime_pseudo = polyval(idobelyegPoliPseudo, gwySampX_shifted - timeMean);
 
 %% Plot offset data
 figure;
 plot(sensorDataX, sensorDataY);
 hold on;
 plot(GwyToSensorTime_pseudo, gwySampY);
-xlabel("Idı [s]");
-ylabel("MÈrÈsi ÈrtÈk [ADC]");
-title("Pszeudoinverzes ÷sszehangol·s 10^6 s idıeltol·ssal");
+xlabel("Id≈ë [s]");
+ylabel("M√©r√©si √©rt√©k [ADC]");
+title("Pszeudoinverzes √∂sszehangol√°s 10^6 s id≈ëeltol√°ssal");
 legend("Szenzor", "Gateway", "Location", "best");
 grid on;

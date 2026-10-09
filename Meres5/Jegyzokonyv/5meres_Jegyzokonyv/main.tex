@@ -228,15 +228,46 @@ Ezt követően egy mérési regisztrátumot készítettünk, amelyben a jel ampl
 
 \feladat{1.4}
 
-A negyedik feladatban az előző feladatban bemutatott időbélyeg transzformációt végeztük el újra, LS becslés segítsgével. Felépítettük az \textbf{X} mátrixot, amely első oszlopa a gateway szinkronizációs időbélyegeit, második oszlopa pedig egyeseket tartalmazott. Az \textbf{y} vektor a szenzor szinkronizációs időbélyegeit tartalmazta. A számításhoz a Moore-Penrose pszeudoinverzet használtuk, aminek képlete:
+A negyedik feladatban az előző feladatban bemutatott időbélyeg-transzformációt végeztük el újra, LS-becslés segítségével. Felépítettük az \textbf{X} mátrixot, amelynek első oszlopa a gateway szinkronizációs időbélyegeit, második oszlopa pedig egyeseket tartalmazott. Az \textbf{y} vektor a szenzor szinkronizációs időbélyegeit tartalmazta. A számításhoz a Moore--Penrose-pszeudoinverzt használtuk, amelynek LS-megoldása:
 
 \begin{equation}
     p = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y}
 \end{equation}
 
-A Matlab beépített függvényei között megtalálható a \texttt{pinv} függvény, amivel ez a pszeudoinverz számítható. Az pszeudóinverzel összehangolt jelek az alábbi ábrán láthatóak:
+A MATLAB beépített függvényei között megtalálható a \texttt{pinv} függvény, amellyel ez a megoldás SVD-alapú módon számítható. A pszeudoinverzzel összehangolt jelek az alábbi ábrán láthatóak:
 
 \kep{../../Kepek/Pszeudoinverz.jpg}{Pszeudoinverz segítségével összehangolt jelek változó amplitúdóval.}{Pszeudoinverz}
+
+Ezt követően a gateway szinkronizációs időadatait és a gateway mérési időtengelyét $10^6$ másodperccel eltoltuk, majd így ismét elvégeztük a feladatot, és vizsgáltuk a mátrix kondicionáltságát. Az első esetben a kondíciószám $1{,}0367 \cdot 10^7$ volt, az időeltolást követően pedig ez az érték $2{,}6496 \cdot 10^{11}$-re növekedett. Az ábrán ennek ellenére nem látható lényeges eltérés, mivel a lineáris transzformáció konstans tagja kompenzálja az időkoordináta közös eltolását. A nagyobb kondíciószámból azonban következik, hogy a becslés érzékenyebbé válik a mérési és kerekítési hibákra.
+
+A probléma megoldására az időadatokat az illesztés előtt központosítottuk. Ehhez a gateway szinkronizációs időadataiból kivontuk azok átlagát, és ugyanezt az eltolást alkalmaztuk a gateway mérési időpontjaira is. Így a transzformáció eredménye nem változik, miközben a mátrix kondicionáltsága javul.
+
+\feladat{1.5}
+
+Az ötödik feladatban a szenzor mérési eredményeit a gateway mintavételi időpontjaiban kellett meghatározni lineáris interpoláció segítségével. Először a szinkronizációs pontokból lineáris időbélyeg-transzformációt hajtottunk végre, a korábbi feladatokban leírt módszer segítségével. Ezután a gateway minden mintavételi időpontját átszámítottuk a szenzor időrendszerébe. Az \texttt{interp1} függvény ezekben az időpontokban a szenzor két szomszédos mintája közötti egyenest használva becsülte meg a szenzor mérési értékét, az alábbi összefüggés szerint:
+
+\[
+\hat{s}(t) =
+s(t_i) + \frac{t-t_i}{t_{i+1}-t_i}
+\bigl(s(t_{i+1})-s(t_i)\bigr),
+\qquad t_i \leq t \leq t_{i+1}.
+\]
+
+A kapott interpolált szenzorértékeket a gateway ugyanazon időpontokban mért értékeivel hasonlítottuk össze. Az összehasonlításhoz az átlagos négyzetes eltérést is kiszámítottuk:
+
+\[
+\mathrm{MSE} =
+\frac{1}{N}\sum_{i=1}^{N}
+\left(y_{\mathrm{gateway},i}
+-\hat{y}_{\mathrm{szenzor},i}\right)^2.
+\]
+
+A programot 50~Hz-es és 500~Hz-es mérésre is lefuttattuk. Az 50~Hz-es jel esetén az MSE értéke $0,7255$, 500~Hz-es jel esetén pedig $1,9439$ volt. Az 500~Hz nagyobb változási sebessége volt a nagyobb hiba oka a második esetben. A mérési eredmények az alábbi ábrákon láthatóak, kellő nagyítással a jobb vizualizáció érdekében:
+
+\kep{../../Kepek/Linear_interp_50hz.jpg}{Lineáris interpoláció 50~Hz-en.}{linear-interp-50hz}
+
+\kep{../../Kepek/Linear_interp_500hz.jpg}{Lineáris interpoláció 500~Hz-en.}{linear-interp-500hz}
+
 
 \section*{Függelék}
 \subsection*{MATLAB kódok}
