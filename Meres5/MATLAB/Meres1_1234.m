@@ -96,8 +96,8 @@ title("Nyers szinkronizációs időbélyegek (500 Hz)");
 grid on;
 
 %% Időbélyeg-transzformáció
-idobelyegPoli2 = polyfit(stmpSyncGwy, stmpSyncSens, 1);
-GwyToSensorTime  = polyval(idobelyegPoli2, gwySampX);
+idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
+GwyToSensorTime  = polyval(idobelyegPoli, gwySampX);
 
 %% Plot offset data
 figure;
