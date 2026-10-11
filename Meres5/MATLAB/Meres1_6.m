@@ -26,19 +26,6 @@ for k = 1:numel(frequencies)
     stmpSyncGwy = stmpSync(:, 1);
     stmpSyncSens = stmpSync(:, 2);
 
-   
-%{
-  %% Upsampling the sensor data
-    upSampNum = 10;
-    Ts = mean(diff(sensorDataX));
-    fs = 1 / Ts;
-    fsNew = fs * upSampNum;
-
-    upSampledSensorDataX = sensorDataX(1):1/fsNew:sensorDataX(end);
-    upSampledSensorDataY = interp1(sensorDataX, sensorDataY, upSampledSensorDataX, 'linear');
- 
-%}
-
     %% Upsampling the sensor data
 
     upSampNum = 10;
@@ -49,15 +36,14 @@ for k = 1:numel(frequencies)
     yUp = zeros(upSampNum * (numel(sensorDataY) - 1) + 1, 1);
     yUp(1:upSampNum:end) = sensorDataY;
 
-    filterOrder = 100;
-    filterCoeff = fir1(filterOrder, 1/upSampNum);
-    
-    filterCoeff = filterCoeff / sum(filterCoeff) * sqrt(upSampNum);
+    cutoffFrequency = fs / 2;
+    [b, a] = butter(4, cutoffFrequency / (fsNew / 2), "low");
 
-    upSampledSensorDataY = filtfilt(filterCoeff, 1, yUp);
+    upSampledSensorDataY = filtfilt(b, a, yUp);
 
-    upSampledSensorDataX = sensorDataX(1) + ...
-        (0:numel(yUp)-1)' / fsNew;
+    upSampledSensorDataY = upSampNum * upSampledSensorDataY;
+
+    upSampledSensorDataX = sensorDataX(1) + (0:numel(yUp) - 1)' / fsNew;
 
     %% Interpolation
     idobelyegPoli = polyfit(stmpSyncGwy, stmpSyncSens, 1);
@@ -65,15 +51,24 @@ for k = 1:numel(frequencies)
     sensorDataYInterpolated = interp1(upSampledSensorDataX, upSampledSensorDataY, gatewayTimeInSensorClock, 'linear');
 
     validSamples = ~isnan(sensorDataYInterpolated);
-    squaredError = mean((gwySampY(validSamples) - sensorDataYInterpolated(validSamples)).^2);
+
+    edgeSamples = 50;
+    comparisonSamples = validSamples;
+    comparisonSamples(1:edgeSamples) = false;
+    comparisonSamples(end-edgeSamples + 1:end) = false;
+
+    squaredError = mean((gwySampY(comparisonSamples) - ...
+        sensorDataYInterpolated(comparisonSamples)).^2);
     fprintf("%d Hz: átlagos négyzetes eltérés = %.6g\n", frequency, squaredError);
 
     %% Plotting
     figure;
     plot(sensorDataX, sensorDataY, "-o");
     hold on;
-    plot(gatewayTimeInSensorClock, gwySampY, "-o");
-    plot(gatewayTimeInSensorClock, sensorDataYInterpolated, "-o");
+    plot(gatewayTimeInSensorClock(comparisonSamples), ...
+        gwySampY(comparisonSamples), "-o");
+    plot(gatewayTimeInSensorClock(comparisonSamples), ...
+        sensorDataYInterpolated(comparisonSamples), "-o");
     xlabel("Idő [s]");
     ylabel("Mérési érték [ADC]");
     title(sprintf("Lineáris interpoláció %d Hz-en", frequency));
