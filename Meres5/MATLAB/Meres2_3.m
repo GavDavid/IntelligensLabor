@@ -28,10 +28,10 @@ stmpSyncGwy = stmpSync(:, 1);
 stmpSyncSens = stmpSync(:, 2);
 clearvars stmpSync;
 
-%% Gateway átlag kivonás
+%% Gateway ï¿½tlag kivonï¿½s
 gwySampY = gwySampY - mean(gwySampY);
 
-%% Id?bélyeg transzformáció 
+%% Id?bï¿½lyeg transzformï¿½ciï¿½ 
 idobelyegPoli = polyfit(stmpSyncSens, stmpSyncGwy, 1);
 sensorToGwyTime  = polyval(idobelyegPoli, sensorDataTime);
 
@@ -86,16 +86,16 @@ for i = 1 : length(reconstructedPhasesBase)
         end
     end
 end
-    
-%reconstructedBaseFncBase = abs(reconstructedCoefFirst).*exp(1j * reconstructedPhasesBase + angle(reconstructedCoefFirst));
-reconstructedBaseFncFirst = abs(reconstructedCoefFirst).*exp(1j * reconstructedPhasesFirst  + angle(reconstructedCoefFirst));
-reconstructedBaseFncSecond = abs(reconstructedCoefSecond).*exp(1j * reconstructedPhasesSecond + angle(reconstructedCoefSecond));
-reconstructedBaseFncThird = abs(reconstructedCoefThird).*exp(1j * reconstructedPhasesThird + angle(reconstructedCoefThird));
-reconstructedBaseFncFourth = abs(reconstructedCoefFourth).*exp(1j * reconstructedPhasesFourth  + angle(reconstructedCoefFourth));
-reconstructedBaseFncFifth = abs(reconstructedCoefFifth).*exp(1j * reconstructedPhasesFifth + angle(reconstructedCoefFifth));
 
-%reconstructedSignal = 2 * real(reconstructedBaseFncFirst + reconstructedBaseFncSecond + reconstructedBaseFncThird + reconstructedBaseFncFourth + reconstructedBaseFncFifth);
-reconstructedSignal = 2 * real(reconstructedBaseFncFirst);
+
+reconstructedBaseFncFirst = reconstructedCoefFirst .* exp(1j * reconstructedPhasesFirst);
+reconstructedBaseFncSecond = reconstructedCoefSecond .* exp(1j * reconstructedPhasesSecond);
+reconstructedBaseFncThird = reconstructedCoefThird .* exp(1j * reconstructedPhasesThird);
+reconstructedBaseFncFourth = reconstructedCoefFourth .* exp(1j * reconstructedPhasesFourth);
+reconstructedBaseFncFifth = reconstructedCoefFifth .* exp(1j * reconstructedPhasesFifth);
+
+reconstructedSignal = 2 * real(reconstructedBaseFncFirst + reconstructedBaseFncSecond + ... 
+reconstructedBaseFncThird + reconstructedBaseFncFourth + reconstructedBaseFncFifth);
 
 plot(reconstructedSignal)
 hold on;
