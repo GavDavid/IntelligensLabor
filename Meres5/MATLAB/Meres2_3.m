@@ -88,11 +88,11 @@ for i = 1 : length(reconstructedPhasesBase)
 end
 
 
-reconstructedBaseFncFirst = reconstructedCoefFirst .* exp(1j * reconstructedPhasesFirst);
-reconstructedBaseFncSecond = reconstructedCoefSecond .* exp(1j * reconstructedPhasesSecond);
-reconstructedBaseFncThird = reconstructedCoefThird .* exp(1j * reconstructedPhasesThird);
-reconstructedBaseFncFourth = reconstructedCoefFourth .* exp(1j * reconstructedPhasesFourth);
-reconstructedBaseFncFifth = reconstructedCoefFifth .* exp(1j * reconstructedPhasesFifth);
+reconstructedBaseFncFirst = abs(reconstructedCoefFirst) .* exp(1j * (reconstructedPhasesFirst + angle(reconstructedCoefFirst)));
+reconstructedBaseFncSecond = abs(reconstructedCoefSecond) .* exp(1j * (reconstructedPhasesSecond + angle(reconstructedCoefSecond)));
+reconstructedBaseFncThird = abs(reconstructedCoefThird) .* exp(1j * (reconstructedPhasesThird + angle(reconstructedCoefThird)));
+reconstructedBaseFncFourth = abs(reconstructedCoefFourth) .* exp(1j * (reconstructedPhasesFourth + angle(reconstructedCoefFourth)));
+reconstructedBaseFncFifth = abs(reconstructedCoefFifth) .* exp(1j * (reconstructedPhasesFifth + angle(reconstructedCoefFifth)));
 
 reconstructedSignal = 2 * real(reconstructedBaseFncFirst + reconstructedBaseFncSecond + ... 
 reconstructedBaseFncThird + reconstructedBaseFncFourth + reconstructedBaseFncFifth);
