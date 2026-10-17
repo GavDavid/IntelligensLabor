@@ -1,6 +1,3 @@
-%%TODO
-% Egészben javítani a meredekséget
-
 %% Clearing wokspace
 clear;
 clf;
@@ -8,9 +5,9 @@ clc;
 close all;
 
 %% Loading measurement files and parameters for 50 [Hz] measurement
-gwySampFull = load("Measurements/ElsoFeladatteszt/pre_gwySampFull.dat");
-sensorDataFull = load("Measurements/ElsoFeladatteszt/pre_sensorDataFull.dat");
-stmpSync = load("Measurements/ElsoFeladatteszt/pre_stmpSync.dat");
+gwySampFull = load("Measurements/ElsoFeladat50Hz/pre_gwySampFull.dat");
+sensorDataFull = load("Measurements/ElsoFeladat50Hz/pre_sensorDataFull.dat");
+stmpSync = load("Measurements/ElsoFeladat50Hz/pre_stmpSync.dat");
 
 sensorDataX = sensorDataFull(:, 1);
 sensorDataY = sensorDataFull(:, 2);
@@ -192,7 +189,6 @@ Y = stmpSyncSens;
 X_shifted = [stmpSyncGwy, ones(size(stmpSyncGwy))];
 cond(X_shifted)
 
-% Az adatok központosítása javítja a mátrix kondicionáltságát.
 timeMean = mean(stmpSyncGwy);
 X_centered = [stmpSyncGwy - timeMean, ones(size(stmpSyncGwy))];
 cond(X_centered)

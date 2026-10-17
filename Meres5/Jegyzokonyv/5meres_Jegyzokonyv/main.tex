@@ -157,6 +157,8 @@ A mérés célja az elosztott rendszerű hálózatok és azok problémáinak meg
 
 Az első fő feladatrészben két mitmótot felhasználva vizsgáljuk a szenzor és a gateway által rögzített jelek szinkronizációs problémáit. A feladat során a két mérőegység által rögzített jelek időbeli összehangolását végezzük el időbélyeg-transzformáció segítségével, majd a gateway mintavételi időpontjaiban interpolációval becsüljük a szenzorértékeket.\\
 
+Ezt követően a második fő feladatrészben Fourier-együtthatókból állítjuk vissza a szenzor jelét és vizsgáljuk a rezonátoros megfigyelő működését.
+
 \subsection*{A méréshez használt eszközök}
 \begin{itemize}
 	\item Mitmótok
@@ -179,28 +181,26 @@ pontokra illesztett lineáris időbélyeg-transzformáció segítségével az
 adatgyűjtő időskáláját a szenzor időskálájára alakítjuk, majd megvizsgáljuk az
 így kapott jelek egyezését. Az összehangolt adatokból lineáris interpolációval
 becsüljük a szenzorértékeket az adatgyűjtő mintavételi időpontjaiban.
-Az elemzést 50~Hz-es, 500~Hz-es, valamint változó amplitúdójú mérésre is
+Az elemzést 50 [Hz]-es, 500 [Hz]-es, valamint változó amplitúdójú mérésre is
 elvégeztük.
 
 \feladat{1.1}
 
-Az első feladat első pontja a mérési összeállítás elkészítése volt. Külső jelként egy függvénygenerátort használtunk, amit a Low Pass Filter bemenetére kötöttünk. Az LPS kimenetét az ellenállásokon keresztül a szenzor és a gateway bemenetére kapcsoltunk, ide csatlakoztatva egy oszcilloszkópot is, a jel valós idejű ellenőrzésének céljából. A gateway-t végül a számítógéphez csatlakozattuk, hogy a méréseket tudjuk rögzíteni és kiértékelni. A DIP kapcsolókat a mérési útmutatóban leírt módon beállítottuk, majd a jelet megvizsgáltuk az oszcilloszkópon és matlabban is. Az összeállítás az alábbi blank. ábrán látható:
+Az első feladat első pontja a mérési összeállítás elkészítése volt. Külső jelként egy függvénygenerátort használtunk, amit az analóg interface kártya Low Pass Filter bemenetére kötöttünk. Az LPS kimenetét az ellenállásokon keresztül a szenzor és a gateway bemenetére kapcsoltunk, ide csatlakoztatva egy oszcilloszkópot is, a jel valós idejű ellenőrzésének céljából. A gateway-t végül a számítógéphez csatlakozattuk, hogy a méréseket tudjuk rögzíteni és kiértékelni. A DIP kapcsolókat a mérési útmutatóban leírt módon beállítottuk, majd a jelet megvizsgáltuk az oszcilloszkópon és matlabban is. Az összeállítás az alábbi \abrara{fig:meresi-elrendezes}-n látható:
 
-%\kep{../../Kepek/20260914_142213.jpg}{A mérési elrendezés.}{meresi-elrendezes}
+\kep[200px][0]{../../Kepek/20260928_144020.jpg}{A mérési elrendezés.}{meresi-elrendezes}
 
 \feladat{1.2}
-A következő feladat a mérési regisztrátum készítése volt. A mérés rögzítéséhez a mérési jegyzőkönyvben leírt programot használtuk, majd a \texttt{preprocessSampleFiles.m} script futtáatása után kapott, egyszerűen feldolgozható fájlokat vizsgáltuk. A mérést elvégeztük 50~Hz-es és 500~Hz-es szinuszos jelekre is, úgy, hogy mérés közben ki és bekapcsoltuk a jelgenerátort. A jelek amplitúdóját mind a kettő esetben 2 V-ra állítottuk, ezzel kitöltve a mérési tartományt. A mérési eredmények 50~Hz-es és 500~Hz-es jelekre az alábbi blank. ábrákon láthatóak:
-
-%y tengely felirat? mit mertunk
+A következő feladat a mérési regisztrátum készítése volt. A mérés rögzítéséhez a mérési jegyzőkönyvben leírt programot használtuk, majd a \texttt{preprocessSampleFiles.m} script futtáatása után kapott, egyszerűen feldolgozható fájlokat vizsgáltuk. A mérést elvégeztük 50~Hz-es és 500~Hz-es szinuszos jelekre is úgy, hogy mérés közben ki és bekapcsoltuk a jelgenerátort. A jelek amplitúdóját mind a kettő esetben 2 V-ra állítottuk, ezzel kitöltve a mérési tartományt. A mérési eredmények 50~Hz-es és 500~Hz-es jelekre az alábbi \abrara{fig:nyers-szenzoradatok-50hz}-n és \abrara{fig:nyers-szenzoradatok-500hz}-n láthatóak:
 
 \kep{../../Kepek/Nyers_Szezor_50hz.jpg}{Nyers szenzoradatok (50 Hz).}{nyers-szenzoradatok-50hz}
 
 \kep{../../Kepek/Nyers_Szenzor_500hz.jpg}{Nyers szenzoradatok (500 Hz).}{nyers-szenzoradatok-500hz}
 
 \feladat{1.3}
-A harmadik feladatban az volt a célunk, hogy a szenzor és a gateway által rögzített jeleket időben összehangoljuk. Az időbeli eltérést az eszközöknél kezdeti időeltérés a két belső óra skáláján és a két órajel mintavételi frekvenciája közötti elrétés is okozhatta. Ennek a megoldására egy olyan lineáris transzformációt kerestünk, ami a gateway időskáláját a szenzor időskálájára alakítja.\\
+A harmadik feladatban az volt a célunk, hogy a szenzor és a gateway által rögzített jeleket időben összehangoljuk. Az időbeli eltérést az eszközöknél kezdeti időeltérés és a két eszköz órajelének eltérése okozhatta. Ennek a megoldására egy olyan lineáris transzformációt kerestünk, ami a gateway időskáláját a szenzor időskálájára alakítja.\\
 
-Ehhez az \texttt{stmpSync} fájlt használtuk fel, amiben szinkronizációs időbélyeg párok szerepelek. Ez azt jelenti, hogy ezek az adatok két eszköz által rögzített, azonos eseményekhez tartozó időbélyegek. A Matlab \texttt{polyfit} függvényével ezekre az időbélyegekre lineáris függvényt illesztettünk, ami az alábbi ábrákon látható 50~Hz-es és 500~Hz-es jelekre:
+Ehhez az \texttt{stmpSync} fájlt használtuk fel, amiben szinkronizációs időbélyeg párok szerepelek. Ez azt jelenti, hogy ezek az adatok két eszköz által rögzített, azonos eseményekhez tartozó időbélyegek. A Matlab \texttt{polyfit} függvényével ezekre az időbélyegekre lineáris függvényt illesztettünk, ami az alábbi ábrákon látható 50 [Hz]-es és 500 [Hz]-es jelekre:
 
 \kep{../../Kepek/Szinkronizacios_idobelyeg_50Hz.jpg}{Szinkronizációs időbélyegek (50 Hz).}{Szinkronizacios-idobelyeg-50Hz}
 
@@ -220,13 +220,13 @@ Mivel elsőfokú polinomot illesztettünk, az első érték a meredekség, a má
 
 A tengelymetszet pedig azt a kezdeti időeltérést írja le, amely a két eszköz időbélyegei között fennáll.
 
-Az illesztési együtthatókat a \texttt{polyval} függvénnyel alkalmaztuk \texttt{gwySampX} minden elemére, így kiszámítva az illesztett polinom által becsült, a szenzor időskálájára átszámított időbélyegeket, amik az alábbi ábrákon láthatóak 50~Hz-es és 500~Hz-es jelek esetén:
+Az illesztési együtthatókat a \texttt{polyval} függvénnyel alkalmaztuk \texttt{gwySampX} minden elemére, így kiszámítva az illesztett polinom által becsült, a szenzor időskálájára átszámított időbélyegeket, amik az alábbi ábrákon láthatóak 50 [Hz]-es és 500 [Hz]-es jelek esetén:
 
 \kep{../../Kepek/Idobelyeg_50hz.jpg}{Időbélyeggel összehangolt jelek (50 Hz).}{idobelyeg-50Hz}
 
 \kep{../../Kepek/Idobelyeg_500hz.jpg}{Időbélyeggel összehangolt jelek (500 Hz).}{idobelyeg-500Hz}
 
-Ezt követően egy mérési regisztrátumot készítettünk, amelyben a jel amplitúdóját az indulástól kezdve folyamatosan növeltük, majd elvégeztük rá a korábbi feladatokban leírt összehangolását. Ez alatt a mérés alatt 50~Hz-es frekvencián mértünk. Az alábbi ábrákon látható a nyers mérési regisztrátum, a szinkronizációs időbélyegek, valamint az összehangolt jelek:
+Ezt követően egy mérési regisztrátumot készítettünk, amelyben a jel amplitúdóját az indulástól kezdve folyamatosan növeltük, majd elvégeztük rá a korábbi feladatokban leírt összehangolását. Ez alatt a mérés alatt 50 [Hz]-es jelet generáltunk. Az alábbi ábrákon látható a nyers mérési regisztrátum, a szinkronizációs időbélyegek, valamint az összehangolt jelek:
 
 \kep{../../Kepek/Nyers_szenzor_valtozo.jpg}{Nyers szenzor jelek változó amplitúdóval.}{nyers-szenzor-valtozo}
 
@@ -252,7 +252,7 @@ A probléma megoldására az időadatokat az illesztés előtt központosítottu
 
 \feladat{1.5}
 
-Az ötödik feladatban a szenzor mérési eredményeit a gateway mintavételi időpontjaiban kellett meghatározni lineáris interpoláció segítségével. Először a szinkronizációs pontokból lineáris időbélyeg-transzformációt hajtottunk végre, a korábbi feladatokban leírt módszer segítségével. Ezután a gateway minden mintavételi időpontját átszámítottuk a szenzor időrendszerébe. Az \texttt{interp1} függvény ezekben az időpontokban a szenzor két szomszédos mintája közötti egyenest használva becsülte meg a szenzor mérési értékét, az alábbi összefüggés szerint:
+Az ötödik feladatban a szenzor mérési eredményeit a gateway mintavételi időpontjaiban kellett meghatározni lineáris interpoláció segítségével. Először a szinkronizációs pontokból lineáris időbélyeg-transzformációt hajtottunk végre, a korábbi feladatokban leírt módszer segítségével.  Az \texttt{interp1} függvény ezekben az időpontokban a szenzor két szomszédos mintája közötti egyenest használva becsülte meg a szenzor mérési értékét, az alábbi összefüggés szerint:
 
 \[
 \hat{s}(t) =
@@ -270,7 +270,7 @@ A kapott interpolált szenzorértékeket a gateway ugyanazon időpontokban mért
 -\hat{y}_{\mathrm{szenzor},i}\right)^2.
 \]
 
-A programot 50~Hz-es és 500~Hz-es mérésre is lefuttattuk. Az 50~Hz-es jel esetén az MSE értéke $0,7255$, 500~Hz-es jel esetén pedig $1,9439$ volt. Az 500~Hz nagyobb változási sebessége volt a nagyobb hiba oka a második esetben. A mérési eredmények az alábbi ábrákon láthatóak, kellő nagyítással a jobb vizualizáció érdekében:
+A programot 50 [Hz]-es és 500 [Hz]-es mérésre is lefuttattuk. Az 50 [Hz]-es jel esetén az MSE értéke $0.7255$, 500 [Hz]-es jel esetén pedig $1.9439$ volt. Az 500 [Hz] nagyobb változási sebessége volt a nagyobb hiba oka a második esetben. A mérési eredmények az alábbi ábrákon láthatóak, kellő nagyítással a jobb vizualizáció érdekében:
 
 \kep{../../Kepek/Linear_interp_50hz.jpg}{Lineáris interpoláció 50~Hz-en.}{linear-interp-50hz}
 
@@ -283,10 +283,11 @@ sűrítettük annak érdekében, hogy a gateway mintavételi időpontjaiban
 pontosabban tudjuk meghatározni a szenzorjel értékét. A felmintavételezésre
 azért volt szükség, mert a két mérőegység nem ugyanabban az
 időpillanatban rögzítette a mintákat.
-A feldolgozást az 50~Hz-es és az 500~Hz-es mérésre is elvégeztük. A
+A feldolgozást az 50 [Hz]-es és az 500 [Hz]-es mérésre is elvégeztük. A
 szenzorjelet tízszeresen mintavételeztük fel. Ennek során az eredeti
 szenzorminták közé nullákat illesztettünk, majd az így kapott jelet
-aluláteresztő szűrővel simítottuk.Az eredeti szenzorminták közötti átlagos időeltérésből meghatároztuk az eredeti mintavételi frekvenciát:
+aluláteresztő szűrővel simítottuk. \\
+Az eredeti szenzorminták közötti átlagos időeltérésből meghatároztuk az eredeti mintavételi frekvenciát:
 
 \[
 T_s = \operatorname{mean}\left(\operatorname{diff}(t_{\mathrm{szenzor}})\right),
@@ -301,7 +302,7 @@ f_{s,\mathrm{új}} = 10 f_s.
 \]
 
 A nullákkal kiegészített jelet negyedrendű Butterworth-aluláteresztő
-szűrővel szűrtük. A szűrő levágási frekvenciáját az eredeti mintavételi
+szűrővel szűrtük. A szűrő vágási frekvenciáját az eredeti mintavételi
 frekvencia felének választottuk. A szűrést a MATLAB \texttt{filtfilt} függvényével
 végeztük, amely előre és visszafelé is végrehajtja a szűrést, ezért nem
 okoz fázistolást. A szűrés után a jelet a felmintavételezési tényezővel
@@ -311,54 +312,30 @@ Ezt követően létrehoztuk a felmintavételezett szenzorjelhez tartozó új
 időtengelyt. Az időpontokat a mérés kezdő időpontjától számítottuk az új,
 sűrűbb mintavételi frekvenciával. Ezután a korábbi feladatokban ismertetett
 időbélyeg-transzformációt alkalmaztuk. A szinkronizációs időbélyegpárokra
-elsőfokú polinomot illesztettünk, majd a \texttt{polyval} függvénnyel a gateway minden mintavételi időpontját átszámítottuk a szenzor időskálájára.
-
-A szenzorértékeket ezekben az időpontokban lineáris interpolációval
-határoztuk meg. Az interpoláció során a keresett időpontot közrefogó két
-szenzorminta közötti egyenest használtuk:
-
-\[
-\hat{s}(t) =
-s(t_i) +
-\frac{t-t_i}{t_{i+1}-t_i}
-\left(s(t_{i+1})-s(t_i)\right),
-\qquad t_i \leq t \leq t_{i+1}.
-\]
+elsőfokú polinomot illesztettünk, majd a \texttt{polyval} függvénnyel a gateway minden mintavételi időpontját átszámítottuk a szenzor időskálájára.\\
 
 Az interpolációt a MATLAB \texttt{interp1} függvényével valósítottuk meg.
 Az így kapott szenzorértékeket a gateway ugyanazon időpontokban mért
-értékeivel hasonlítottuk össze. Az összehasonlításhoz kiszámítottuk az
-átlagos négyzetes eltérést:
-
-\[
-\mathrm{MSE}
-=
-\frac{1}{N}
-\sum_{i=1}^{N}
-\left(
-y_{\mathrm{gateway},i}
--
-\hat{y}_{\mathrm{szenzor},i}
-\right)^2.
-\]
+értékeivel hasonlítottuk össze. Az összehasonlításhoz ismét kiszámítottuk az
+átlagos négyzetes eltérést.\\
 
 Az összehasonlításból kihagytuk azokat a mintákat, amelyekhez nem tartozott
 érvényes interpolált szenzorérték, valamint a mérés elején és végén
 található 50-50 mintát. Ezzel elkerültük az időtartomány szélén fellépő
 interpolációs és szűrési hatások torzító hatását.
 
-Az átlagos négyzetes eltérés értékének 50~Hz-es jel esetén $1,34037$, 500~Hz-es jel esetén pedig $1,57142$-t kaptunk. Ezek alapján megállapítható, hogy 500~Hz-es jel esetén az interpoláció eredményei jobbak, mint az 1.5. feladatban bemutatott módszer esetén. Az interpoláció eredményei az alábbi ábrákon láthatóak:
+Az átlagos négyzetes eltérés értékének 50 [Hz]-es jel esetén $1.34037$, 500~Hz-es jel esetén pedig $1.57142$-t kaptunk. Ezek alapján megállapítható, hogy 500 [Hz]-es jel esetén az interpoláció eredményei jobbak, mint az 1.5. feladatban bemutatott módszer esetén. Az interpoláció eredményei az alábbi ábrákon láthatóak:
 
 \kep{../../Kepek/Interp_50_hz.jpg}{Lineáris interpoláció 50~Hz-en.}{interp-50hz}
 
 \kep{../../Kepek/Interp_500_hz.jpg}{Lineáris interpoláció 500~Hz-en.}{interp-500hz}
 
-
+\newpage
 \feladat{1.7}
 A hetedik feladatban a szenzorértékeket lokális polinomos interpolációval
 becsültük meg a gateway mintavételi időpontjaiban, minden gateway-mintához a
 hozzá legközelebb eső szenzorminta környezetében lévő 11 pontját használtuk fel.
-A feldolgozást az 50~Hz-es és az 500~Hz-es mérésre is elvégeztük, majd a korábbi feladatokbán olvashtó időbélyeg transzformációt is elvégeztük.\\
+A feldolgozást az 50 [Hz]-es és az 500 [Hz]-es mérésre is elvégeztük, majd a korábbi feladatokbán olvashtó időbélyeg transzformációt is elvégeztük.\\
 
 Az átszámított gateway-időpontokhoz megkerestük a legközelebbi
 szenzormintát. Ezt a MATLAB \texttt{interp1} függvényével, a
@@ -387,21 +364,8 @@ szomszédos pont, ezekhez az értékekhez a program \texttt{NaN} értéket rende
 összehasonlítás során ezeket az értékeket figyelmen kívül hagytuk.
 
 Az interpoláció minőségét a gateway mért értékei és a lokális polinommal
-becsült szenzorértékek közötti átlagos négyzetes eltéréssel jellemeztük:\\
-
-\[
-\mathrm{MSE}
-=
-\frac{1}{N}
-\sum_{i=1}^{N}
-\left(
-y_{\mathrm{gateway},i}
--
-\hat{y}_{\mathrm{szenzor},i}
-\right)^2.
-\]
-
-Az átlagos négyzetes eltérés értékének 50~Hz-es jel esetén $0,831329$-et, 500~Hz-es jel esetén pedig $0,683739$-et kaptunk. Ezek alapján megállapítható, hogy az interpoláció eredményei jobbak, mint a korábbi feladatokban bemutatott módszer esetén, mert a becslült jel lokális alakját több mérési pont alapján határozza meg,viszont a magas polinomfok és a lokális környezet nem megfelelő megválasztása oszcillációt vagy numerikai érzékenységet okozhat. Az interpoláció eredményei az alábbi ábrákon láthatóak:
+becsült szenzorértékek közötti átlagos négyzetes eltéréssel jellemeztük.\\
+Az átlagos négyzetes eltérés értékének 50 [Hz]-es jel esetén $0.831329$-et, 500 [Hz]-es jel esetén pedig $0.683739$-et kaptunk. Ezek alapján megállapítható, hogy az interpoláció eredményei jobbak, mint a korábbi feladatokban bemutatott módszer esetén, mert a becslült jel lokális alakját több mérési pont alapján határozza meg,viszont a magas polinomfok és a lokális környezet nem megfelelő megválasztása oszcillációt vagy numerikai érzékenységet okozhat. Az interpoláció eredményei az alábbi ábrákon láthatóak:
 
 \kep{../../Kepek/magasbb_fok_interp_50hz.jpg}{Interpoláció 10. fokú polinommal 50~Hz-en.}{interp-magas-50hz}
 
@@ -413,8 +377,8 @@ Az átlagos négyzetes eltérés értékének 50~Hz-es jel esetén $0,831329$-et
 A második főfeladatban egy rezonátor alapú tömörítést alkalmazó mérőrendszert vizsgáltunk. A mérőrendszer elrendezése az első főfeladathot hasonló, viszont ebben a feladatban a szenzor nem a jelet továbbítja, hanem csak annak Fourier-együtthatóit. Ezáltal csökken az átküldendő adatmennyiség, viszont a jel visszaállításához több utólagos számítás szükséges.
 
 \feladat{2.1}
-Az első feladatban össezeállítottuk a mérési elrendezést, a szenzor nodeot a 2-es üzemmódban elindítva, hogy a Fourier-együtthatókat továbbítsa a PC felé. Ezt követően a szenzoron és a gatewayen is a megfelelő állapotba kapcsoltuk a DIP kapcsolókat.  A mérési elrendezés az alábbi \abrara{fig:meresi-elrendezes} ábrán látható:
-\kep{../../Kepek/20261012_142657.jpg}{A mérési elrendezés.}{meresi-elrendezes}
+Az első feladatban össezeállítottuk a mérési elrendezést, a szenzor nodeot a 2-es üzemmódban elindítva, hogy a Fourier-együtthatókat továbbítsa a PC felé. Ezt követően a szenzoron és a gatewayen is a megfelelő állapotba kapcsoltuk a DIP kapcsolókat.  A mérési elrendezés az alábbi \abrara{fig:meresi-elrendezes2} ábrán látható:
+\kep{../../Kepek/20261012_142657.jpg}{A mérési elrendezés.}{meresi-elrendezes2}
 \par
 Ezt követően a PC-n elindítottuk a mérési programot, majd a függvénygenerátoron beállítottuk a 50Hz-es szinuszos jelet és kipróbáltuk a szoftver működését.
 
