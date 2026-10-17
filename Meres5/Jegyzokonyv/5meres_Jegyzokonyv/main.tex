@@ -276,6 +276,142 @@ A programot 50~Hz-es és 500~Hz-es mérésre is lefuttattuk. Az 50~Hz-es jel ese
 
 \kep{../../Kepek/Linear_interp_500hz.jpg}{Lineáris interpoláció 500~Hz-en.}{linear-interp-500hz}
 
+\feladat{1.6}
+
+A hatodik feladatban a szenzor mérési eredményeit felmintavételezéssel
+sűrítettük annak érdekében, hogy a gateway mintavételi időpontjaiban
+pontosabban tudjuk meghatározni a szenzorjel értékét. A felmintavételezésre
+azért volt szükség, mert a két mérőegység nem ugyanabban az
+időpillanatban rögzítette a mintákat.
+A feldolgozást az 50~Hz-es és az 500~Hz-es mérésre is elvégeztük. A
+szenzorjelet tízszeresen mintavételeztük fel. Ennek során az eredeti
+szenzorminták közé nullákat illesztettünk, majd az így kapott jelet
+aluláteresztő szűrővel simítottuk.Az eredeti szenzorminták közötti átlagos időeltérésből meghatároztuk az eredeti mintavételi frekvenciát:
+
+\[
+T_s = \operatorname{mean}\left(\operatorname{diff}(t_{\mathrm{szenzor}})\right),
+\qquad
+f_s = \frac{1}{T_s}.
+\]
+
+A tízszeres felmintavételezés után az új mintavételi frekvencia:
+
+\[
+f_{s,\mathrm{új}} = 10 f_s.
+\]
+
+A nullákkal kiegészített jelet negyedrendű Butterworth-aluláteresztő
+szűrővel szűrtük. A szűrő levágási frekvenciáját az eredeti mintavételi
+frekvencia felének választottuk. A szűrést a MATLAB \texttt{filtfilt} függvényével
+végeztük, amely előre és visszafelé is végrehajtja a szűrést, ezért nem
+okoz fázistolást. A szűrés után a jelet a felmintavételezési tényezővel
+skáláztuk, hogy a mérési értékek amplitúdója megfelelő maradjon.\\
+
+Ezt követően létrehoztuk a felmintavételezett szenzorjelhez tartozó új
+időtengelyt. Az időpontokat a mérés kezdő időpontjától számítottuk az új,
+sűrűbb mintavételi frekvenciával. Ezután a korábbi feladatokban ismertetett
+időbélyeg-transzformációt alkalmaztuk. A szinkronizációs időbélyegpárokra
+elsőfokú polinomot illesztettünk, majd a \texttt{polyval} függvénnyel a gateway minden mintavételi időpontját átszámítottuk a szenzor időskálájára.
+
+A szenzorértékeket ezekben az időpontokban lineáris interpolációval
+határoztuk meg. Az interpoláció során a keresett időpontot közrefogó két
+szenzorminta közötti egyenest használtuk:
+
+\[
+\hat{s}(t) =
+s(t_i) +
+\frac{t-t_i}{t_{i+1}-t_i}
+\left(s(t_{i+1})-s(t_i)\right),
+\qquad t_i \leq t \leq t_{i+1}.
+\]
+
+Az interpolációt a MATLAB \texttt{interp1} függvényével valósítottuk meg.
+Az így kapott szenzorértékeket a gateway ugyanazon időpontokban mért
+értékeivel hasonlítottuk össze. Az összehasonlításhoz kiszámítottuk az
+átlagos négyzetes eltérést:
+
+\[
+\mathrm{MSE}
+=
+\frac{1}{N}
+\sum_{i=1}^{N}
+\left(
+y_{\mathrm{gateway},i}
+-
+\hat{y}_{\mathrm{szenzor},i}
+\right)^2.
+\]
+
+Az összehasonlításból kihagytuk azokat a mintákat, amelyekhez nem tartozott
+érvényes interpolált szenzorérték, valamint a mérés elején és végén
+található 50-50 mintát. Ezzel elkerültük az időtartomány szélén fellépő
+interpolációs és szűrési hatások torzító hatását.
+
+Az átlagos négyzetes eltérés értékének 50~Hz-es jel esetén $1,34037$, 500~Hz-es jel esetén pedig $1,57142$-t kaptunk. Ezek alapján megállapítható, hogy 500~Hz-es jel esetén az interpoláció eredményei jobbak, mint az 1.5. feladatban bemutatott módszer esetén. Az interpoláció eredményei az alábbi ábrákon láthatóak:
+
+\kep{../../Kepek/Interp_50_hz.jpg}{Lineáris interpoláció 50~Hz-en.}{interp-50hz}
+
+\kep{../../Kepek/Interp_500_hz.jpg}{Lineáris interpoláció 500~Hz-en.}{interp-500hz}
+
+
+\feladat{1.7}
+A hetedik feladatban a szenzorértékeket lokális polinomos interpolációval
+becsültük meg a gateway mintavételi időpontjaiban, minden gateway-mintához a
+hozzá legközelebb eső szenzorminta környezetében lévő 11 pontját használtuk fel.
+A feldolgozást az 50~Hz-es és az 500~Hz-es mérésre is elvégeztük, majd a korábbi feladatokbán olvashtó időbélyeg transzformációt is elvégeztük.\\
+
+Az átszámított gateway-időpontokhoz megkerestük a legközelebbi
+szenzormintát. Ezt a MATLAB \texttt{interp1} függvényével, a
+\texttt{nearest} módszer használatával valósítottuk meg. A legközelebbi
+szenzorminta indexe jelölte ki a lokális polinom középpontját. A lokális környezet méretét a kódban $5$-nek választottuk, így jött ki a középponttal együtt a 11 minta, amelyhez $2\cdot5 = 10$-ed fokú polinomot illesztettünk.\\
+
+Az illesztést nem a nagy abszolút időértékekkel, hanem a gateway keresett
+időpontjához képesti lokális időeltérésekkel végeztük. A kiszámoltuk
+szenzormintákhoz tartozó időeltéréseket, majd ezeket a numerikai stabilitás javítása érdekében a legnagyobb abszolút értékkel is normáltuk. Ezután a MATLAB
+\texttt{polyfit} függvényével a normált lokális időkoordinátákra és a
+szenzorértékekre illesztettük a polinomot:
+
+\[
+y_i \approx
+a_{10}x_i^{10}+a_9x_i^9+\ldots+a_1x_i+a_0.
+\]
+
+Mivel a gateway mintavételi időpontja a normált lokális időkoordinátán
+\(x=0\)-nak felel meg, a keresett szenzorértéket az illesztett polinom
+\(x=0\) helyen felvett értékeként számítottuk ki. Így minden gateway
+mintához egy, a környező szenzorminták alakját figyelembe vevő lokális
+becslést kaptunk.
+
+A mérési tartomány elején és végén nem áll rendelkezésre minden szükséges
+szomszédos pont, ezekhez az értékekhez a program \texttt{NaN} értéket rendelt, és az
+összehasonlítás során ezeket az értékeket figyelmen kívül hagytuk.
+
+Az interpoláció minőségét a gateway mért értékei és a lokális polinommal
+becsült szenzorértékek közötti átlagos négyzetes eltéréssel jellemeztük:\\
+
+\[
+\mathrm{MSE}
+=
+\frac{1}{N}
+\sum_{i=1}^{N}
+\left(
+y_{\mathrm{gateway},i}
+-
+\hat{y}_{\mathrm{szenzor},i}
+\right)^2.
+\]
+
+Az átlagos négyzetes eltérés értékének 50~Hz-es jel esetén $0,831329$-et, 500~Hz-es jel esetén pedig $0,683739$-et kaptunk. Ezek alapján megállapítható, hogy az interpoláció eredményei jobbak, mint a korábbi feladatokban bemutatott módszer esetén, mert a becslült jel lokális alakját több mérési pont alapján határozza meg,viszont a magas polinomfok és a lokális környezet nem megfelelő megválasztása oszcillációt vagy numerikai érzékenységet okozhat. Az interpoláció eredményei az alábbi ábrákon láthatóak:
+
+\kep{../../Kepek/magasbb_fok_interp_50hz.jpg}{Interpoláció 10. fokú polinommal 50~Hz-en.}{interp-magas-50hz}
+
+\kep{../../Kepek/magasbb_fok_interp_500hz.jpg}{Interpoláció 10. fokú polinommal 500~Hz-en.}{interp-magas-500hz}
+
+\feladat{2}
+
+\feladat{2.1}
+
+
 \newpage
 \section*{Függelék}
 \subsection*{MATLAB kódok}
