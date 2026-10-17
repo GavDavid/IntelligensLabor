@@ -5,10 +5,10 @@ clc;
 close all;
 
 %% Loading measurement files and parameters for 50 [Hz] measurement
-gwySampFull = load("Measurements/MasodikFeladatJel50HzProgi52Hz/pre_gwySampFull.dat");
-sensorDataFull = load("Measurements/MasodikFeladatJel50HzProgi52Hz/pre_sensorResonator.dat");
-stmpSync = load("Measurements/MasodikFeladatJel50HzProgi52Hz/pre_stmpSync.dat");
-signalFreq = load("Measurements/MasodikFeladatJel50HzProgi52Hz/signalFreq.dat");
+gwySampFull = load("Measurements/MasodikFeladatJel50HzProgi50Hz/pre_gwySampFull.dat");
+sensorDataFull = load("Measurements/MasodikFeladatJel50HzProgi50Hz/pre_sensorResonator.dat");
+stmpSync = load("Measurements/MasodikFeladatJel50HzProgi50Hz/pre_stmpSync.dat");
+signalFreq = load("Measurements/MasodikFeladatJel50HzProgi50Hz/signalFreq.dat");
 
 sensorDataID = sensorDataFull(:, 1);
 sensorDataTime = sensorDataFull(:, 2);
