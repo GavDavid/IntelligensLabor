@@ -5,10 +5,10 @@ clc;
 close all;
 
 %% Loading measurement files and parameters for 50 [Hz] measurement
-gwySampFull = load("Measurements/MasodikFeladatJel50HzKiBeKapcsoltProgi50Hz/pre_gwySampFull.dat");
-sensorDataFull = load("Measurements/MasodikFeladatJel50HzKiBeKapcsoltProgi50Hz/pre_sensorResonator.dat");
-stmpSync = load("Measurements/MasodikFeladatJel50HzKiBeKapcsoltProgi50Hz/pre_stmpSync.dat");
-signalFreq = load("Measurements/MasodikFeladatJel50HzKiBeKapcsoltProgi50Hz/signalFreq.dat");
+gwySampFull = load("Measurements/MasodikFeladatJel50HzProgi60Hz/pre_gwySampFull.dat");
+sensorDataFull = load("Measurements/MasodikFeladatJel50HzProgi60Hz/pre_sensorResonator.dat");
+stmpSync = load("Measurements/MasodikFeladatJel50HzProgi60Hz/pre_stmpSync.dat");
+signalFreq = load("Measurements/MasodikFeladatJel50HzProgi60Hz/signalFreq.dat");
 
 sensorDataID = sensorDataFull(:, 1);
 sensorDataTime = sensorDataFull(:, 2);
@@ -73,10 +73,10 @@ for i = 1 : length(reconstructedPhasesBase)
         if sensorToGwyTime(j) == evalTimes(i)
             reconstructedPhasesBase(i) = sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 2 * pi;
             reconstructedPhasesFirst(i) = sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 1 * 2 * pi;
-            reconstructedPhasesSecond(i) = sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 2 * 2 * pi;
-            reconstructedPhasesThird(i) = sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 3 * 2 * pi;
-            reconstructedPhasesFourth(i) = sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 4 * 2 * pi;
-            reconstructedPhasesFifth(i) = sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 5 * 2 * pi;
+            reconstructedPhasesSecond(i) = 2 *sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 2 * 2 * pi;
+            reconstructedPhasesThird(i) =  3* sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 3 * 2 * pi;
+            reconstructedPhasesFourth(i) = 4 * sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 4 * 2 * pi;
+            reconstructedPhasesFifth(i) = 5 * sensorDataPhi(j) + evalDeltaT(i) * signalFreq * 5 * 2 * pi;
         
             reconstructedCoefFirst(i) = sensorDataFirstHarmonic(j);
             reconstructedCoefSecond(i) = sensorDataSecondHarmonic(j);

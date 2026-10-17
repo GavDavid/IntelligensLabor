@@ -11,7 +11,6 @@ for k = 1:numel(frequencies)
     frequency = frequencies(k);
     measurementFolder = measurementFolders(k);
 
-    % A mérési adatok betöltése.
     gwySampFull = load(fullfile("Measurements", measurementFolder, ...
         "pre_gwySampFull.dat"));
     sensorDataFull = load(fullfile("Measurements", measurementFolder, ...
@@ -24,19 +23,15 @@ for k = 1:numel(frequencies)
     gwySampX = gwySampFull(:, 1);
     gwySampY = gwySampFull(:, 2);
 
-    % A gateway idejét a szenzor órájára transzformáljuk.
     idobelyegPoli = polyfit(stmpSync(:, 1), stmpSync(:, 2), 1);
     gatewayTimeInSensorClock = polyval(idobelyegPoli, gwySampX);
 
-    % A szenzor jelét a gateway mintavételi időpontjaiban becsüljük.
-    sensorDataYInterpolated = interp1( ...
-        sensorDataX, sensorDataY, gatewayTimeInSensorClock, "linear");
+    
+    sensorDataYInterpolated = interp1(sensorDataX, sensorDataY, gatewayTimeInSensorClock, "linear");
 
     validSamples = ~isnan(sensorDataYInterpolated);
-    squaredError = mean((gwySampY(validSamples) ...
-        - sensorDataYInterpolated(validSamples)).^2);
-    fprintf("%d Hz: átlagos négyzetes eltérés = %.6g\n", ...
-        frequency, squaredError);
+    squaredError = mean((gwySampY(validSamples)  - sensorDataYInterpolated(validSamples)).^2);
+    fprintf("%d Hz: átlagos négyzetes eltérés = %.6g\n", frequency, squaredError);
 
     figure;
     plot(sensorDataX, sensorDataY, "-o");
