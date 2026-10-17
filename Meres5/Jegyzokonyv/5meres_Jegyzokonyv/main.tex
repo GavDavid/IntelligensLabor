@@ -407,25 +407,80 @@ Az átlagos négyzetes eltérés értékének 50~Hz-es jel esetén $0,831329$-et
 
 \kep{../../Kepek/magasbb_fok_interp_500hz.jpg}{Interpoláció 10. fokú polinommal 500~Hz-en.}{interp-magas-500hz}
 
+\newpage
+
 \feladat{2}
+A második főfeladatban egy rezonátor alapú tömörítést alkalmazó mérőrendszert vizsgáltunk. A mérőrendszer elrendezése az első főfeladathot hasonló, viszont ebben a feladatban a szenzor nem a jelet továbbítja, hanem csak annak Fourier-együtthatóit. Ezáltal csökken az átküldendő adatmennyiség, viszont a jel visszaállításához több utólagos számítás szükséges.
 
 \feladat{2.1}
+Az első feladatban össezeállítottuk a mérési elrendezést, a szenzor nodeot a 2-es üzemmódban elindítva, hogy a Fourier-együtthatókat továbbítsa a PC felé. Ezt követően a szenzoron és a gatewayen is a megfelelő állapotba kapcsoltuk a DIP kapcsolókat.  A mérési elrendezés az alábbi \abrara{fig:meresi-elrendezes} ábrán látható:
+\kep{../../Kepek/20261012_142657.jpg}{A mérési elrendezés.}{meresi-elrendezes}
+\par
+Ezt követően a PC-n elindítottuk a mérési programot, majd a függvénygenerátoron beállítottuk a 50Hz-es szinuszos jelet és kipróbáltuk a szoftver működését.
 
+\feladat{2.2}
+Az 50 [Hz]-es szinuszos jelet rajta hagyva a függvénygenerátoron indultunk neki ennek a feladatnak. Az a) feladatban kipróbáltuk, hogy hogyan tudjuk a jel frekvenciáját meghatározni a mérési szoftver segítségével. Egy kis rezonátor frekvenciáról indulva elkezdtük növelni addig amíg az alapharmonikus fázisa konstans értéket nem mutatott. Ez 50 [Hz]-nél következett be amit a \abrara{fig:konstans-alapharmonikus} szemléltet.
 
+\kep{../../Kepek/2_2_a.jpg}{Konstans alapharmonikus fázis.}{konstans-alapharmonikus}
+\par
+Ezt követően a b) feladatban a MATLAB \texttt{tic} és \texttt{toc} függvényeit használva is meghatároztuk a jel frekvenciáját megközelítőleg mivel egy ilyen szemre történő mérésnél nehéz pontosan meghatározni a jel frekvenciáját.\par
+
+Végül a c) feladatban az \texttt{angle} és \texttt{unwrap} függvények segítségével meghatároztuk a jel fázisát, majd a \texttt{polyfit} függvénnyel lineáris illesztést végeztünk a fázisra. Ezt követően a meredekséget elosztva a 2$\pi$-vel megkaptuk a jel frekvenciáját, ami 50 [Hz] lett. 
+
+\feladat{2.3}
+A feladat első lépéseként mérési regisztrátumot készítettünk úgy, hogy a jelgenerátort bekapcsoltuk, kikapcsoltuk, bekapcsoltuk, majd megint kikapcsoltuk. A mérés során a jelgenerátor frekvenciáját 50 [Hz]-en hagytuk, az amplitúdót pedig 2 [V]-ra állítottuk. A mérési regisztrátumot a \texttt{preprocessResonatorFiles.m} script futtatásával dolgoztuk fel.\\
+Ezt követően eltávolítottuk a gateway adatainak DC komponensét, majd a korábbi főfeladathoz hasonlóan elvégeztük az időbélyeg transzformációt, tehát átkonvertáltuk a sensor időbélyegeit a gateway időbélyegeire.\\
+Következő feladatrész a jel visszaállítása a Fourier-együtthatókból volt. Mivel a Fourier-együtthatók sokkal ritkábban érkeznek mint a gateway mintavételezési idejei, elsőként megkellett határozni azt, hogy melyik Fourier-csomag van legközelebb az adott kiértékelési időponthoz, hogy a megfelelől Fourier-együtthatókat használhassuk a jel visszaállításához. Ezután következhetett a jelkomponensek fázisainak, majd a bázisfüggvényeknek a meghatározása, majd a jel visszaállítása. A visszaállított jelet és a gateway által mért jelet a(z) \abrara{fig:visszaallitott-jel} szemléltettük:
+\kep{../../Kepek/KiBeKapcsVisszaallitott.jpg}{A visszaállított jel és a gateway által mért jel.}{visszaallitott-jel}
+
+Belenagyítva a visszaállított jel és a gateway által mért jel közötti eltérést a(z) \abrara{fig:visszaallitott-jel-belenagyitva} ábrán szemléltettük:
+\kep{../../Kepek/KiBeKapcsVisszaallitottBelenagyitva.jpg}{A visszaállított jel és a gateway által mért jel belenagyítva.}{visszaallitott-jel-belenagyitva}
+
+\feladat{2.4}
+A feladat első lépéseként a jelgenerátor frekvenciáját 50 [Hz]-en hagytuk és a rezonátor frekvenciáját fokozatosan elállítottuk mindkét irányba $\pm 0.01$ [Hz], $\pm 0.1$ [Hz], $\pm 0.5$ [Hz], $\pm 1$ [Hz], $\pm 2$ [Hz], $\pm 5$ [Hz] és $\pm 10$ [Hz]-re. A mérés során a jelgenerátor amplitúdóját 2 [V]-ra állítottuk, majd a mérési regisztrátumot a \texttt{preprocessResonatorFiles.m} script futtatásával dolgoztuk fel.\\
+Az 50 [Hz]-es amplitudóátvitellel normalizálva a(z) \abrara{fig:amplitudoatvitel}-n látható az amplitudóátvitel a rezonátor frekvenciájának függvényében.
+\kep{../../Kepek/amplitudoatvitel.jpg}{Az amplitudóátvitel a rezonátor frekvenciájának függvényében.}{amplitudoatvitel}
+A DFT-vel összehasonlítva a módszert, az eredmény éppen ellentétes jellegű. Amíg a DFT-nél a valós frekvencián a legnagyobb az amplitudó, addig a rezonátor esetében a valós frekvencia közelében volt a legkisebb, közelében elkezdett növekedni, majd távolodva újra csökkenni. A 40 [Hz]-es mérést valószínleg hiba terhelheti.
+
+\newpage
+\feladat{2.5}
+Ebben a feladatban a korábbi méréseket felhasználva megvizsgáltuk az eltérést a visszaállított jel és a gateway által mért jel között. A frekvencia függvényében alakuló RMS eltéréseket a(z) \abrara{fig:eltérés}-n szemléltettük.
+\kep{../../Kepek/RMSkulonbseg.jpg}{Az eltérés a visszaállított jel és a gateway által mért jel között.}{eltérés}
+Ahogy látható, kis eltérés esetén még elfogadható hibával visszaállítható a jel.
 \newpage
 \section*{Függelék}
 \subsection*{MATLAB kódok}
 
 \lstinputlisting[
-   caption={Az 1-4 mérés MATLAB-kódja},
+   caption={Az 1.1-4 mérés MATLAB-kódja},
    label={lst:meres1-matlab}
 ]{../../MATLAB/meres1_1234.m}
 
-
 \lstinputlisting[
-   caption={Az 5. mérés MATLAB-kódja},
+   caption={Az 1.5 mérés MATLAB-kódja},
    label={lst:meres5-matlab}
 ]{../../MATLAB/meres1_5.m}
+
+\lstinputlisting[
+   caption={Az 1.6 mérés MATLAB-kódja},
+   label={lst:meres6-matlab}
+]{../../MATLAB/meres1_6.m}
+
+\lstinputlisting[
+   caption={Az 1.7 mérés MATLAB-kódja},
+   label={lst:meres7-matlab}
+]{../../MATLAB/meres1_7.m}
+
+\lstinputlisting[
+   caption={Az 2.2 mérés MATLAB-kódja},
+   label={lst:meres2-2-matlab}
+]{../../MATLAB/meres2_2.m}
+
+\lstinputlisting[
+   caption={Az 2.3 mérés MATLAB-kódja},
+   label={lst:meres2-3-matlab}
+]{../../MATLAB/meres2_3.m}
+
 
 
 \end{document}

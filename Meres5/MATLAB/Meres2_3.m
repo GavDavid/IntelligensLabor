@@ -28,10 +28,10 @@ stmpSyncGwy = stmpSync(:, 1);
 stmpSyncSens = stmpSync(:, 2);
 clearvars stmpSync;
 
-%% Gateway �tlag kivon�s
+%% Gateway átlag kivonás
 gwySampY = gwySampY - mean(gwySampY);
 
-%% Id?b�lyeg transzform�ci� 
+%% Időbélyeg transzformáció 
 idobelyegPoli = polyfit(stmpSyncSens, stmpSyncGwy, 1);
 sensorToGwyTime  = polyval(idobelyegPoli, sensorDataTime);
 
@@ -100,4 +100,6 @@ reconstructedBaseFncThird + reconstructedBaseFncFourth + reconstructedBaseFncFif
 plot(reconstructedSignal)
 hold on;
 plot(gwySampY);
+legend('Visszaállított jel', 'Gateway által mért jel');
+grid on;
 
