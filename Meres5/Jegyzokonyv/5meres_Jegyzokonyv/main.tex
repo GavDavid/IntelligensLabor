@@ -365,7 +365,7 @@ szomszédos pont, ezekhez az értékekhez a program \texttt{NaN} értéket rende
 
 Az interpoláció minőségét a gateway mért értékei és a lokális polinommal
 becsült szenzorértékek közötti átlagos négyzetes eltéréssel jellemeztük.\\
-Az átlagos négyzetes eltérés értékének 50 [Hz]-es jel esetén $0.831329$-et, 500 [Hz]-es jel esetén pedig $0.683739$-et kaptunk. Ezek alapján megállapítható, hogy az interpoláció eredményei jobbak, mint a korábbi feladatokban bemutatott módszer esetén, mert a becslült jel lokális alakját több mérési pont alapján határozza meg,viszont a magas polinomfok és a lokális környezet nem megfelelő megválasztása oszcillációt vagy numerikai érzékenységet okozhat. Az interpoláció eredményei az alábbi ábrákon láthatóak:
+Az átlagos négyzetes eltérés értékének 50 [Hz]-es jel esetén $0.831329$-et, 500 [Hz]-es jel esetén pedig $0.683739$-et kaptunk. Ezek alapján megállapítható, hogy az interpoláció eredményei jobbak magas frekvencián, mint a korábbi feladatokban bemutatott módszer esetén, mert a becslült jel lokális alakját több mérési pont alapján határozza meg,viszont a magas polinomfok és a lokális környezet nem megfelelő megválasztása oszcillációt vagy numerikai érzékenységet okozhat. Alacsony frekvencián még ilyen magas fokú polinommal sem sikerült jobbat produkálni az 1.5 feladat eredménye. Az interpoláció eredményei az alábbi ábrákon láthatóak:
 
 \kep{../../Kepek/magasbb_fok_interp_50hz.jpg}{Interpoláció 10. fokú polinommal 50~Hz-en.}{interp-magas-50hz}
 
@@ -389,7 +389,7 @@ Az 50 [Hz]-es szinuszos jelet rajta hagyva a függvénygenerátoron indultunk ne
 \par
 Ezt követően a b) feladatban a MATLAB \texttt{tic} és \texttt{toc} függvényeit használva is meghatároztuk a jel frekvenciáját megközelítőleg mivel egy ilyen szemre történő mérésnél nehéz pontosan meghatározni a jel frekvenciáját.\par
 
-Végül a c) feladatban az \texttt{angle} és \texttt{unwrap} függvények segítségével meghatároztuk a jel fázisát, majd a \texttt{polyfit} függvénnyel lineáris illesztést végeztünk a fázisra. Ezt követően a meredekséget elosztva a 2$\pi$-vel megkaptuk a jel frekvenciáját, ami 50 [Hz] lett. 
+Végül a c) feladatban az \texttt{angle} és \texttt{unwrap} függvények segítségével meghatároztuk a jel fázisát, majd a \texttt{polyfit} függvénnyel lineáris illesztést végeztünk a fázisra. Ezt követően a meredekséget elosztva a 2$\pi$-vel megkaptuk a jel frekvenciaeltérését. Ez akkor lett 0 ha 50 [Hz] lett beállítva a szoftverben. 
 
 \feladat{2.3}
 A feladat első lépéseként mérési regisztrátumot készítettünk úgy, hogy a jelgenerátort bekapcsoltuk, kikapcsoltuk, bekapcsoltuk, majd megint kikapcsoltuk. A mérés során a jelgenerátor frekvenciáját 50 [Hz]-en hagytuk, az amplitúdót pedig 2 [V]-ra állítottuk. A mérési regisztrátumot a \texttt{preprocessResonatorFiles.m} script futtatásával dolgoztuk fel.\\
