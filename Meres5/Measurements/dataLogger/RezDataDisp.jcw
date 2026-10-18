@@ -1,0 +1,19 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "RezDataDisp"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "E:\\users\\Orosz\\Tmp\\JavaKellEConstructor\\JavaKellEConstructor.jcp" #[EndProject]
+#[BeginProject]SOURCE := "RezDataDisp.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "RezdataColl.java" #[EndFile]
+#[BeginFile]SOURCE := "SimpleSerialSend.java" #[EndFile]
+#[BeginFile]SOURCE := "myCustomCanvas.java" #[EndFile]
+#[BeginFile]SOURCE := "E:\\users\\Orosz\\03_phd\\BSc_lab_doksi\\Kellekek\\Meres2_kellek\\hallgatoknak\\ANC\\DSPkod\\ANCsimpData\\processANC.c" #[EndFile]
+#[BeginFile]SOURCE := "E:\\users\\Orosz\\Tmp\\JavaKellEConstructor\\KellEKonstruktor.java" #[EndFile]
+
+! Start Breakpoint Structure
+

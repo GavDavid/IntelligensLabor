@@ -1,0 +1,29 @@
+! ** JCreator Project File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.10"
+LABEL := "RezDataDisp"
+JDKPROFILE := "JDK version 1.6.0_14"
+ACTIVE := "1"
+OUTPUTPATH := ".\\"
+COMPILER := "<Default>"
+
+! Start RunTime Configuration Structure
+#[BeginRunTime]LABEL := "<Default>" RUNAPPLIC := "<Default>" RUNAPPLET := "<Default>" RUNDEBUG := "<Default>" PARAM := "--com COM1 --baud 115200 --mode DSP //data" RUN := "RezDataColl" CHECK := "10" #[EndRunTime]
+! Start Required Libraries Structure
+
+! Start Project Folder Structure
+#[BeginFolder]
+LABEL := "Root"
+FILTER := ""
+
+#[BeginFile]SOURCE := "ComplexNumber.java" #[EndFile]
+#[BeginFile]SOURCE := "ResonatorParamsCompl.java" #[EndFile]
+#[BeginFile]SOURCE := "InterpretComplexNumber.java" #[EndFile]
+#[BeginFile]SOURCE := "SimpleSerialSend.java" #[EndFile]
+#[BeginFile]SOURCE := "RezdataColl.java" #[EndFile]
+#[BeginFile]SOURCE := "myCustomCanvas.java" #[EndFile]
+#[BeginFile]SOURCE := "FileBackupClass.java" #[EndFile]
+#[BeginFile]SOURCE := "ModeSelector.java" #[EndFile]
+#[BeginFile]SOURCE := "MDFileHandler.java" #[EndFile]
+#[EndFolder]
