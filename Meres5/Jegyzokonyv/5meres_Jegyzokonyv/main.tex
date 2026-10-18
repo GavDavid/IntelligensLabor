@@ -248,7 +248,7 @@ A MATLAB beépített függvényei között megtalálható a \texttt{pinv} függv
 
 Ezt követően a gateway szinkronizációs időadatait és a gateway mérési időtengelyét $10^6$ másodperccel eltoltuk, majd így ismét elvégeztük a feladatot, és vizsgáltuk a mátrix kondicionáltságát. Az első esetben a kondíciószám $1{,}0367 \cdot 10^7$ volt, az időeltolást követően pedig ez az érték $2{,}6496 \cdot 10^{11}$-re növekedett. Az ábrán ennek ellenére nem látható lényeges eltérés, mivel a lineáris transzformáció konstans tagja kompenzálja az időkoordináta közös eltolását. A nagyobb kondíciószámból azonban következik, hogy a becslés érzékenyebbé válik a mérési és kerekítési hibákra.
 
-A probléma megoldására az időadatokat az illesztés előtt központosítottuk. Ehhez a gateway szinkronizációs időadataiból kivontuk azok átlagát, és ugyanezt az eltolást alkalmaztuk a gateway mérési időpontjaira is. Így a transzformáció eredménye nem változik, miközben a mátrix kondicionáltsága javul.
+A probléma megoldására az időadatokat az illesztés előtt központosítottuk. Ehhez a gateway szinkronizációs időadataiból kivontuk azok átlagát, és ugyanezt az eltolást alkalmaztuk a gateway mérési időpontjaira is. Így a transzformáció eredménye nem változik, miközben a mátrix kondicionáltsága javul. Az így kapott kondíciószám 3.8219 lett.
 
 \feladat{1.5}
 
@@ -270,7 +270,7 @@ A kapott interpolált szenzorértékeket a gateway ugyanazon időpontokban mért
 -\hat{y}_{\mathrm{szenzor},i}\right)^2.
 \end{equation}
 
-A programot 50 [Hz]-es és 500 [Hz]-es mérésre is lefuttattuk. Az 50 [Hz]-es jel esetén az MSE értéke $0.7255$, 500 [Hz]-es jel esetén pedig $1.9439$ volt. Az 500 [Hz] nagyobb változási sebessége volt a nagyobb hiba oka a második esetben. A mérési eredmények az alábbi ábrákon láthatóak, kellő nagyítással a jobb vizualizáció érdekében:
+A programot 50 [Hz]-es és 500 [Hz]-es mérésre is lefuttattuk. Az 50 [Hz]-es jel esetén az MSE értéke $0.7255$, 500 [Hz]-es jel esetén pedig $1.9439$ volt. Az 500 [Hz] nagyobb változási sebessége ugyanakkora mintavételi frekvencia mellett volt a nagyobb hiba oka a második esetben. A mérési eredmények az alábbi ábrákon láthatóak, kellő nagyítással a jobb vizualizáció érdekében:
 
 \kep{../../Kepek/Linear_interp_50hz.jpg}{Lineáris interpoláció 50~Hz-en.}{linear-interp-50hz}
 
@@ -312,38 +312,13 @@ Ezt követően létrehoztuk a felmintavételezett szenzorjelhez tartozó új
 időtengelyt. Az időpontokat a mérés kezdő időpontjától számítottuk az új,
 sűrűbb mintavételi frekvenciával. Ezután a korábbi feladatokban ismertetett
 időbélyeg-transzformációt alkalmaztuk. A szinkronizációs időbélyegpárokra
-elsőfokú polinomot illesztettünk, majd a \texttt{polyval} függvénnyel a gateway minden mintavételi időpontját átszámítottuk a szenzor időskálájára.
-
-A szenzorértékeket ezekben az időpontokban lineáris interpolációval
-határoztuk meg. Az interpoláció során a keresett időpontot közrefogó két
-szenzorminta közötti egyenest használtuk:
-
-\begin{equation}
-\hat{s}(t) =
-s(t_i) +
-\frac{t-t_i}{t_{i+1}-t_i}
-\left(s(t_{i+1})-s(t_i)\right),
-\qquad t_i \leq t \leq t_{i+1}.
-\end{equation}
+elsőfokú polinomot illesztettünk, majd a \texttt{polyval} függvénnyel a gateway minden mintavételi időpontját átszámítottuk a szenzor időskálájára. A szenzorértékeket ezekben az időpontokban lineáris interpolációval
+határoztuk meg. 
 
 Az interpolációt a MATLAB \texttt{interp1} függvényével valósítottuk meg.
 Az így kapott szenzorértékeket a gateway ugyanazon időpontokban mért
 értékeivel hasonlítottuk össze. Az összehasonlításhoz kiszámítottuk az
-átlagos négyzetes eltérést:
-
-\begin{equation}
-\mathrm{MSE}
-=
-\frac{1}{N}
-\sum_{i=1}^{N}
-\left(
-y_{\mathrm{gateway},i}
--
-\hat{y}_{\mathrm{szenzor},i}
-\right)^2.
-\end{equation}
-értékeivel hasonlítottuk össze. Az összehasonlításhoz ismét kiszámítottuk az
-átlagos négyzetes eltérést.\\
+átlagos négyzetes eltérést.
 
 Az összehasonlításból kihagytuk azokat a mintákat, amelyekhez nem tartozott
 érvényes interpolált szenzorérték, valamint a mérés elején és végén
@@ -390,22 +365,9 @@ szomszédos pont, ezekhez az értékekhez a program \texttt{NaN} értéket rende
 összehasonlítás során ezeket az értékeket figyelmen kívül hagytuk.
 
 Az interpoláció minőségét a gateway mért értékei és a lokális polinommal
-becsült szenzorértékek közötti átlagos négyzetes eltéréssel jellemeztük:\\
-
-\begin{equation}
-\mathrm{MSE}
-=
-\frac{1}{N}
-\sum_{i=1}^{N}
-\left(
-y_{\mathrm{gateway},i}
--
-\hat{y}_{\mathrm{szenzor},i}
-\right)^2.
-\end{equation}
-
 becsült szenzorértékek közötti átlagos négyzetes eltéréssel jellemeztük.\\
-Az átlagos négyzetes eltérés értékének 50 [Hz]-es jel esetén $0.831329$-et, 500 [Hz]-es jel esetén pedig $0.683739$-et kaptunk. Ezek alapján megállapítható, hogy az interpoláció eredményei jobbak magas frekvencián, mint a korábbi feladatokban bemutatott módszer esetén, mert a becslült jel lokális alakját több mérési pont alapján határozza meg,viszont a magas polinomfok és a lokális környezet nem megfelelő megválasztása oszcillációt vagy numerikai érzékenységet okozhat. Alacsony frekvencián még ilyen magas fokú polinommal sem sikerült jobbat produkálni az 1.5 feladat eredménye. Az interpoláció eredményei az alábbi ábrákon láthatóak:
+
+Az átlagos négyzetes eltérés értékének 50 [Hz]-es jel esetén $0.831329$-et, 500 [Hz]-es jel esetén pedig $0.683739$-et kaptunk. Ezek alapján megállapítható, hogy az interpoláció eredményei jobbak magas frekvencián, mint a korábbi feladatokban bemutatott módszer esetén, mert a becslült jel lokális alakját több mérési pont alapján határozza meg,viszont a magas polinomfok és a lokális környezet nem megfelelő megválasztása oszcillációt vagy numerikai érzékenységet okozhat. Alacsony frekvencián még ilyen magas fokú polinommal sem sikerült jobbat produkálni mint az 1.5 feladat eredménye. Az interpoláció eredményei az alábbi ábrákon láthatóak:
 
 \kep{../../Kepek/magasbb_fok_interp_50hz.jpg}{Interpoláció 10. fokú polinommal 50~Hz-en.}{interp-magas-50hz}
 
@@ -429,7 +391,7 @@ Az 50 Hz-es szinuszos jelet kapcsoltunk először a rendszerre. Az a) feladatban
 \par
 Ezt követően a b) feladatban a MATLAB \texttt{tic} és \texttt{toc} függvényeit használva is meghatároztuk a jel frekvenciáját megközelítőleg, mivel egy ilyen szemre történő mérésnél nehéz pontosan meghatározni a jel frekvenciáját.\\
 
-Végül a c) feladatban az \texttt{angle} és \texttt{unwrap} függvények segítségével meghatároztuk a jel fázisát, majd a \texttt{polyfit} függvénnyel lineáris illesztést végeztünk a fázisra. Ezt követően a meredekséget elosztva a 2$\pi$-vel megkaptuk a jel frekvenciaeltérését. Ez akkor lett 0 ha 50 [Hz] lett beállítva a szoftverben. 
+Végül a c) feladatban mérési regisztrátumokat készítettünk külöböző rezonátor frekvenciákkal, majd az \texttt{angle} és \texttt{unwrap} függvények segítségével meghatároztuk a jel fázisát, majd a \texttt{polyfit} függvénnyel lineáris illesztést végeztünk a fázisra. Ezt követően a meredekséget elosztva a 2$\pi$-vel megkaptuk a jel frekvenciaeltérését. Ez akkor lett 0 ha 50 [Hz] lett beállítva a szoftverben. 
 
 \feladat{2.3}
 A feladat első lépéseként mérési regisztrátumot készítettünk úgy, hogy a jelgenerátort bekapcsoltuk, kikapcsoltuk, bekapcsoltuk, majd megint kikapcsoltuk. A mérés során a jelgenerátor frekvenciáját 50 Hz-en hagytuk, az amplitúdót pedig 2 V-ra állítottuk. A mérési regisztrátumot a \texttt{preprocessResonatorFiles.m} script futtatásával dolgoztuk fel.\\
@@ -447,13 +409,13 @@ Belenagyítva a visszaállított jel és a gateway által mért jel közötti el
 A feladat első lépéseként a jelgenerátor frekvenciáját 50 Hz-en hagytuk és a rezonátor frekvenciáját fokozatosan elállítottuk mindkét irányba $\pm 0.01$ Hz, $\pm 0.1$ Hz, $\pm 0.5$ Hz, $\pm 1$ Hz, $\pm 2$ Hz, $\pm 5$ Hz és $\pm 10$ Hz-re. A mérés során a jelgenerátor amplitúdóját 2 V-ra állítottuk, majd a mérési regisztrátumot a \texttt{preprocessResonatorFiles.m} script futtatásával dolgoztuk fel.\\
 Az 50 Hz-es amplitudóátvitellel normalizálva a(z) \abrara{fig:amplitudoatvitel}-n látható az amplitudóátvitel a rezonátor frekvenciájának függvényében.
 \kep{../../Kepek/amplitudoatvitel.jpg}{Az amplitudóátvitel a rezonátor frekvenciájának függvényében.}{amplitudoatvitel}
-A DFT-vel összehasonlítva a módszert, az eredmény éppen ellentétes jellegű. Amíg a DFT-nél a valós frekvencián a legnagyobb az amplitudó, addig a rezonátor esetében a valós frekvencia közelében volt a legkisebb, közelében elkezdett növekedni, majd távolodva újra csökkenni. A 40 Hz-es mérést valószínleg hiba terhelheti.
+A DFT-vel összehasonlítva a módszert, az eredmény éppen ellentétes jellegű. Amíg a DFT-nél a valós frekvencián a legnagyobb az amplitudó, addig a rezonátor esetében a valós frekvencián kicsi volt, közelében elkezdett növekedni, majd távolodva újra csökkenni. A 40 Hz-es mérést valószínleg hiba terhelheti.
 
 \newpage
 \feladat{2.5}
 Ebben a feladatban a korábbi méréseket felhasználva megvizsgáltuk az eltérést a visszaállított jel és a gateway által mért jel között. A frekvencia függvényében alakuló RMS eltéréseket a(z) \abrara{fig:eltérés}-n szemléltettük.
 \kep{../../Kepek/RMSkulonbseg.jpg}{Az eltérés a visszaállított jel és a gateway által mért jel között.}{eltérés}
-Ahogy látható, kis eltérés esetén még elfogadható hibával visszaállítható a jel.
+Ahogy látható, kis eltérés ($\pm 1$ Hz) esetén még elfogadható hibával visszaállítható a jel.
 
 \feladat{2.6}
 
@@ -470,7 +432,7 @@ Ezután minden gateway mintához megkerestük a legközelebbi szenzor-adatcsomag
 egymást követő gateway-mintához is hozzárendelésre kerül.\\
 
 A Fourier-bázis fázisát a szenzor által küldött referenciafázisból
-számítottuk, a 2.3 feladat során már korábban felhasznált módszer segítségével, majd a meghatározott fázisokból szintén a 2.3 feladatban felhasznált módszerrel a bázisfüggvények is meghatározhatóak voltak. Ezek összefüggései az alábbi 12. és 13. egyenletekben láthatóak:
+számítottuk, a 2.3 feladat során már korábban felhasznált módszer segítségével, majd a meghatározott fázisokból szintén a 2.3 feladatban felhasznált módszerrel a bázisfüggvények is meghatározhatóak voltak. Ezek összefüggései az alábbi 9. és 10. egyenletekben láthatóak:
 
 
 \begin{equation}
@@ -550,16 +512,16 @@ be- és kikapcsolásakor a rekonstruált jel nem azonnal éri el a gateway-jel
 amplitúdóját, hanem fokozatosan áll be. Ez a rezonátoros megfigyelő beállási tranzienséből
 származó eltérés.\\
 
-Az algoritmus eredményeit vizuális kettő ábrán vizsgáltuk, a 23. és 24. ábrában a gateway által mért időtartománybeli jelet és az öt Fourier-együtthatóból visszaállított jelet vetettük össze, a 25. ábránpedig a gateway-adatokból becsült, valamint a szenzor által szolgáltatott Fourier-együtthatók amplitúdóját hasonlítottuk össze.\\
+Az algoritmus eredményeit vizuális kettő ábrán vizsgáltuk, a(z) \abrara{fig:visszaallitott-bezoom}-n és a(z) \abrara{fig:visszaallitott-sima}-n a gateway által mért időtartománybeli jelet és az öt Fourier-együtthatóból visszaállított jelet vetettük össze, a(z) \abrara{fig:becsult-fszenzor}-n pedig a gateway-adatokból becsült, valamint a szenzor által szolgáltatott Fourier-együtthatók amplitúdóját hasonlítottuk össze.\\
 
-Az alábbi 24. ábrán látható a fentebb említett eltérés a felfutási és lecsengési tranziens esetén, viszont a 23. ábrán nagyítás után az állandósult szakaszon csak minimális eltérés látható a két jel között.
+Az alábbi \abrara{fig:visszaallitott-sima}-n látható a fentebb említett eltérés a felfutási és lecsengési tranziens esetén, viszont a(z) \abrara{fig:visszaallitott-bezoom}-n nagyítás után az állandósult szakaszon csak minimális eltérés látható a két jel között.
 
 \kep{../../Kepek/Visszaallitott_bezoom.jpg}{Gateway jel és visszaállított jel belenagyítva.}{visszaallitott-bezoom}
 
 \kep{../../Kepek/Visszaallitott_sima.jpg}{Gateway jel és visszaállított jel.}{visszaallitott-sima}
 
 
-A 25. ábrán a gateway-adatokból becsült, valamint a szenzor által
+A(z) \abrara{fig:becsult-fszenzor}-n a gateway-adatokból becsült, valamint a szenzor által
 szolgáltatott Fourier-együtthatók amplitúdójának összehasonlítása látható. Az
 első harmonikus amplitúdója volt a legnagyobb, ezért annak abszolút
 hibája is nagyobb lett, illetve szintén a fentebb leírt tranzienseknél jelentkező különbség is látható.
@@ -569,17 +531,17 @@ hibája is nagyobb lett, illetve szintén a fentebb leírt tranzienseknél jelen
 Az összehasonlítást a komplex együtthatók és a gateway-jel és a visszaállított jel közötti eltérést RMS értékével számítottuk.\\
 
 A mérés során a gateway-jel és a visszaállított jel RMS eltérése
-$4{,}74589$ volt. Az egyes harmonikusokra kapott RMS eltérések:
+$4.74589$ volt. Az egyes harmonikusokra kapott RMS eltérések:
 
 \begin{equation}
 \begin{array}{c|c}
 \text{Harmonikus} & \text{RMS eltérés}\\
 \hline
-1. & 1{,}51301\\
-2. & 0{,}631144\\
-3. & 0{,}255675\\
-4. & 0{,}1732\\
-5. & 0{,}160554
+1. & 1.51301\\
+2. & 0.631144\\
+3. & 0.255675\\
+4. & 0.1732\\
+5. & 0.160554
 \end{array}
 \end{equation}
 
