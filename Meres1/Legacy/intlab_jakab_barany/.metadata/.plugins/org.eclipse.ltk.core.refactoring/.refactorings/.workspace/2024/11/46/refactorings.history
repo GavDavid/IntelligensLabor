@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete 3 resources" deleteContents="false" description="Delete 3 resources" element1="/BlackFin_FIR_asm" element2="/BlackFin_FIR_fract" element3="/BlackFin_Frame" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="3" stamp="1731334882665"/>&#x0A;<refactoring comment="Rename resource &apos;BlackFin_FIR_asm&apos; to &apos;Eq&apos;" description="Rename resource &apos;BlackFin_FIR_asm&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/BlackFin_FIR_asm" name="Eq" stamp="1731334909806" updateReferences="true"/>
+</session>

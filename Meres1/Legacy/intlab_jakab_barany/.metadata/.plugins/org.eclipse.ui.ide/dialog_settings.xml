@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="D:\intlab_jakab_barany\EQ\BlackFin_FIR_asm"/>
+		<item value="D:\intlab_jakab_barany\BlackFin_FIR_asm"/>
+		<item value="D:\intlab_jakab_barany\BlackFin_FIR_fract"/>
+		<item value="D:\intlab_jakab_barany\BlackFin_Frame"/>
+	</list>
+	<section name="ExternalProjectImportWizard">
+	</section>
+</section>

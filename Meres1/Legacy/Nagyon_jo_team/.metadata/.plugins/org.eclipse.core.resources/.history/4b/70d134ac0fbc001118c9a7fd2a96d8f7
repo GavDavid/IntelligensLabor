@@ -1,0 +1,79 @@
+#include "frame.h"
+
+#define N 5		    // number of b coefficients
+section("L1_data_b") fract coefs_b[N] = {
+#include "task_2_iir_filter_b.dat"
+};
+section("L1_data_b") fract coefs_a[N - 1] = {
+#include "task_2_iir_filter_a.dat"
+};
+
+fract section("L1_data_a") input[N];
+fract output[N];
+accum out_b = 0;
+accum out_a = 0;
+volatile fract outVal;
+int i = 0;		
+
+fract konv;
+uint16_t *konvi;
+uint32_t konvi32;
+
+//--------------------------------------------------------------------------//
+// Function:	Process_Data()												//
+//																			//
+// Description: This function is called from inside the SPORT0 ISR every 	//
+//				time a complete audio frame has been received. The new 		//
+//				input samples can be found in the variables iChannel0LeftIn,//
+//				iChannel0RightIn, iChannel1LeftIn and iChannel1RightIn 		//
+//				respectively. The processed	data should be stored in 		//
+//				iChannel0LeftOut, iChannel0RightOut, iChannel1LeftOut,		//
+//				iChannel1RightOut, iChannel2LeftOut and	iChannel2RightOut	//
+//				respectively.												//
+//--------------------------------------------------------------------------//
+void Process_Data(void)
+{
+	if (uart_rx_flag)
+	{
+		uart_rx_flag = false;
+		uart_putch(uart_getch());
+	}
+
+	iChannel0LeftOut = iChannel0RightIn;
+
+	input[i] = rbits((iChannel0RightIn>>8));
+				
+	int j;
+	int ix;
+
+	ix  = i;
+	out_b = 0;
+	out_a = 0;
+			
+	// Filter loop
+	for (j=0;j<N;j++)
+	{
+		out_b += input[ix%N]*coefs_b[j];
+
+		if (j >= 1)
+		{
+			out_a += output[ix%N]*coefs_a[j-1];
+		}
+
+		ix++;
+	}
+
+	outVal = out_b - out_a*4;
+
+	i--;
+
+	if (i<0)
+	{
+		i = N-1;
+	}
+
+	output[i] = outVal;
+
+	iChannel0RightOut = bitsr(outVal) << 8;
+}
+

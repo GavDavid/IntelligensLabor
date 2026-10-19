@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="D:\1meres_pot\BlackFin_FIR_asm"/>
+		<item value="D:\1meres_pot\BlackFin_Frame"/>
+		<item value="D:\1meres_pot"/>
+	</list>
+	<section name="CleanDialogSettings">
+		<item value="500" key="DIALOG_WIDTH"/>
+		<item value="true" key="BUILD_ALL"/>
+		<item value="false" key="TOGGLE_SELECTED"/>
+		<item value="465" key="DIALOG_HEIGHT"/>
+		<item value="710" key="DIALOG_X_ORIGIN"/>
+		<item value="210" key="DIALOG_Y_ORIGIN"/>
+		<item value="true" key="BUILD_NOW"/>
+	</section>
+</section>

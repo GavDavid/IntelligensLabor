@@ -1,0 +1,63 @@
+#line 1 "../src/conv_asm.asm"
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+.section L1_code;
+
+.global _conv_asm;
+_conv_asm:
+
+	P0 = R0;	 
+	I0 = R1;	 
+	B0 = R2;	 
+	P1 = 2 * 401; 
+	L0 = P1;
+	M0 = 1;
+		
+	R0 = 0;
+	NOP;
+	NOP;
+	R1 = W[P0++] (Z);
+	R2.l = W[I0++];
+	A0 = 0;	
+
+	P1 = 401 - 1; 	 
+	LSETUP (mac_loop,mac_loop) LC0 = P1;
+	mac_loop: 	A0 += R1.l * R2.l || R2.l = W[I0 ++] || R1 = W[P0++](Z);
+	
+	A0 += 	R1.l * R2.l;
+	R0.l = A0;
+	RTS;
+
+_conv_asm.end:
+
+
+
+
+
+
+
+
+
+
+
+
+ 

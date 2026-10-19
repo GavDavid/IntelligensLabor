@@ -1,0 +1,16 @@
+/*
+ * allapotgep.c
+ *
+ *  Created on: 18 Nov 2024
+ *      Author: student
+ */
+
+
+#include "allapotgep.h"
+
+elem vezerloTomb[LevelMenu+1][PB4+1];
+
+level_e frequencyParam = 0;
+
+#define NUMBER_OF_LEVELS 5
+int possibleLevelValues[NUMBER_OF_LEVELS] = {0, -3, -6, -9, -12};

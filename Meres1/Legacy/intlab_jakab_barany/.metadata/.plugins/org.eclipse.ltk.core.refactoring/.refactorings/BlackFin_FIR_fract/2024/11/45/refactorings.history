@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;BlackFin_FIR_fract/src/bp_fract.dat&apos; to &apos;bp_fract_old.dat&apos;" description="Rename resource &apos;bp_fract.dat&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/bp_fract.dat" name="bp_fract_old.dat" stamp="1730733018621" updateReferences="true"/>
+</session>

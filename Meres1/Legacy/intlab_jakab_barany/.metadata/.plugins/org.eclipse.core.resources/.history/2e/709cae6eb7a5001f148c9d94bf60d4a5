@@ -1,0 +1,116 @@
+#ifndef _BUTTON_LED_GPIO_H_
+#define _BUTTON_LED_GPIO_H_
+
+#include <services/gpio/adi_gpio.h>
+#include <services/int/adi_int.h>
+#include <stdio.h>
+
+
+/*Push button 1 GPIO settings*/
+/* GPIO port to which push button 1 is connected to */
+#define PUSH_BUTTON1_PORT           ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which push button 1 is connected to */
+#define PUSH_BUTTON1_PIN            ADI_GPIO_PIN_2
+
+/* Interrupt channel through which the GPIO interrupt is notified */
+#define PUSH_BUTTON1_INT_CHNL       ADI_GPIO_MASK_A
+
+/* Label printed on the EZ-Kit */
+#define PUSH_BUTTON1_LABEL          "PB1"
+
+
+/* Push button 2 GPIO settings*/
+/* GPIO port to which push button 2 is connected to */
+#define PUSH_BUTTON2_PORT           ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which push button 2 is connected to */
+#define PUSH_BUTTON2_PIN            ADI_GPIO_PIN_3
+
+/* Interrupt channel through which the GPIO interrupt is notified */
+#define PUSH_BUTTON2_INT_CHNL       ADI_GPIO_MASK_A
+
+/* Label printed on the EZ-Kit */
+#define PUSH_BUTTON2_LABEL          "PB2"
+
+
+/* Push button 3 GPIO settings*/
+/* GPIO port to which push button 2 is connected to */
+#define PUSH_BUTTON3_PORT           ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which push button 2 is connected to */
+#define PUSH_BUTTON3_PIN            ADI_GPIO_PIN_4
+
+/* Interrupt channel through which the GPIO interrupt is notified */
+#define PUSH_BUTTON3_INT_CHNL       ADI_GPIO_MASK_A
+
+/* Label printed on the EZ-Kit */
+#define PUSH_BUTTON3_LABEL          "PB3"
+
+
+/* Push button 4 GPIO settings*/
+/* GPIO port to which push button 2 is connected to */
+#define PUSH_BUTTON4_PORT           ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which push button 2 is connected to */
+#define PUSH_BUTTON4_PIN            ADI_GPIO_PIN_5
+
+/* Interrupt channel through which the GPIO interrupt is notified */
+#define PUSH_BUTTON4_INT_CHNL       ADI_GPIO_MASK_A
+
+/* Label printed on the EZ-Kit */
+#define PUSH_BUTTON4_LABEL          "PB4"
+
+
+/* LED 1 GPIO settings */
+/* GPIO port to which LED 1 is connected to */
+#define LED1_PORT                   ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which LED 1 is connected to */
+#define LED1_PIN                    ADI_GPIO_PIN_6
+
+
+/* LED 2 GPIO settings */
+/* GPIO port to which LED 2 is connected to */
+#define LED2_PORT                   ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which LED 2 is connected to */
+#define LED2_PIN                    ADI_GPIO_PIN_7
+
+
+/* LED 3 GPIO settings */
+/* GPIO port to which LED 2 is connected to */
+#define LED3_PORT                   ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which LED 2 is connected to */
+#define LED3_PIN                    ADI_GPIO_PIN_8
+
+
+/* LED 4 GPIO settings */
+/* GPIO port to which LED 2 is connected to */
+#define LED4_PORT                   ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which LED 2 is connected to */
+#define LED4_PIN                    ADI_GPIO_PIN_9
+
+
+/* LED 5 GPIO settings */
+/* GPIO port to which LED 2 is connected to */
+#define LED5_PORT                   ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which LED 2 is connected to */
+#define LED5_PIN                    ADI_GPIO_PIN_10
+
+
+/* LED 6 GPIO settings */
+/* GPIO port to which LED 2 is connected to */
+#define LED6_PORT                   ADI_GPIO_PORT_F
+
+/* GPIO pin within the port to which LED 2 is connected to */
+#define LED6_PIN                    ADI_GPIO_PIN_11
+
+#endif /* _BUTTON_LED_GPIO_H_ */
+
+
+// Public func
+void PB_LED_set_up(void);

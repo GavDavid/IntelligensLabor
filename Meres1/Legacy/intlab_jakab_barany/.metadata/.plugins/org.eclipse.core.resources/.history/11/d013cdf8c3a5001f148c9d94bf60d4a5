@@ -1,0 +1,169 @@
+#include "my_led_pb.h"
+#include "allapotgep.h"
+
+#define GPIO_MEMORY_SIZE (ADI_GPIO_CALLBACK_MEM_SIZE*2)
+/* Managed drivers and/or services include */
+#include "../system/adi_initialize.h"
+
+/* Macro for reporting errors */
+#define REPORT_ERROR printf
+
+static uint8_t gpioMemory[GPIO_MEMORY_SIZE];
+
+static bool bError;
+static uint64_t count;
+
+
+// Functions
+static void CheckResult(ADI_GPIO_RESULT result);
+
+int ind = 0;
+static void CheckResult(ADI_GPIO_RESULT result)
+{
+    if (result != ADI_GPIO_SUCCESS) {
+        REPORT_ERROR("%d:\t GPIO failure\n", ind++);
+        bError = true;
+    } else {
+    	REPORT_ERROR("%d:\t OK\n", ind++);
+    }
+}
+
+void gpioCallback(ADI_GPIO_PORT ePort, uint32_t Data, void *pCBParam)
+{
+	//sajat resz
+	if (ePort == PUSH_BUTTON1_PORT){
+		esemenyEsParameter_t q;
+
+			//int inputInt = 0;
+			//scanf("%d", &inputInt);
+
+			//q.p = inputInt;
+
+			switch (Data){
+				case PUSH_BUTTON1_PIN:     q.e = PB1; break;
+				case PUSH_BUTTON2_PIN:     q.e = PB2; break;
+				case PUSH_BUTTON3_PIN:     q.e = PB3; break;
+				case PUSH_BUTTON4_PIN:     q.e = PB4; break;
+				default:    q.e = PB1;
+			}
+
+			//return q
+			newButtonPressed = 1;
+	}
+	//
+
+    /*if (ePort == PUSH_BUTTON1_PORT){
+        if (Data & PUSH_BUTTON1_PIN){
+            //push button 1 - toggle LED
+            adi_gpio_Toggle(LED1_PORT, LED1_PIN);
+        }
+        else if (Data & PUSH_BUTTON2_PIN){
+            //push button 2 - toggle LED
+            adi_gpio_Toggle(LED2_PORT, LED2_PIN);
+        }
+        else if (Data & PUSH_BUTTON3_PIN){
+			//push button 3 - toggle LED
+			adi_gpio_Toggle(LED3_PORT, LED3_PIN);
+		}
+        else if (Data & PUSH_BUTTON4_PIN){
+			//push button 4 - toggle LED
+			adi_gpio_Toggle(LED4_PORT, LED4_PIN);
+		}
+    }*/
+
+    /* reset the exit counter */
+    count = 0u;
+}
+
+void PB_LED_set_up(){
+    uint32_t gpioMaxCallbacks;
+    ADI_INT_STATUS  eIntResult;
+    // init the GPIO service
+    ADI_GPIO_RESULT result = adi_gpio_Init(
+            (void*)gpioMemory,
+            GPIO_MEMORY_SIZE,
+            &gpioMaxCallbacks);
+
+    adi_initComponents();
+    CheckResult(result);
+
+	/*
+	 * Setup Push Buttons
+	 */
+
+	// set GPIO input
+
+	result = adi_gpio_SetDirection(
+		PUSH_BUTTON1_PORT,
+		PUSH_BUTTON1_PIN | PUSH_BUTTON2_PIN | PUSH_BUTTON3_PIN | PUSH_BUTTON4_PIN,
+		ADI_GPIO_DIRECTION_INPUT);
+	CheckResult(result);
+
+	result = adi_gpio_SetInputEdgeSense(
+		PUSH_BUTTON1_PORT,
+		PUSH_BUTTON1_PIN | PUSH_BUTTON2_PIN | PUSH_BUTTON3_PIN | PUSH_BUTTON4_PIN,
+		ADI_GPIO_SENSE_RISING_EDGE);
+	CheckResult(result);
+
+	result = adi_gpio_EnableInterruptMask(
+		PUSH_BUTTON1_PORT,
+		PUSH_BUTTON1_PIN | PUSH_BUTTON2_PIN | PUSH_BUTTON3_PIN | PUSH_BUTTON4_PIN,
+		PUSH_BUTTONS_INT_CHNL,
+		true);
+	CheckResult(result);
+
+	// register gpio callback
+	result = adi_gpio_RegisterCallback(
+		PUSH_BUTTON1_PORT,
+		PUSH_BUTTON1_PIN | PUSH_BUTTON2_PIN | PUSH_BUTTON3_PIN | PUSH_BUTTON4_PIN,
+		gpioCallback,
+		(void*)0);
+	CheckResult(result);
+
+
+	/*
+	 * Setup LED's
+	 */
+
+	// set GPIO output LED 0
+	result = adi_gpio_SetDirection(
+		LED1_PORT,
+		LED1_PIN,
+		ADI_GPIO_DIRECTION_OUTPUT);
+	CheckResult(result);
+
+	// set GPIO output LED 1
+	result = adi_gpio_SetDirection(
+		LED2_PORT,
+		LED2_PIN,
+		ADI_GPIO_DIRECTION_OUTPUT);
+	CheckResult(result);
+
+	// set GPIO output LED 2
+	result = adi_gpio_SetDirection(
+		LED3_PORT,
+		LED3_PIN,
+		ADI_GPIO_DIRECTION_OUTPUT);
+	CheckResult(result);
+
+	// set GPIO output LED 1
+	result = adi_gpio_SetDirection(
+		LED4_PORT,
+		LED4_PIN,
+		ADI_GPIO_DIRECTION_OUTPUT);
+	CheckResult(result);
+
+	// set GPIO output LED 1
+	result = adi_gpio_SetDirection(
+		LED5_PORT,
+		LED5_PIN,
+		ADI_GPIO_DIRECTION_OUTPUT);
+	CheckResult(result);
+
+	// set GPIO output LED 1
+	result = adi_gpio_SetDirection(
+		LED6_PORT,
+		LED6_PIN,
+		ADI_GPIO_DIRECTION_OUTPUT);
+	CheckResult(result);
+}

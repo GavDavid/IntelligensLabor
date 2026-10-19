@@ -1,0 +1,185 @@
+	.file "..\system\adi_initialize.c";
+//  Compilation time: Mon Nov 25 16:41:02 2024
+//  Compiler options: -c -file-attr ProjectName=Eq -proc ADSP-BF537 -flags-compiler --no_wrap_diagnostics -si-revision 0.3 -O -Ov100 -g -save-temps -path-output .\system -DCORE0 -D_DEBUG -structs-do-not-overlap -force-circbuf -no-const-strings -no-multiline -warn-protos -double-size-32 -decls-strong -cplbs -gnu-style-dependencies -MD -Mo system\adi_initialize.d -o system\adi_initialize.doj
+//  Compiler version: 8.15.1.0 (944d964b07b43641c9beb96c0dedb3360eadda96)
+//  Architecture: ADSP-BF537
+//  Silicon revision: 0.3
+//  Anomalies summary:
+//   Never on: w_05000046
+//   Disabled: w_05000048, w_05000103, w_05000104, w_05000120, w_05000127, w_05000157, w_05000198, w_05000202, w_05000209, w_05000227, w_05000244, w_05000246, w_05000248, w_05000262, w_05000264, w_05000283, w_F3_F_021, w_F3_F_008_F3_F_013, w_05000428, w_05000412, w_05000010, w_19000010, w_19000019, w_19000058
+//   Enabled: w_05000074_16000015, w_05000122, w_05000310_16000013, w_05000245_16000014, w_05000312, w_05000371, w_05000426_16000012, w_05000443_16000010, w_05000477_16000009, w_05000506_16000043
+
+.MESSAGE/SUPPRESS 5500;
+.MESSAGE/SUPPRESS 5508;
+
+
+	.section/DOUBLE32 program;
+
+.epctext:
+
+	.align 4;
+_adi_initInterrupts:
+.LN_adi_initInterrupts:
+//-------------------------------------------------------------------
+//  Procedure statistics:
+//  Frame size            = 8 
+//  Scratch registers used: {R0,P0,ASTAT0-ASTAT1}
+//  Call preserved registers used: {RETS}
+//-------------------------------------------------------------------
+// line "..\system\adi_initialize.c":21
+	LINK 0;
+	.align 2
+.LN0:
+// line 28
+	R0 = R0 - R0 (NS) || P0 = [FP + 4];
+	UNLINK;
+	// -- 2 stalls --
+	JUMP (P0);
+.LN._adi_initInterrupts.end:
+._adi_initInterrupts.end:
+	.type _adi_initInterrupts,STT_FUNC;
+
+	.align 4;
+_adi_initComponents:
+.LN_adi_initComponents:
+//-------------------------------------------------------------------
+//  Procedure statistics:
+//  Frame size            = 20 
+//  Scratch registers used: {P0}
+//  Call preserved registers used: {RETS}
+//  Registers that could be clobbered by function calls: {R0,P0-P1,ASTAT0-ASTAT1,RETS}
+//-------------------------------------------------------------------
+// line "..\system\adi_initialize.c":13
+	LINK 12;
+	.align 2
+.LN1:
+// line 15
+	CALL.X _adi_initInterrupts;
+.LN2:
+// line 17
+	P0 = [FP + 4];
+	UNLINK;
+	// -- 2 stalls --
+	JUMP (P0);
+.LN._adi_initComponents.end:
+._adi_initComponents.end:
+	.global _adi_initComponents;
+	.type _adi_initComponents,STT_FUNC;
+
+	.file_attr ProjectName="Eq";
+	.file_attr FuncName="_adi_initInterrupts";
+	.file_attr FuncName="_adi_initComponents";
+	.file_attr Content="Code";
+.epctext.end:
+
+	.section .debug_abbrev;
+
+	.align 1;
+	.type .epcabbrev,STT_OBJECT;
+.epcabbrev:
+	.byte =
+		0x01,0x11,0x01,0x03,0x08,0x13,0x0B,0x10,0x06,0x43,0x06,0x1B,
+		0x08,0x25,0x08,0x42,0x0B,0x00,0x00,0x02,0x24,0x00,0x03,0x08,
+		0x3E,0x0B,0x0B,0x0F,0x00,0x00,0x03,0x24,0x00,0x03,0x08,0x3E,
+		0x0B,0x5F,0x0F,0x5B,0x0F,0x0B,0x0F,0x00,0x00,0x04,0x16,0x00,
+		0x03,0x08,0x32,0x0B,0x49,0x13,0x00,0x00,0x05,0x0F,0x00,0x33,
+		0x0F,0x49,0x13,0x00,0x00,0x06,0x2E,0x01,0x01,0x13,0x03,0x08,
+		0x32,0x0B,0x11,0x01,0x12,0x01,0x27,0x0C,0x49,0x13,0x3F,0x0C,
+		0x20,0x0B,0x00,0x00,0x07,0x0B,0x01,0x01,0x13,0x11,0x01,0x12,
+		0x01,0x00,0x00,0x00;
+.epcabbrev.end:
+
+	.section .debug_info;
+
+	.align 1;
+	.type .epcdebug,STT_OBJECT;
+.epcdebug:
+	.byte =
+		0xF6,0x06,0x00,0x00,0x02,0x00;
+	.byte4 = .epcabbrev;
+	.byte =
+		0x04,0x01,0x2E,0x2E,0x5C,0x73,0x79,0x73,0x74,0x65,0x6D,0x5C,
+		0x61,0x64,0x69,0x5F,0x69,0x6E,0x69,0x74,0x69,0x61,0x6C,0x69,
+		0x7A,0x65,0x2E,0x63,0x00,0x0C;
+	.byte4 = .epcline;
+	.inc/binary ".\system\adi_initialize.sbn", 0, 1655;
+	.byte4 = .LN_adi_initInterrupts;
+	.byte4 = .LN._adi_initInterrupts.end;
+	.byte =
+		0x01,0xB9,0x04,0x00,0x00,0x00,0x00,0x07,0x00,0x00,0x00,0x00;
+	.byte4 = .LN0;
+	.byte4 = .LN._adi_initInterrupts.end;
+	.byte =
+		0x00,0x00,0x06,0xF8,0x06,0x00,0x00,0x61,0x64,0x69,0x5F,0x69,
+		0x6E,0x69,0x74,0x43,0x6F,0x6D,0x70,0x6F,0x6E,0x65,0x6E,0x74,
+		0x73,0x00,0x01;
+	.byte4 = .LN_adi_initComponents;
+	.byte4 = .LN._adi_initComponents.end;
+	.byte =
+		0x01,0xB9,0x04,0x00,0x00,0x01,0x00,0x07,0x00,0x00,0x00,0x00;
+	.byte4 = .LN1;
+	.byte4 = .LN._adi_initComponents.end;
+	.byte =
+		0x00,0x00,0x00,0x00;
+.epcdebug.end:
+
+	.section .debug_line;
+
+	.align 1;
+	.type .epcline,STT_OBJECT;
+.epcline:
+	.inc/binary ".\system\adi_initialize.sbn", 1655, 202;
+	.byte4 = .LN_adi_initInterrupts;
+	.byte =
+		0x04,0x01,0x05,0x01,0x1D,0x00,0x05,0x02;
+	.byte4 = .LN0;
+	.byte =
+		0x05,0x02,0x10,0x00,0x05,0x02;
+	.byte4 = .LN._adi_initInterrupts.end;
+	.byte =
+		0x00,0x01,0x01,0x00,0x05,0x02;
+	.byte4 = .LN_adi_initComponents;
+	.byte =
+		0x04,0x01,0x05,0x01,0x15,0x00,0x05,0x02;
+	.byte4 = .LN1;
+	.byte =
+		0x05,0x1D,0x0B,0x00,0x05,0x02;
+	.byte4 = .LN2;
+	.byte =
+		0x05,0x02,0x0B,0x00,0x05,0x02;
+	.byte4 = .LN._adi_initComponents.end;
+	.byte =
+		0x00,0x01,0x01;
+.epcline.end:
+
+	.section .debug_pubnames;
+
+	.align 1;
+.epcpubnames:
+	.type .epcpubnames,STT_OBJECT;
+	.byte =
+		0x25,0x00,0x00,0x00,0x02,0x00;
+	.byte4 = .epcdebug;
+	.byte =
+		0xFA,0x06,0x00,0x00,0xC1,0x06,0x00,0x00,0x61,0x64,0x69,0x5F,
+		0x69,0x6E,0x69,0x74,0x43,0x6F,0x6D,0x70,0x6F,0x6E,0x65,0x6E,
+		0x74,0x73,0x00,0x00,0x00,0x00,0x00;
+.epcpubnames.end:
+
+	.section .debug_aranges;
+
+	.align 1;
+.epcaranges:
+	.type .epcaranges,STT_OBJECT;
+	.byte =
+		0x24,0x00,0x00,0x00,0x02,0x00;
+	.byte4 = .epcdebug;
+	.byte =
+		0x04,0x00,0x00,0x00,0x00,0x00;
+	.byte4 = .LN_adi_initInterrupts;
+	.byte4 = .LN._adi_initInterrupts.end-.LN_adi_initInterrupts;
+	.byte4 = .LN_adi_initComponents;
+	.byte4 = .LN._adi_initComponents.end-.LN_adi_initComponents;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00;
+.epcaranges.end:

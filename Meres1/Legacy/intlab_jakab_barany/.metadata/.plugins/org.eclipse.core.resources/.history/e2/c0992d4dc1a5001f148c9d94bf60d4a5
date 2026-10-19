@@ -1,0 +1,66 @@
+/*
+ * allapotgep.h
+ *
+ *  Created on: 18 Nov 2024
+ *      Author: student
+ */
+
+#ifndef ALLAPOTGEP_H_
+#define ALLAPOTGEP_H_
+
+#include "frame.h"
+typedef enum {MainMenu,LevelMenu} allapot;
+typedef enum {PB1, PB2, PB3, PB4} esemeny;
+
+typedef enum {Bass, Mid, High} level_e;
+typedef level_e param_t;
+
+typedef void (*teendo)(param_t*);
+typedef struct{
+    esemeny e;
+    param_t* p;
+} esemenyEsParameter_t;
+
+typedef struct{
+    allapot uj_allapot;
+    teendo mit_tegyek;
+} elem;
+
+#define NUMBER_OF_LEVELS 5
+
+extern elem vezerloTomb[LevelMenu+1][PB4+1];
+
+extern volatile level_e frequencyParam;
+
+extern volatile elem ve;
+
+extern volatile int newButtonPressed;
+
+extern volatile esemenyEsParameter_t ep;
+extern param_t parameter;
+
+extern volatile allapot allapotValtozo;
+
+extern fract possibleLevelValues[NUMBER_OF_LEVELS];
+
+extern int indeces[3];
+extern section("L1_data_b") fract levels[3];
+
+
+void setFrequencyParamBass(param_t* c);
+void setFrequencyParamMid(param_t* c);
+void setFrequencyParamHigh(param_t* c);
+
+
+void decreaseLevel(param_t* frequencyParameter);
+void increaseLevel(param_t* frequencyParameter);
+
+void setLeds(int index);
+
+
+void gotoMainMenu(param_t* c);
+void semmi(param_t* c);
+
+void initStateMachine();
+
+#endif /* ALLAPOTGEP_H_ */

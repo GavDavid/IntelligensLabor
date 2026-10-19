@@ -1,0 +1,87 @@
+/*
+ * allapotgep.c
+ *
+ *  Created on: 18 Nov 2024
+ *      Author: student
+ */
+
+
+#include "allapotgep.h"
+
+elem vezerloTomb[LevelMenu+1][PB4+1];
+
+level_e frequencyParam = 0;
+
+#define NUMBER_OF_LEVELS 5
+
+// Array for amps
+fract possibleLevelValues[NUMBER_OF_LEVELS] = {
+	#include "amps.dat"
+};
+
+int indeces[3] = {0};
+section("L1_data_b") fract levels[3] = {0};
+
+
+
+void setFrequencyParamBass(param_t* c){
+    printf("Bass selected\n");
+    *c = Bass;
+}
+
+void setFrequencyParamMid(param_t* c){
+    printf("Mid selected\n");
+    *c = Mid;
+}
+
+void setFrequencyParamHigh(param_t* c){
+    printf("High selected\n");
+    *c = High;
+}
+
+
+
+void decreaseLevel(param_t* frequencyParameter){
+    if(indeces[*frequencyParameter] < NUMBER_OF_LEVELS - 1){
+    indeces[*frequencyParameter]++;
+    levels[*frequencyParameter] = possibleLevelValues[indeces[*frequencyParameter]];
+    }
+    else{
+        printf("Limit reached\n");
+    }
+}
+
+void increaseLevel(param_t* frequencyParameter){
+    if(indeces[*frequencyParameter] > 0){
+        indeces[*frequencyParameter]--;
+        levels[*frequencyParameter] = possibleLevelValues[indeces[*frequencyParameter]];
+    }
+    else{
+        printf("Limit reached\n");
+    }
+}
+
+
+void setLeds(uint8_t index){
+    switch(index){
+        case 0:
+            adi_gpio_Set(LED_1_PORT, LED_1_PIN | LED_2_PIN | LED_3_PIN | LED_4_PIN | LED_5_PIN);
+            break;
+        case 1:
+            adi_gpio_Set(LED_1_PORT, LED_1_PIN | LED_2_PIN | LED_3_PIN | LED_4_PIN);
+            adi_gpio_Clear(LED_5_PIN);
+            break;
+        case 2:
+            adi_gpio_Set(LED_1_PORT, LED_1_PIN | LED_2_PIN | LED_3_PIN);
+            LED_5_PIN(LED_5_PIN | LED_4_PIN);
+            break;
+        case 3:
+            adi_gpio_Set(LED_1_PORT, LED_1_PIN | LED_2_PIN);
+            LED_5_PIN(LED_5_PIN | LED_4_PIN | LED_3_PIN);
+            break;
+        case 4:
+            adi_gpio_Set(LED_1_PORT, LED_1_PIN);
+            LED_5_PIN(LED_5_PIN | LED_4_PIN | LED_3_PIN | LED_2_PIN);
+            break;
+    }
+}

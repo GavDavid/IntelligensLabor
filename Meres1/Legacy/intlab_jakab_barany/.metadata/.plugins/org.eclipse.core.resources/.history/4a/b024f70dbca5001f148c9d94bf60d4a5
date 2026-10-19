@@ -1,0 +1,11 @@
+/*
+ * allapotgep.c
+ *
+ *  Created on: 18 Nov 2024
+ *      Author: student
+ */
+
+
+#include "allapotgep.h"
+
+elem vezerloTomb[LevelMenu+1][PB4+1];

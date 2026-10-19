@@ -1,0 +1,557 @@
+	.file "..\src\ISR.c";
+//  Compilation time: Mon Oct 28 14:32:28 2024
+//  Compiler options: -c -file-attr ProjectName=BlackFin_Frame -proc ADSP-BF537 -flags-compiler --no_wrap_diagnostics -si-revision 0.3 -O -Ov100 -g -save-temps -path-output .\src -DCORE0 -D_DEBUG -structs-do-not-overlap -force-circbuf -no-const-strings -no-multiline -warn-protos -double-size-32 -decls-strong -cplbs -gnu-style-dependencies -MD -Mo src\ISR.d -o src\ISR.doj
+//  Compiler version: 8.15.1.0 (944d964b07b43641c9beb96c0dedb3360eadda96)
+//  Architecture: ADSP-BF537
+//  Silicon revision: 0.3
+//  Anomalies summary:
+//   Never on: w_05000046
+//   Disabled: w_05000048, w_05000103, w_05000104, w_05000120, w_05000127, w_05000157, w_05000198, w_05000202, w_05000209, w_05000227, w_05000244, w_05000246, w_05000248, w_05000262, w_05000264, w_05000283, w_F3_F_021, w_F3_F_008_F3_F_013, w_05000428, w_05000412, w_05000010, w_19000010, w_19000019, w_19000058
+//   Enabled: w_05000074_16000015, w_05000122, w_05000310_16000013, w_05000245_16000014, w_05000312, w_05000371, w_05000426_16000012, w_05000443_16000010, w_05000477_16000009, w_05000506_16000043
+
+.MESSAGE/SUPPRESS 5500;
+.MESSAGE/SUPPRESS 5508;
+
+
+	.section/DOUBLE32 program;
+
+.epctext:
+
+	.align 4;
+_UART0_RX_ISR:
+.LN_UART0_RX_ISR:
+//-------------------------------------------------------------------
+//  Procedure statistics:
+//  Frame size            = 16 
+//  Scratch registers used: {R0,P1}
+//  Call preserved registers used: {RETS}
+//-------------------------------------------------------------------
+// line "..\src\ISR.c":68
+	LINK 0;
+	.align 2
+	[--SP] = R0;
+	[--SP] = P1;
+.LN0:
+// line 70
+	R0 = 1;
+	P1.L = _uart_rx_flag;
+	P1.H = _uart_rx_flag;
+	B[P1] = R0;
+.LN1:
+// line 73
+	P1 = 1024 /* -4193280 */;
+	P1.H = -64 /* -4193280 */;
+	R0 = W[P1] (X);
+	P1.L = _uart_ch;
+	P1.H = _uart_ch;
+	W[P1] = R0.L;
+.LN2:
+// line 74
+	P1 = [SP++];
+	R0 = [SP++];
+	UNLINK;
+	RTI;
+.LN._UART0_RX_ISR.end:
+._UART0_RX_ISR.end:
+	.global _UART0_RX_ISR;
+	.type _UART0_RX_ISR,STT_FUNC;
+
+	.align 4;
+_UART0_TX_ISR:
+.LN_UART0_TX_ISR:
+//-------------------------------------------------------------------
+//  Procedure statistics:
+//  Frame size            = 36 
+//  Scratch registers used: {R0-R1,P0-P2,ASTAT0-ASTAT1,CC,AQ}
+//  Call preserved registers used: {RETS}
+//-------------------------------------------------------------------
+// line "..\src\ISR.c":42
+	LINK 4;
+	.align 2
+	[--SP] = ASTAT;
+	[--SP] = R0;
+	[--SP] = R1;
+	[--SP] = P0;
+	[--SP] = P1;
+	[--SP] = P2;
+	P1.L = _uart_str;
+	P1.H = _uart_str;
+.LN3:
+// line 44
+	R1 = R1 - R1 (NS) || P0 = [P1];
+.LN4:
+// line 53
+	P2 = 1024 /* -4193280 */;
+	P2.H = -64 /* -4193280 */;
+	// -- stall --
+.LN5:
+// line 44
+	R0 = B[P0] (X);
+	CC = R0 == 0;
+	if !CC jump .P44L2 ;
+
+.LN6:
+// line 47
+	P1 = 1032 /* -4193272 */;
+	P1.H = -64 /* -4193272 */;
+	R0 = W[P1] (X);
+	W[SP + 26] = R0;
+	P1.L = _uart_tx_active;
+	P1.H = _uart_tx_active;
+.LN7:
+// line 48
+	B[P1] = R1;
+
+.P44L3:
+.LN8:
+// line 58
+	P2 = [SP++];
+	P1 = [SP++];
+	P0 = [SP++];
+	R1 = [SP++];
+	R0 = [SP++];
+	ASTAT = [SP++];
+	UNLINK;
+	RTI;
+
+	.align 4
+.P44L2:
+.LN9:
+// line 50
+	P0 = 1044 /* -4193260 */;
+	P0.H = -64 /* -4193260 */;
+	.align 2
+	R0 = W[P0] (Z);
+	CC = BITTST(R0, 5);
+	if !CC jump .P44L3 ;
+
+.LN10:
+// line 53
+	P0 = [P1];
+	// -- 3 stalls --
+	R0 = B[P0] (X);
+	W[P2] = R0.L;
+.LN11:
+// line 55
+	R0 = [P1];
+	R0 += 1;
+	[P1] = R0;
+.LN12:
+// line 58
+	P2 = [SP++];
+	P1 = [SP++];
+	P0 = [SP++];
+	R1 = [SP++];
+	R0 = [SP++];
+	ASTAT = [SP++];
+	UNLINK;
+	RTI;
+.LN._UART0_TX_ISR.end:
+._UART0_TX_ISR.end:
+	.global _UART0_TX_ISR;
+	.type _UART0_TX_ISR,STT_FUNC;
+
+	.align 4;
+_Sport0_RX_ISR:
+.LN_Sport0_RX_ISR:
+//-------------------------------------------------------------------
+//  Procedure statistics:
+//  Frame size            = 144 
+//  Scratch registers used: {R0-R3,P0-P2,I0-I3,B0-B3,M0-M3,A0-A1,ASTAT0-ASTAT1,CC,AQ,LC0-LC1,LT0-LT1,LB0-LB1}
+//  Call preserved registers used: {L0-L3,RETS}
+//  Registers that could be clobbered by function calls: {R0-R3,P0-P2,I0-I3,B0-B3,M0-M3,A0-A1,ASTAT0-ASTAT1,CC,AQ,LC0-LC1,LT0-LT1,LB0-LB1,RETS,SEQSTAT,SYSCFG,USP}
+//-------------------------------------------------------------------
+// line "..\src\ISR.c":15
+	LINK 0;
+	.align 2
+	[--SP] = LC0;                           // Inserted 6 instrs to fix anomaly w_05000312. 
+	[--SP] = LC1;
+	[--SP] = LT0;
+	[--SP] = LT1;
+	[--SP] = LB0;
+	[--SP] = LB1;
+	[--SP] = ASTAT;
+	[--SP] = R0;
+	[--SP] = R1;
+	[--SP] = R2;
+	[--SP] = R3;
+	[--SP] = P0;
+	[--SP] = P1;
+	[--SP] = P2;
+	[--SP] = A0.W;
+	[--SP] = A0.X;
+	[--SP] = A1.W;
+	[--SP] = A1.X;
+	[--SP] = L0;
+	[--SP] = L1;
+	[--SP] = L2;
+	[--SP] = L3;
+	[--SP] = I0;
+	[--SP] = I1;
+	[--SP] = I2;
+	[--SP] = I3;
+	[--SP] = B0;
+	[--SP] = B1;
+	[--SP] = B2;
+	[--SP] = B3;
+	[--SP] = M0;
+	[--SP] = M1;
+	[--SP] = M2;
+	[--SP] = M3;
+	L0 = 0;
+	L1 = 0;
+	L2 = 0;
+	L3 = 0;
+	SP += -12;
+.LN13:
+// line 17
+	R0 = 1;
+	P1 = 3304 /* -4191000 */;
+	P1.H = -64 /* -4191000 */;
+	W[P1] = R0.L;
+	P1.L = _iRxBuffer1;
+	P1.H = _iRxBuffer1;
+.LN14:
+// line 20
+	R0 = [P1 + 0];
+	P0.L = _iChannel0LeftIn;
+	P0.H = _iChannel0LeftIn;
+	[P0] = R0;
+.LN15:
+// line 21
+	R0 = [P1 + 4];
+	P1.L = _iChannel0RightIn;
+	P1.H = _iChannel0RightIn;
+	[P1] = R0;
+.LN16:
+// line 24
+	CALL.X _Process_Data;
+	P1.L = _iChannel0LeftOut;
+	P1.H = _iChannel0LeftOut;
+.LN17:
+// line 27
+	R0 = [P1];
+	P1.L = _iTxBuffer1;
+	P1.H = _iTxBuffer1;
+	[P1 + 0] = R0;
+	P0.L = _iChannel0RightOut;
+	P0.H = _iChannel0RightOut;
+.LN18:
+// line 28
+	R0 = [P0];
+	[P1 + 4] = R0;
+.LN19:
+// line 30
+	SP += 12;
+	M3 = [SP++];
+	M2 = [SP++];
+	M1 = [SP++];
+	M0 = [SP++];
+	B3 = [SP++];
+	B2 = [SP++];
+	B1 = [SP++];
+	B0 = [SP++];
+	I3 = [SP++];
+	I2 = [SP++];
+	I1 = [SP++];
+	I0 = [SP++];
+	L3 = [SP++];
+	L2 = [SP++];
+	L1 = [SP++];
+	L0 = [SP++];
+	A1.X = [SP++];
+	A1.W = [SP++];
+	A0.X = [SP++];
+	A0.W = [SP++];
+	P2 = [SP++];
+	P1 = [SP++];
+	P0 = [SP++];
+	R3 = [SP++];
+	R2 = [SP++];
+	R1 = [SP++];
+	R0 = [SP++];
+	ASTAT = [SP++];
+	LB1 = [SP++];                           // Inserted 6 instrs to fix anomaly w_05000312. 
+	LB0 = [SP++];
+	LT1 = [SP++];
+	LT0 = [SP++];
+	LC1 = [SP++];
+	LC0 = [SP++];
+	UNLINK;
+	RTI;
+.LN._Sport0_RX_ISR.end:
+._Sport0_RX_ISR.end:
+	.global _Sport0_RX_ISR;
+	.type _Sport0_RX_ISR,STT_FUNC;
+
+	.file_attr ProjectName="BlackFin_Frame";
+	.file_attr FuncName="_UART0_RX_ISR";
+	.file_attr FuncName="_UART0_TX_ISR";
+	.file_attr FuncName="_atof";
+	.file_attr FuncName="_atoi";
+	.file_attr FuncName="_atol";
+	.file_attr FuncName="_strtod";
+	.file_attr FuncName="_strtoul";
+	.file_attr FuncName="_atoll";
+	.file_attr FuncName="_strtof";
+	.file_attr FuncName="_strtold";
+	.file_attr FuncName="_strtoll";
+	.file_attr FuncName="_strtoull";
+	.file_attr FuncName="_Sport0_RX_ISR";
+	.file_attr Content="Code";
+.epctext.end:
+
+	.extern _Process_Data;
+	.type _Process_Data,STT_FUNC;
+
+	.section .debug_abbrev;
+
+	.align 1;
+	.type .epcabbrev,STT_OBJECT;
+.epcabbrev:
+	.inc/binary ".\src\ISR.sbn", 0, 247;
+.epcabbrev.end:
+
+	.section .debug_info;
+
+	.align 1;
+	.type .epcdebug,STT_OBJECT;
+.epcdebug:
+	.byte =
+		0x9B,0x12,0x00,0x00,0x02,0x00;
+	.byte4 = .epcabbrev;
+	.byte =
+		0x04,0x01,0x2E,0x2E,0x5C,0x73,0x72,0x63,0x5C,0x49,0x53,0x52,
+		0x2E,0x63,0x00,0x0C;
+	.byte4 = .epcline;
+	.inc/binary ".\src\ISR.sbn", 247, 4214;
+	.byte4 = .LN_UART0_RX_ISR;
+	.byte4 = .LN._UART0_RX_ISR.end;
+	.byte =
+		0x01,0x01,0x00,0x11,0x00,0x00,0x00,0x00;
+	.byte4 = .LN0;
+	.byte4 = .LN._UART0_RX_ISR.end;
+	.byte =
+		0x00,0x00,0x10,0xFC,0x10,0x00,0x00,0x55,0x41,0x52,0x54,0x30,
+		0x5F,0x54,0x58,0x5F,0x49,0x53,0x52,0x00,0x01;
+	.byte4 = .LN_UART0_TX_ISR;
+	.byte4 = .LN._UART0_TX_ISR.end;
+	.byte =
+		0x01,0x01,0x00,0x11,0x00,0x00,0x00,0x00;
+	.byte4 = .LN3;
+	.byte4 = .LN._UART0_TX_ISR.end;
+	.byte =
+		0x11,0x00,0x00,0x00,0x00;
+	.byte4 = .LN6;
+	.byte4 = .LN8;
+	.byte =
+		0x12,0x74,0x65,0x6D,0x70,0x00,0x01,0xFC,0x10,0x00,0x00,0x02,
+		0x7F,0x7E,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0E,0xA9,
+		0x01,0x00,0x00,0x10,0x2F,0x11,0x00,0x00,0x53,0x70,0x6F,0x72,
+		0x74,0x30,0x5F,0x52,0x58,0x5F,0x49,0x53,0x52,0x00,0x01;
+	.byte4 = .LN_Sport0_RX_ISR;
+	.byte4 = .LN._Sport0_RX_ISR.end;
+	.byte =
+		0x01,0x01,0x00,0x11,0x00,0x00,0x00,0x00;
+	.byte4 = .LN13;
+	.byte4 = .LN._Sport0_RX_ISR.end;
+	.byte =
+		0x00,0x00,0x12,0x75,0x61,0x72,0x74,0x5F,0x73,0x74,0x72,0x00,
+		0x01,0x99,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _uart_str;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x75,0x61,0x72,0x74,0x5F,0x63,
+		0x68,0x00,0x01,0xFC,0x10,0x00,0x00,0x05,0x03;
+	.byte4 = _uart_ch;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x75,0x61,0x72,0x74,0x5F,0x74,
+		0x78,0x5F,0x61,0x63,0x74,0x69,0x76,0x65,0x00,0x01,0x89,0x12,
+		0x00,0x00,0x05,0x03;
+	.byte4 = _uart_tx_active;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x75,0x61,0x72,0x74,0x5F,0x72,
+		0x78,0x5F,0x66,0x6C,0x61,0x67,0x00,0x01,0x89,0x12,0x00,0x00,
+		0x05,0x03;
+	.byte4 = _uart_rx_flag;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x43,0x68,0x61,0x6E,0x6E,
+		0x65,0x6C,0x30,0x4C,0x65,0x66,0x74,0x49,0x6E,0x00,0x01,0x60,
+		0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iChannel0LeftIn;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x43,0x68,0x61,0x6E,0x6E,
+		0x65,0x6C,0x30,0x52,0x69,0x67,0x68,0x74,0x49,0x6E,0x00,0x01,
+		0x60,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iChannel0RightIn;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x43,0x68,0x61,0x6E,0x6E,
+		0x65,0x6C,0x30,0x4C,0x65,0x66,0x74,0x4F,0x75,0x74,0x00,0x01,
+		0x60,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iChannel0LeftOut;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x43,0x68,0x61,0x6E,0x6E,
+		0x65,0x6C,0x30,0x52,0x69,0x67,0x68,0x74,0x4F,0x75,0x74,0x00,
+		0x01,0x60,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iChannel0RightOut;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x52,0x78,0x42,0x75,0x66,
+		0x66,0x65,0x72,0x31,0x00,0x01,0x77,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iRxBuffer1;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x54,0x78,0x42,0x75,0x66,
+		0x66,0x65,0x72,0x31,0x00,0x01,0x65,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iTxBuffer1;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x0E,0xD4,0x01,0x00,0x00,0x13,0x77,
+		0x12,0x00,0x00,0x60,0x12,0x00,0x00,0x14,0x00,0x00,0xFF,0xFF,
+		0xFF,0xFF,0x0F,0x00,0x13,0x89,0x12,0x00,0x00,0x60,0x12,0x00,
+		0x00,0x14,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0x0F,0x00,0x0E,0x6E,
+		0x01,0x00,0x00,0x0E,0x81,0x01,0x00,0x00,0x05,0x00,0x8E,0x12,
+		0x00,0x00,0x0E,0x93,0x12,0x00,0x00,0x00;
+.epcdebug.end:
+
+	.section .debug_line;
+
+	.align 1;
+	.type .epcline,STT_OBJECT;
+.epcline:
+	.inc/binary ".\src\ISR.sbn", 4461, 803;
+	.byte4 = .LN_UART0_RX_ISR;
+	.byte =
+		0x04,0x01,0x05,0x01,0x4C,0x00,0x05,0x02;
+	.byte4 = .LN0;
+	.byte =
+		0x05,0x02,0x0B,0x00,0x05,0x02;
+	.byte4 = .LN1;
+	.byte =
+		0x0C,0x00,0x05,0x02;
+	.byte4 = .LN2;
+	.byte =
+		0x05,0x01,0x0A,0x00,0x05,0x02;
+	.byte4 = .LN._UART0_RX_ISR.end;
+	.byte =
+		0x00,0x01,0x01,0x00,0x05,0x02;
+	.byte4 = .LN_UART0_TX_ISR;
+	.byte =
+		0x04,0x01,0x05,0x01,0x32,0x00,0x05,0x02;
+	.byte4 = .LN3;
+	.byte =
+		0x05,0x02,0x0B,0x00,0x05,0x02;
+	.byte4 = .LN4;
+	.byte =
+		0x05,0x04,0x12,0x00,0x05,0x02;
+	.byte4 = .LN5;
+	.byte =
+		0x05,0x02,0x03,0x77,0x01,0x00,0x05,0x02;
+	.byte4 = .LN6;
+	.byte =
+		0x05,0x17,0x0C,0x00,0x05,0x02;
+	.byte4 = .LN7;
+	.byte =
+		0x05,0x03,0x0A,0x00,0x05,0x02;
+	.byte4 = .LN8;
+	.byte =
+		0x05,0x01,0x13,0x00,0x05,0x02;
+	.byte4 = .LN9;
+	.byte =
+		0x05,0x03,0x03,0x78,0x01,0x00,0x05,0x02;
+	.byte4 = .LN10;
+	.byte =
+		0x05,0x04,0x0C,0x00,0x05,0x02;
+	.byte4 = .LN11;
+	.byte =
+		0x0B,0x00,0x05,0x02;
+	.byte4 = .LN12;
+	.byte =
+		0x05,0x01,0x0C,0x00,0x05,0x02;
+	.byte4 = .LN._UART0_TX_ISR.end;
+	.byte =
+		0x00,0x01,0x01,0x00,0x05,0x02;
+	.byte4 = .LN_Sport0_RX_ISR;
+	.byte =
+		0x04,0x01,0x05,0x01,0x17,0x00,0x05,0x02;
+	.byte4 = .LN13;
+	.byte =
+		0x05,0x02,0x0B,0x00,0x05,0x02;
+	.byte4 = .LN14;
+	.byte =
+		0x0C,0x00,0x05,0x02;
+	.byte4 = .LN15;
+	.byte =
+		0x0A,0x00,0x05,0x02;
+	.byte4 = .LN16;
+	.byte =
+		0x05,0x0E,0x0C,0x00,0x05,0x02;
+	.byte4 = .LN17;
+	.byte =
+		0x05,0x02,0x0C,0x00,0x05,0x02;
+	.byte4 = .LN18;
+	.byte =
+		0x0A,0x00,0x05,0x02;
+	.byte4 = .LN19;
+	.byte =
+		0x05,0x01,0x0B,0x00,0x05,0x02;
+	.byte4 = .LN._Sport0_RX_ISR.end;
+	.byte =
+		0x00,0x01,0x01;
+.epcline.end:
+
+	.section .debug_pubnames;
+
+	.align 1;
+.epcpubnames:
+	.type .epcpubnames,STT_OBJECT;
+	.byte =
+		0x42,0x00,0x00,0x00,0x02,0x00;
+	.byte4 = .epcdebug;
+	.byte =
+		0x9F,0x12,0x00,0x00,0x81,0x10,0x00,0x00,0x55,0x41,0x52,0x54,
+		0x30,0x5F,0x52,0x58,0x5F,0x49,0x53,0x52,0x00,0xAE,0x10,0x00,
+		0x00,0x55,0x41,0x52,0x54,0x30,0x5F,0x54,0x58,0x5F,0x49,0x53,
+		0x52,0x00,0x01,0x11,0x00,0x00,0x53,0x70,0x6F,0x72,0x74,0x30,
+		0x5F,0x52,0x58,0x5F,0x49,0x53,0x52,0x00,0x00,0x00,0x00,0x00;
+.epcpubnames.end:
+
+	.section .debug_aranges;
+
+	.align 1;
+.epcaranges:
+	.type .epcaranges,STT_OBJECT;
+	.byte =
+		0x2C,0x00,0x00,0x00,0x02,0x00;
+	.byte4 = .epcdebug;
+	.byte =
+		0x04,0x00,0x00,0x00,0x00,0x00;
+	.byte4 = .LN_UART0_RX_ISR;
+	.byte4 = .LN._UART0_RX_ISR.end-.LN_UART0_RX_ISR;
+	.byte4 = .LN_UART0_TX_ISR;
+	.byte4 = .LN._UART0_TX_ISR.end-.LN_UART0_TX_ISR;
+	.byte4 = .LN_Sport0_RX_ISR;
+	.byte4 = .LN._Sport0_RX_ISR.end-.LN_Sport0_RX_ISR;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00;
+.epcaranges.end:
+
+	.section/DOUBLE32 data1;
+
+
+	.extern _uart_str;
+	.type _uart_str,STT_OBJECT;
+	.extern _uart_ch;
+	.type _uart_ch,STT_OBJECT;
+	.extern _uart_tx_active;
+	.type _uart_tx_active,STT_OBJECT;
+	.extern _uart_rx_flag;
+	.type _uart_rx_flag,STT_OBJECT;
+	.extern _iChannel0LeftIn;
+	.type _iChannel0LeftIn,STT_OBJECT;
+	.extern _iChannel0RightIn;
+	.type _iChannel0RightIn,STT_OBJECT;
+	.extern _iChannel0LeftOut;
+	.type _iChannel0LeftOut,STT_OBJECT;
+	.extern _iChannel0RightOut;
+	.type _iChannel0RightOut,STT_OBJECT;
+	.extern _iRxBuffer1;
+	.type _iRxBuffer1,STT_OBJECT;
+	.extern _iTxBuffer1;
+	.type _iTxBuffer1,STT_OBJECT;

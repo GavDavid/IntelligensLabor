@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="blackfin.toolchain.configuration.debug.1549345226">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="blackfin.toolchain.configuration.debug.1549345226" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.analog.crosscore.managedbuilder.core.errorparser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,com.analog.crosscore.managedbuilder.buildType=com.analog.crosscore.managedbuilder.buildType.debug" cleanCommand="clean" description="" id="blackfin.toolchain.configuration.debug.1549345226" name="Debug" parent="blackfin.toolchain.configuration.debug">
+					<folderInfo id="blackfin.toolchain.configuration.debug.1549345226." name="/" resourcePath="">
+						<toolChain id="blackfin.toolchain.debug.495020715" isAbstract="false" name="CrossCore Blackfin Toolchain" superClass="blackfin.toolchain" targetTool="blackfin.toolchain.linker">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="blackfin.platform.1069126628" name="CrossCore Blackfin Target Platform" osList="all" superClass="blackfin.platform"/>
+							<builder buildPath="${workspace_loc:/LabFrame_FIR_fract}/Debug" id="blackfin.toolchain.builder.800521308" keepEnvironmentInBuildfile="false" name="CrossCore Blackfin Builder" superClass="blackfin.toolchain.builder"/>
+							<tool id="blackfin.toolchain.assembler.994429388" name="CrossCore Blackfin Assembler" superClass="blackfin.toolchain.assembler">
+								<option id="assembler.option.debugcode.2017058270" name="Generate debug information (-g)" superClass="assembler.option.debugcode" useByScannerDiscovery="false"/>
+								<option id="assembler.option.proc.1738921243" name="-proc" superClass="assembler.option.proc" useByScannerDiscovery="false" value=" ADSP-BF537" valueType="string"/>
+								<option id="assembler.option.sirevision.743995276" name="-si-revision" superClass="assembler.option.sirevision" useByScannerDiscovery="false" value=" 0.3" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="assembler.option.preprocessdefs.1225011773" name="Preprocessor definitions (-D):" superClass="assembler.option.preprocessdefs" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CORE0"/>
+									<listOptionValue builtIn="false" value="_DEBUG"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="assembler.option.additionaldirectories.1970225267" name="Additional include directories (-I):" superClass="assembler.option.additionaldirectories" useByScannerDiscovery="false" valueType="includePath"/>
+								<option id="assembler.option.savetempfiles.1506697267" name="Save temporary files (-save-temps)" superClass="assembler.option.savetempfiles" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<inputType id="assembler.input.1840534891" name="Assembler Source" superClass="assembler.input"/>
+							</tool>
+							<tool id="blackfin.toolchain.compiler.1892925711" name="CrossCore Blackfin C/C++ Compiler" superClass="blackfin.toolchain.compiler">
+								<option id="compiler.option.optimization.1854650119" name="Enable optimization (-O)" superClass="compiler.option.optimization" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="compiler.option.debugcode.678328649" name="Generate debug information (-g)" superClass="compiler.option.debugcode" useByScannerDiscovery="false"/>
+								<option id="compiler.option.proc.1692089952" name="-proc" superClass="compiler.option.proc" useByScannerDiscovery="false" value=" ADSP-BF537" valueType="string"/>
+								<option id="compiler.option.sirevision.1986672110" name="-si-revision" superClass="compiler.option.sirevision" useByScannerDiscovery="false" value=" 0.3" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="compiler.option.preprocessdefs.374233020" name="Preprocessor definitions (-D):" superClass="compiler.option.preprocessdefs" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CORE0"/>
+									<listOptionValue builtIn="false" value="_DEBUG"/>
+								</option>
+								<option id="compiler.option.coreid.224804618" name="Specify the core Id (-DCORE[A|B|0-2])" superClass="compiler.option.coreid" useByScannerDiscovery="false" value="0" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="compiler.option.additionaldirectories.452118441" name="Additional include directories (-I):" superClass="compiler.option.additionaldirectories" useByScannerDiscovery="false" valueType="includePath"/>
+								<option id="compiler.option.circbufgen.430789259" name="Circular Buffer Generation" superClass="compiler.option.circbufgen" useByScannerDiscovery="false" value="compiler.option.circbufgen.enumerated.never" valueType="enumerated"/>
+								<option id="compiler.option.savetempfiles.153579715" name="Save temporary files (-save-temps)" superClass="compiler.option.savetempfiles" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<inputType id="compiler.inputType.428372781" name="C/C++ Source" superClass="compiler.inputType"/>
+							</tool>
+							<tool id="blackfin.toolchain.linker.2146567433" name="CrossCore Blackfin Linker" superClass="blackfin.toolchain.linker">
+								<option id="linker.option.individmap.831901486" name="Individually map functions and data items (-ip)" superClass="linker.option.individmap" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="linker.option.eliminateunused.793522109" name="Eliminate unused objects (-e)" superClass="linker.option.eliminateunused" useByScannerDiscovery="false"/>
+								<option id="linker.option.usedbglib.1150468747" name="Use Debug System libraries (-add-debug-libpaths)" superClass="linker.option.usedbglib" useByScannerDiscovery="false"/>
+								<option id="linker.option.proc.2059726384" name="-proc" superClass="linker.option.proc" useByScannerDiscovery="false" value=" ADSP-BF537" valueType="string"/>
+								<option id="linker.option.sirevision.537107251" name="-si-revision" superClass="linker.option.sirevision" useByScannerDiscovery="false" value=" 0.3" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="linker.option.preprocessdefs.8141084" name="Preprocessor definitions (-MD)" superClass="linker.option.preprocessdefs" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CORE0"/>
+									<listOptionValue builtIn="false" value="DEBUG"/>
+								</option>
+								<option id="linker.option.gensymbolmap.1982903280" name="Generate symbol map (-map)" superClass="linker.option.gensymbolmap" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="linker.option.savetempfiles.1227751175" name="Save temporary files (-save-temps)" superClass="linker.option.savetempfiles" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="blackfin.linker.option.memusage.1540164063" name="Memory Usage" superClass="blackfin.linker.option.memusage" useByScannerDiscovery="false" value="blackfin.linker.option.memusage.enumerated.internalsramonly" valueType="enumerated"/>
+								<inputType id="linker.doj.input.1278439894" name="Object Files" superClass="linker.doj.input"/>
+							</tool>
+							<tool id="blackfin.toolchain.archiver.1862334472" name="CrossCore Blackfin Archiver" superClass="blackfin.toolchain.archiver">
+								<option id="archiver.option.proc.470278613" name="-proc" superClass="archiver.option.proc" value=" ADSP-BF537" valueType="string"/>
+								<option id="archiver.option.sirevision.1370052966" name="-si-revision" superClass="archiver.option.sirevision" value=" 0.3" valueType="string"/>
+							</tool>
+							<tool id="blackfin.toolchain.loader.214216564" name="CrossCore Blackfin Loader" superClass="blackfin.toolchain.loader">
+								<option id="loader.option.proc.151710723" name="-proc" superClass="loader.option.proc" value=" ADSP-BF537" valueType="string"/>
+								<option id="loader.option.sirevision.907866951" name="-si-revision" superClass="loader.option.sirevision" value=" 0.3" valueType="string"/>
+							</tool>
+							<tool id="blackfin.toolchain.deviceprogrammer.1851396749" name="CrossCore Blackfin Device Programmer" superClass="blackfin.toolchain.deviceprogrammer">
+								<option id="deviceprogrammer.option.proc.1517732202" name="-proc" superClass="deviceprogrammer.option.proc" value=" ADSP-BF537" valueType="string"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="system|src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="blackfin.toolchain.configuration.release.676038238">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="blackfin.toolchain.configuration.release.676038238" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.analog.crosscore.managedbuilder.core.errorparser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,com.analog.crosscore.managedbuilder.buildType=com.analog.crosscore.managedbuilder.buildType.release" cleanCommand="clean" description="" id="blackfin.toolchain.configuration.release.676038238" name="Release" parent="blackfin.toolchain.configuration.release">
+					<folderInfo id="blackfin.toolchain.configuration.release.676038238." name="/" resourcePath="">
+						<toolChain id="blackfin.toolchain.release.1038917266" isAbstract="false" name="CrossCore Blackfin Toolchain" superClass="blackfin.toolchain" targetTool="blackfin.toolchain.linker">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="blackfin.platform.1952956333" name="CrossCore Blackfin Target Platform" osList="all" superClass="blackfin.platform"/>
+							<builder buildPath="${workspace_loc:/LabFrame_FIR_fract}/Release" id="blackfin.toolchain.builder.1352706068" keepEnvironmentInBuildfile="false" name="CrossCore Blackfin Builder" superClass="blackfin.toolchain.builder"/>
+							<tool id="blackfin.toolchain.assembler.280254680" name="CrossCore Blackfin Assembler" superClass="blackfin.toolchain.assembler">
+								<option id="assembler.option.debugcode.336927246" name="Generate debug information (-g)" superClass="assembler.option.debugcode" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="assembler.option.proc.502848943" name="-proc" superClass="assembler.option.proc" value=" ADSP-BF537" valueType="string"/>
+								<option id="assembler.option.sirevision.914411815" name="-si-revision" superClass="assembler.option.sirevision" value=" 0.3" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="assembler.option.preprocessdefs.1362918372" name="Preprocessor definitions (-D):" superClass="assembler.option.preprocessdefs" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CORE0"/>
+									<listOptionValue builtIn="false" value="NDEBUG"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="assembler.option.additionaldirectories.2036389189" name="Additional include directories (-I):" superClass="assembler.option.additionaldirectories" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/system}&quot;"/>
+								</option>
+								<inputType id="assembler.input.1402970728" name="Assembler Source" superClass="assembler.input"/>
+							</tool>
+							<tool id="blackfin.toolchain.compiler.1772939581" name="CrossCore Blackfin C/C++ Compiler" superClass="blackfin.toolchain.compiler">
+								<option id="compiler.option.optimization.243457453" name="Enable optimization (-O)" superClass="compiler.option.optimization" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="compiler.option.debugcode.281794654" name="Generate debug information (-g)" superClass="compiler.option.debugcode" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="compiler.option.proc.363268124" name="-proc" superClass="compiler.option.proc" value=" ADSP-BF537" valueType="string"/>
+								<option id="compiler.option.sirevision.143239448" name="-si-revision" superClass="compiler.option.sirevision" value=" 0.3" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="compiler.option.preprocessdefs.1874528210" name="Preprocessor definitions (-D):" superClass="compiler.option.preprocessdefs" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CORE0"/>
+									<listOptionValue builtIn="false" value="NDEBUG"/>
+								</option>
+								<option id="compiler.option.coreid.2030198612" name="Specify the core Id (-DCORE[A|B|0-2])" superClass="compiler.option.coreid" value="0" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="compiler.option.additionaldirectories.1332582514" name="Additional include directories (-I):" superClass="compiler.option.additionaldirectories" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/system}&quot;"/>
+								</option>
+								<inputType id="compiler.inputType.750303885" name="C/C++ Source" superClass="compiler.inputType"/>
+							</tool>
+							<tool id="blackfin.toolchain.linker.392541951" name="CrossCore Blackfin Linker" superClass="blackfin.toolchain.linker">
+								<option defaultValue="true" id="linker.option.individmap.369093211" name="Individually map functions and data items (-ip)" superClass="linker.option.individmap" valueType="boolean"/>
+								<option id="linker.option.eliminateunused.1083240356" name="Eliminate unused objects (-e)" superClass="linker.option.eliminateunused" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="linker.option.usedbglib.1655715795" name="Use Debug System libraries (-add-debug-libpaths)" superClass="linker.option.usedbglib" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="linker.option.proc.608332933" name="-proc" superClass="linker.option.proc" value=" ADSP-BF537" valueType="string"/>
+								<option id="linker.option.sirevision.704070612" name="-si-revision" superClass="linker.option.sirevision" value=" 0.3" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="linker.option.preprocessdefs.1734341140" name="Preprocessor definitions (-MD)" superClass="linker.option.preprocessdefs" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CORE0"/>
+									<listOptionValue builtIn="false" value="RELEASE"/>
+								</option>
+								<inputType id="linker.doj.input.676884925" name="Object Files" superClass="linker.doj.input"/>
+							</tool>
+							<tool id="blackfin.toolchain.archiver.809956050" name="CrossCore Blackfin Archiver" superClass="blackfin.toolchain.archiver">
+								<option id="archiver.option.proc.664432663" name="-proc" superClass="archiver.option.proc" value=" ADSP-BF537" valueType="string"/>
+								<option id="archiver.option.sirevision.719567048" name="-si-revision" superClass="archiver.option.sirevision" value=" 0.3" valueType="string"/>
+							</tool>
+							<tool id="blackfin.toolchain.loader.1008319861" name="CrossCore Blackfin Loader" superClass="blackfin.toolchain.loader">
+								<option id="loader.option.proc.2015338394" name="-proc" superClass="loader.option.proc" value=" ADSP-BF537" valueType="string"/>
+								<option id="loader.option.sirevision.382167932" name="-si-revision" superClass="loader.option.sirevision" value=" 0.3" valueType="string"/>
+							</tool>
+							<tool id="blackfin.toolchain.deviceprogrammer.668210613" name="CrossCore Blackfin Device Programmer" superClass="blackfin.toolchain.deviceprogrammer">
+								<option id="deviceprogrammer.option.proc.1050838054" name="-proc" superClass="deviceprogrammer.option.proc" value=" ADSP-BF537" valueType="string"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="system|src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="LabFrame_FIR_fract.blackfin.projecttype.dxe.1522067683" name="Blackfin Executable Project" projectType="blackfin.projecttype.dxe"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="org.eclipse.cdt.core.language.mapping">
+		<project-mappings>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.asmSource" language="com.analog.crosscore.ui.asm.adi.extension"/>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cHeader" language="org.eclipse.cdt.core.c.adi.extension"/>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cSource" language="org.eclipse.cdt.core.c.adi.extension"/>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cxxHeader" language="org.eclipse.cdt.core.c++.adi.extension"/>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cxxSource" language="org.eclipse.cdt.core.c++.adi.extension"/>
+		</project-mappings>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="refreshScope"/>
+</cproject>

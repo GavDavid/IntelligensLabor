@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;BlackFin_FIR_fract/src/custom_coeffs.dat&apos; to &apos;custom_coeffs_b.dat&apos;" description="Rename resource &apos;custom_coeffs.dat&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/custom_coeffs.dat" name="custom_coeffs_b.dat" stamp="1764599459645" updateReferences="true"/>
+</session>

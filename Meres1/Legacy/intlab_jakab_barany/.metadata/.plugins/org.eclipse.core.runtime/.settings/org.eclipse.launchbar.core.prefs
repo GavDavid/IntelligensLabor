@@ -1,0 +1,13 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:BlackFin_FIR_asm Debug,org.eclipse.launchbar.core.descriptorType.default\:GpioPushbuttonLed Debug,org.eclipse.launchbar.core.descriptorType.default\:Eq Debug
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:BlackFin_FIR_asm\ Debug/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:BlackFin_FIR_asm\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:BlackFin_FIR_fract\ Debug/activeLaunchMode=debug
+org.eclipse.launchbar.core.descriptorType.default\:BlackFin_FIR_fract\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:BlackFin_Frame\ Debug/activeLaunchMode=debug
+org.eclipse.launchbar.core.descriptorType.default\:BlackFin_Frame\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:Eq\ Debug/activeLaunchMode=debug
+org.eclipse.launchbar.core.descriptorType.default\:Eq\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

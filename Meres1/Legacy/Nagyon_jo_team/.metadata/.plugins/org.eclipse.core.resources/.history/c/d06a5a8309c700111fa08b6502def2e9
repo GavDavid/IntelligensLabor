@@ -1,0 +1,45 @@
+#include "frame.h"
+#include <stdfix.h>
+#include "sin2pi_fx.h"
+
+#define FCLK 48000.0
+#define FOUT 50.0
+
+//--------------------------------------------------------------------------//
+// Function:	Process_Data()												//
+//																			//
+// Description: This function is called from inside the SPORT0 ISR every 	//
+//				time a complete audio frame has been received. The new 		//
+//				input samples can be found in the variables iChannel0LeftIn //
+//				and iChannel0RightIn respectively. The processed data should//
+// 				be stored in iChannel0LeftOut and iChannel0RightOut.		//
+//--------------------------------------------------------------------------//
+void Process_Data(void)
+{
+
+	if (uart_rx_flag)
+	{
+		uart_rx_flag = false;
+		uart_putch(uart_getch());
+	}
+	fract counter = -1;
+	int cntrInt;
+
+	static fract phase = FOUT/FCLK;
+
+	fract outData;
+	int outInt;
+
+	outData = sin2pi_pm_fx16(counter);
+	outInt = bitsr(outData);
+
+	cntrInt = bitsr(counter);
+	cntrInt+= bitsr(phase);
+
+	counter = rbits(cntrInt);
+
+
+	iChannel0LeftOut  = (outInt << 8);
+
+	iChannel0RightOut = iChannel0RightIn;
+}

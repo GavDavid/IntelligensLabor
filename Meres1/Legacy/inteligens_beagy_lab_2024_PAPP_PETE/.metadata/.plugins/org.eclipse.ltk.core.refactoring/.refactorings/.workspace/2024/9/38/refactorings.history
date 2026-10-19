@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;BlackFin_FIR_fract/src/fir_coef.mat&apos;" deleteContents="false" description="Delete resource &apos;BlackFin_FIR_fract/src/fir_coef.mat&apos;" element1="/BlackFin_FIR_fract/src/fir_coef.mat" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1726489661628"/>
+</session>

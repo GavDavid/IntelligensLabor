@@ -1,0 +1,152 @@
+/*
+ * allapotgep.c
+ *
+ *  Created on: 18 Nov 2024
+ *      Author: student
+ */
+
+
+#include "allapotgep.h"
+#include "my_led_pb.h"
+
+
+elem vezerloTomb[LevelMenu+1][PB4+1];
+
+volatile level_e frequencyParam = 0;
+
+volatile elem ve;
+
+volatile int newButtonPressed = 0;
+
+volatile esemenyEsParameter_t ep;
+param_t parameter;
+volatile allapot allapotValtozo = MainMenu;
+
+
+// Array for amps
+fract possibleLevelValues[NUMBER_OF_LEVELS] = {
+	#include "amps.dat"
+};
+
+int indeces[3] = {0};
+section("L1_data_b") fract levels[3] = {possibleLevelValues[0], possibleLevelValues[0], possibleLevelValues[0]};
+
+
+
+void setFrequencyParamBass(param_t* c){
+    printf("Bass selected\n");
+    *c = Bass;
+    setLeds(indeces[Bass]);
+}
+
+void setFrequencyParamMid(param_t* c){
+    printf("Mid selected\n");
+    *c = Mid;
+    setLeds(indeces[Mid]);
+}
+
+void setFrequencyParamHigh(param_t* c){
+    printf("High selected\n");
+    *c = High;
+    setLeds(indeces[High]);
+}
+
+
+
+void decreaseLevel(param_t* frequencyParameter){
+    if(indeces[*frequencyParameter] < NUMBER_OF_LEVELS - 1){
+    indeces[*frequencyParameter]++;
+    levels[*frequencyParameter] = possibleLevelValues[indeces[*frequencyParameter]];
+    }
+    else{
+        printf("Limit reached\n");
+    }
+    setLeds(indeces[*frequencyParameter]);
+}
+
+void increaseLevel(param_t* frequencyParameter){
+    if(indeces[*frequencyParameter] > 0){
+        indeces[*frequencyParameter]--;
+        levels[*frequencyParameter] = possibleLevelValues[indeces[*frequencyParameter]];
+    }
+    else{
+        printf("Limit reached\n");
+    }
+    setLeds(indeces[*frequencyParameter]);
+}
+
+
+void setLeds(int index){
+    switch(index){
+        case 0:
+            adi_gpio_Set(LED1_PORT, LED1_PIN | LED2_PIN | LED3_PIN | LED4_PIN | LED5_PIN);
+            break;
+        case 1:
+            adi_gpio_Set(LED1_PORT, LED1_PIN | LED2_PIN | LED3_PIN | LED4_PIN);
+            adi_gpio_Clear(LED1_PORT, LED5_PIN);
+            break;
+        case 2:
+            adi_gpio_Set(LED1_PORT, LED1_PIN | LED2_PIN | LED3_PIN);
+            adi_gpio_Clear(LED1_PORT, LED5_PIN | LED4_PIN);
+            break;
+        case 3:
+            adi_gpio_Set(LED1_PORT, LED1_PIN | LED2_PIN);
+            adi_gpio_Clear(LED1_PORT, LED5_PIN | LED4_PIN | LED3_PIN);
+            break;
+        case 4:
+            adi_gpio_Set(LED1_PORT, LED1_PIN);
+            adi_gpio_Clear(LED1_PORT, LED5_PIN | LED4_PIN | LED3_PIN | LED2_PIN);
+            break;
+        default:
+        	adi_gpio_Clear(LED1_PORT, LED5_PIN | LED4_PIN | LED3_PIN | LED2_PIN | LED1_PIN);
+        	break;
+
+    }
+}
+
+
+void gotoMainMenu(param_t* c){
+    printf("Returned to MainMenu\n");
+    setLeds(10);
+
+}
+void semmi(param_t* c){
+}
+
+void initStateMachine(){
+     allapot i;
+     esemeny j;
+
+     for (i = MainMenu; i <= LevelMenu; i++){
+        for(j = PB1; j <= PB4; j++){
+            vezerloTomb[i][j].uj_allapot=MainMenu; vezerloTomb[i][j].mit_tegyek=semmi;
+        }
+     }
+
+     vezerloTomb[MainMenu][PB4].uj_allapot = LevelMenu; vezerloTomb[MainMenu][PB4].mit_tegyek = setFrequencyParamBass;
+     vezerloTomb[MainMenu][PB3].uj_allapot = LevelMenu; vezerloTomb[MainMenu][PB3].mit_tegyek = setFrequencyParamMid;
+     vezerloTomb[MainMenu][PB2].uj_allapot = LevelMenu; vezerloTomb[MainMenu][PB2].mit_tegyek = setFrequencyParamHigh;
+
+
+     vezerloTomb[LevelMenu][PB4].uj_allapot = LevelMenu; vezerloTomb[LevelMenu][PB4].mit_tegyek = decreaseLevel;
+     vezerloTomb[LevelMenu][PB3].uj_allapot = LevelMenu; vezerloTomb[LevelMenu][PB3].mit_tegyek = increaseLevel;
+     vezerloTomb[LevelMenu][PB2].uj_allapot = MainMenu; vezerloTomb[LevelMenu][PB2].mit_tegyek = gotoMainMenu;
+}
+
+void allapotgep(){
+    //állapotok kiírása:
+
+    //printf("-------------\n");
+    //printf("Bass: %d \t\t Mid: %d \t\t High: %d\n", levels[0], levels[1], levels[2]);
+
+    //ep = mi_tortent();
+    //ep.e = mi_tortent(); interrupt
+	if(newButtonPressed){
+		newButtonPressed = 0;
+		//ep.p = &parameter;
+		//ep.e = q.e;
+		ve = vezerloTomb[allapotValtozo][ep.e];
+		ve.mit_tegyek(ep.p);
+		allapotValtozo = ve.uj_allapot;
+	}
+}

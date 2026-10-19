@@ -1,0 +1,102 @@
+#include "frame.h"
+
+//--------------------------------------------------------------------------//
+// Function:	Process_Data()												//
+//																			//
+// Description: This function is called from inside the SPORT0 ISR every 	//
+//				time a complete audio frame has been received. The new 		//
+//				input samples can be found in the variables iChannel0LeftIn //
+//				and iChannel0RightIn respectively. The processed data should//
+// 				be stored in iChannel0LeftOut and iChannel0RightOut.		//
+//--------------------------------------------------------------------------//
+void Process_Data(void)
+{
+
+	if (uart_rx_flag)
+	{
+		uart_rx_flag = false;
+		uart_putch(uart_getch());
+	}
+
+	iChannel0LeftOut  = iChannel0LeftIn;
+	iChannel0RightOut = iChannel0RightIn;
+}
+#include <math.h>
+
+/* setts */
+#define FS        48000.0f
+#define FRACT_MAX  1.0f
+#define FRACT_MIN -1.0f
+
+/* cntrlls*/
+float freq = 1000.0f;
+float amp  = 0.8f;
+int waveform = 0;   // 0=sine, 1=square, 2=triangle, 3=saw
+
+/* swwp triggr */
+int sweep_mode = 0;   // 0=off, 1=linear, 2=log
+float f_start = 500.0f;
+float f_end   = 8000.0f;
+float sweep_time = 2.0f;
+
+/*state */
+float g_phase = 0.0f;
+float g_phase_step = 0.0f;
+unsigned int sweep_n = 0;
+
+/* sine */
+float sin2pi_pm(float p)
+{
+    return sinf(2.0f * 3.14159265358979323846f * p);
+}
+
+/* callback  */
+float signal_callback(void)
+{
+    /*SWEEP UPDATE */
+    if (sweep_mode != 0)
+    {
+        float t = (float)sweep_n / FS;
+        float x = t / sweep_time;
+
+        if (x >= 1.0f) {
+            sweep_n = 0;
+            x = 0.0f;
+        }
+
+        if (sweep_mode == 1)   // LINEAR
+            freq = f_start + (f_end - f_start) * x;
+
+        if (sweep_mode == 2)   // LOG
+            freq = f_start * powf(f_end / f_start, x);
+
+        sweep_n++;
+    }
+
+    g_phase_step = (2.0f * freq) / FS;
+
+    /* phazz accm */
+    g_phase += g_phase_step;
+    if (g_phase >= FRACT_MAX)
+        g_phase = FRACT_MIN;
+
+    float y = 0.0f;
+
+    /* waveform cntrl */
+    if (waveform == 0)           // SINE
+        y = sin2pi_pm(g_phase);
+
+    else if (waveform == 1)      // SQUARE
+        y = (g_phase >= 0) ? FRACT_MAX : FRACT_MIN;
+
+    else if (waveform == 2)      // TRIANGLE
+    {
+        float a = (g_phase > 0) ? -g_phase : g_phase;
+        y = (a + 0.5f) * 2.0f;
+    }
+
+    else if (waveform == 3)      // SAW
+        y = g_phase;
+
+    return amp * y;
+}

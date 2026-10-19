@@ -1,0 +1,21 @@
+/*
+ * allapotgep.c
+ *
+ *  Created on: 18 Nov 2024
+ *      Author: student
+ */
+
+
+#include "allapotgep.h"
+
+elem vezerloTomb[LevelMenu+1][PB4+1];
+
+level_e frequencyParam = 0;
+
+#define NUMBER_OF_LEVELS 5
+int possibleLevelValues[NUMBER_OF_LEVELS] = {};
+
+// Array for amps
+section("L1_data_b") fract possibleLevelValues[NUMBER_OF_LEVELS] = {
+	#include "amps.dat"
+};

@@ -1,0 +1,511 @@
+	.file "..\src\process_data_IIR.c";
+//  Compilation time: Mon Sep 16 16:30:55 2024
+//  Compiler options: -c -file-attr ProjectName=BlackFin_FIR_fract -proc ADSP-BF537 -flags-compiler --no_wrap_diagnostics -si-revision 0.3 -O -Ov100 -g -save-temps -path-output .\src -DCORE0 -D_DEBUG -structs-do-not-overlap -force-circbuf -no-const-strings -no-multiline -warn-protos -double-size-32 -decls-strong -cplbs -gnu-style-dependencies -MD -Mo src\process_data_IIR.d -o src\process_data_IIR.doj
+//  Compiler version: 8.15.1.0 (944d964b07b43641c9beb96c0dedb3360eadda96)
+//  Architecture: ADSP-BF537
+//  Silicon revision: 0.3
+//  Anomalies summary:
+//   Never on: w_05000046
+//   Disabled: w_05000048, w_05000103, w_05000104, w_05000120, w_05000127, w_05000157, w_05000198, w_05000202, w_05000209, w_05000227, w_05000244, w_05000246, w_05000248, w_05000262, w_05000264, w_05000283, w_F3_F_021, w_F3_F_008_F3_F_013, w_05000428, w_05000412, w_05000010, w_19000010, w_19000019, w_19000058
+//   Enabled: w_05000074_16000015, w_05000122, w_05000310_16000013, w_05000245_16000014, w_05000312, w_05000371, w_05000426_16000012, w_05000443_16000010, w_05000477_16000009, w_05000506_16000043
+
+.MESSAGE/SUPPRESS 5500;
+.MESSAGE/SUPPRESS 5508;
+
+
+	.section/DOUBLE32 program;
+
+.epctext:
+
+	.align 4;
+_Process_Data:
+.LN_Process_Data:
+//-------------------------------------------------------------------
+//  Procedure statistics:
+//  Frame size            = 28 
+//  Scratch registers used: {R0-R3,P0-P2,I0-I2,B1-B2,A0-A1,ASTAT0-ASTAT1,CC,LC0,LT0,LB0}
+//  Call preserved registers used: {R6-R7,P3-P5,L1-L2,RETS}
+//  Registers that could be clobbered by function calls: {R0-R3,P0-P2,I0-I3,B0-B3,M0-M3,A0-A1,ASTAT0-ASTAT1,CC,AQ,LC0-LC1,LT0-LT1,LB0-LB1,RETS,SEQSTAT,SYSCFG,USP}
+//Inlined in _Process_Data:
+//  ..\src\process_data_IIR.c:80:27'_bitsr
+//  ..\src\process_data_IIR.c:53:18'_rbits
+//-------------------------------------------------------------------
+// line "..\src\process_data_IIR.c":44
+	LINK 0;
+	.align 2
+	[--SP] = (R7:6, P5:3);
+	SP += -12;
+	P1.L = _uart_rx_flag;
+	P1.H = _uart_rx_flag;
+.LN0:
+// line 45
+	R0 = B[P1] (Z);
+	CC = R0 == 0;
+	if !CC jump .P40L1 ;
+
+.P40L10:
+	P2.L = _coefsA;
+	P2.H = _coefsA;
+.LN1:
+// line 53
+	R0 = [P2 + 16];
+.LN2:
+// line 61
+	R2 = 26215 /* 1717986919 */;
+	R2.H = 26214 /* 1717986919 */;
+	R1 = (A1 = R0.L * R2.L) (FU) || P5 = [P2 + 16];
+	A1 = A1 >> 16;
+	A1 += R2.H * R0.L (M, IS);
+	A1 += R0.H * R2.L (M, IS);
+	A1 = A1 >>> 16;
+	R3 = (A1 += R0.H * R2.H) (IS);
+	R6 = R0 >>> 31;
+	R2 = R3 >>> 1;
+	R2 = R2 - R6;
+	R1 = 5;
+	P4.L = _iChannel0RightIn;
+	P4.H = _iChannel0RightIn;
+	R3 = (A1 = R1.L * R2.L) (FU) || R6 = [P4];
+	A1 = A1 >> 16;
+	R1 = (A1 += R2.H * R1.L) (M, IS);
+	I0.L = _iChannel0LeftOut;
+	I0.H = _iChannel0LeftOut;
+.LN3:
+// line 51
+	R1 = PACK(R1.L, R3.L) || [I0] = R6;
+.LN4:
+// line 53
+	R3 = R0 - R1 (NS) || R6 = [P4];
+	P3.L = _input;
+	P3.H = _input;
+	P4 = P3 + (P5<<1);
+	R6 = R6 >>> 8 || [SP + 40] = R3;
+	R2.L = R2.L - R2.L (NS) || W[P4] = R6.L;
+.LN5:
+// line 61
+	P4 = [SP + 40];
+.LN6:
+// line 62
+	R0 += 1;
+	P5 = R0;
+	P1.L = _output;
+	P1.H = _output;
+.LN7:
+// line 61
+	P4 = P3 + (P4<<1);
+	R1 = W[P4] (X);
+	R1 = - R1 (V);
+	P4.L = _coefsB;
+	P4.H = _coefsB;
+	R0 = W[P4++] (X);
+	B2 = P1;
+	R2.H = R0.L * R1.L (T) || R6 = W[P4++] (X);
+	P1 = P1 + (P5<<1);
+	A0 = R2;
+	P5 = P3 + (P5<<1);
+	I2 = P1;
+	R1 = A0.W; R2 = A0.X;
+	B1 = P3;
+	I1 = P5;
+	L2 = 10;
+	B[P2 + 12] = R2;
+	[P2 + 8] = R1 || R0.L = W[I2++];
+	P0 = P2;
+	L1 = 10;
+.LN8:
+// line 66
+	R3 = W[P2++] (X) || R0.H = W[I1++];
+.LN9:
+	P1 = 3;
+.LN10:
+	R0.L = R3.L * R0.L (T);
+	R7.H = 32768;
+	LOOP .P40L22L LC0 = P1;
+
+.P40L22:
+//-------------------------------------------------------------------
+//   Loop at "..\src\process_data_IIR.c" line 64 col 2
+//-------------------------------------------------------------------
+//   This loop executes 1 iteration of the original loop in estimated 4 cycles.
+//-------------------------------------------------------------------
+//   Trip Count  = 3
+//-------------------------------------------------------------------
+//   Successfully found modulo schedule with:
+//     Initiation Interval (II)                                  = 4
+//     Stage Count (SC)                                          = 2
+//     MVE Unroll Factor                                         = 1
+//     Minimum initiation interval due to recurrences (rec MII)  = 1
+//     Minimum initiation interval due to resources (res MII)    = 4.00
+//-------------------------------------------------------------------
+//   This loop's resource usage is:
+//     32-bit Instruction  used   4 out of    4 (100.0%)
+//     16-bit Instruction  used   4 out of    8 ( 50.0%)
+//     Group 1             used   2 out of    4 ( 50.0%)
+//-------------------------------------------------------------------
+	LOOP_BEGIN .P40L22L;
+	R0.H = R6.L * R0.H (T) || R1 = W[P2++] (X);
+	R0.H = R0.L - R0.H (S) || R0.L = W[I2++];
+	R0.L = R1.L * R0.L (T) || R6 = W[P4++] (X);
+	A0 -= R0.H * R7.H || R0.H = W[I1++];
+	LOOP_END .P40L22L;
+//-------------------------------------------------------------------
+//   End Kernel for Loop L22
+//-------------------------------------------------------------------
+
+//-------------------------------------------------------------------
+//   Part of top level (no loop)
+//-------------------------------------------------------------------
+	R0.H = R6.L * R0.H (T);
+	R0.L = R0.L - R0.H (S);
+	L2 = 0;
+	A0 -= R0.L * R7.H;
+	L1 = 0;
+	P0 += 8;
+	R1 = A0.W; R0 = A0.X;
+	B[P0 + 4] = R0;
+.LN11:
+// line 73
+	R0 = [P0 + 8];
+	R0 += -1;
+.LN12:
+// line 75
+	CC = R0 < 0;
+	R2 = 4;
+	IF CC R0 = R2;
+	[P0 + 8] = R0;
+	P1.L = _iChannel0RightOut;
+	P1.H = _iChannel0RightOut;
+.LN13:
+// line 80
+	R0 = [P0 + 4];
+	A0.W = R1; A0.X = R0;
+	R0 = A0 || [P0] = R1;
+	R0 = R0 >>> 16;
+	R0 <<= 8;
+	[P1] = R0;
+.LN14:
+// line 81
+	SP += 12;
+	P2 = [FP + 4];
+	(R7:6, P5:3) = [SP++];
+	UNLINK;
+	// -- stall --
+	JUMP (P2);
+
+.P40L1:
+.LN15:
+// line 47
+	R0 = 0;
+	B[P1] = R0;
+.LN16:
+// line 48
+	CALL.X _uart_getch;
+	R0 = R0.b (X);
+.LN17:
+	CALL.X _uart_putch;
+	jump.s .P40L10;
+.LN._Process_Data.end:
+._Process_Data.end:
+	.global _Process_Data;
+	.type _Process_Data,STT_FUNC;
+
+	.file_attr ProjectName="BlackFin_FIR_fract";
+	.file_attr FuncName="_rbits";
+	.file_attr FuncName="_bitsr";
+	.file_attr FuncName="_atof";
+	.file_attr FuncName="_atoi";
+	.file_attr FuncName="_atol";
+	.file_attr FuncName="_strtod";
+	.file_attr FuncName="_strtoul";
+	.file_attr FuncName="_atoll";
+	.file_attr FuncName="_strtof";
+	.file_attr FuncName="_strtold";
+	.file_attr FuncName="_strtoll";
+	.file_attr FuncName="_strtoull";
+	.file_attr FuncName="_Process_Data";
+	.file_attr Content="CodeData";
+.epctext.end:
+
+	.extern _uart_getch;
+	.type _uart_getch,STT_FUNC;
+	.extern _uart_putch;
+	.type _uart_putch,STT_FUNC;
+
+	.section/DOUBLE32 data1;
+
+	.align 4;
+	.type .epcdata,STT_OBJECT;
+.epcdata:
+	.byte _coefsA[] =
+		0x00,0x80,0xFF,0x7F,0x00,0x80,0xAA,0x2A;
+	.global _coefsA;
+	.type _coefsA,STT_OBJECT;
+	.byte _out[8];
+	.global _out;
+	.type _out,STT_OBJECT;
+	.byte _i[4];
+	.global _i;
+	.type _i,STT_OBJECT;
+.epcdata.end:
+
+	.section/ZERO_INIT/DOUBLE32 bsz;
+
+	.align 4;
+	.type .epcbss,STT_OBJECT;
+.epcbss:
+	.byte _output[10];
+	.global _output;
+	.type _output,STT_OBJECT;
+	.byte _konv[2];
+	.global _konv;
+	.type _konv,STT_OBJECT;
+	.byte _konvi[4];
+	.global _konvi;
+	.type _konvi,STT_OBJECT;
+	.byte _konvi32[4];
+	.global _konvi32;
+	.type _konvi32,STT_OBJECT;
+.epcbss.end:
+
+	.section .debug_abbrev;
+
+	.align 1;
+	.type .epcabbrev,STT_OBJECT;
+.epcabbrev:
+	.inc/binary ".\src\process_data_IIR.sbn", 0, 247;
+.epcabbrev.end:
+
+	.section .debug_info;
+
+	.align 1;
+	.type .epcdebug,STT_OBJECT;
+.epcdebug:
+	.byte =
+		0x8A,0x12,0x00,0x00,0x02,0x00;
+	.byte4 = .epcabbrev;
+	.byte =
+		0x04,0x01,0x2E,0x2E,0x5C,0x73,0x72,0x63,0x5C,0x70,0x72,0x6F,
+		0x63,0x65,0x73,0x73,0x5F,0x64,0x61,0x74,0x61,0x5F,0x49,0x49,
+		0x52,0x2E,0x63,0x00,0x0C;
+	.byte4 = .epcline;
+	.inc/binary ".\src\process_data_IIR.sbn", 247, 4241;
+	.byte4 = .LN_Process_Data;
+	.byte4 = .LN._Process_Data.end;
+	.byte =
+		0x01,0x01,0x00,0x11,0x00,0x00,0x00,0x00;
+	.byte4 = .LN0;
+	.byte4 = .LN._Process_Data.end;
+	.byte =
+		0x00,0x00,0x12,0x75,0x61,0x72,0x74,0x5F,0x72,0x78,0x5F,0x66,
+		0x6C,0x61,0x67,0x00,0x01,0x88,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _uart_rx_flag;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x43,0x68,0x61,0x6E,0x6E,
+		0x65,0x6C,0x30,0x52,0x69,0x67,0x68,0x74,0x49,0x6E,0x00,0x01,
+		0x83,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iChannel0RightIn;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x43,0x68,0x61,0x6E,0x6E,
+		0x65,0x6C,0x30,0x4C,0x65,0x66,0x74,0x4F,0x75,0x74,0x00,0x01,
+		0x83,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iChannel0LeftOut;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x69,0x43,0x68,0x61,0x6E,0x6E,
+		0x65,0x6C,0x30,0x52,0x69,0x67,0x68,0x74,0x4F,0x75,0x74,0x00,
+		0x01,0x83,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _iChannel0RightOut;
+	.byte =
+		0x00,0x00,0x00,0x00,0x01,0x12,0x63,0x6F,0x65,0x66,0x73,0x42,
+		0x00,0x01,0x75,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _coefsB;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x63,0x6F,0x65,0x66,0x73,0x41,
+		0x00,0x01,0x67,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _coefsA;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x69,0x6E,0x70,0x75,0x74,0x00,
+		0x01,0x59,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _input;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x6F,0x75,0x74,0x70,0x75,0x74,
+		0x00,0x01,0x4B,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _output;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x6F,0x75,0x74,0x00,0x01,0xAB,
+		0x02,0x00,0x00,0x05,0x03;
+	.byte4 = _out;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x6F,0x75,0x74,0x56,0x61,0x6C,
+		0x00,0x01,0x46,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _outVal;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x69,0x00,0x01,0xFC,0x01,0x00,
+		0x00,0x05,0x03;
+	.byte4 = _i;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x6B,0x6F,0x6E,0x76,0x00,0x01,
+		0xC7,0x03,0x00,0x00,0x05,0x03;
+	.byte4 = _konv;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x6B,0x6F,0x6E,0x76,0x69,0x00,
+		0x01,0x40,0x12,0x00,0x00,0x05,0x03;
+	.byte4 = _konvi;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x12,0x6B,0x6F,0x6E,0x76,0x69,0x33,
+		0x32,0x00,0x01,0x0F,0x06,0x00,0x00,0x05,0x03;
+	.byte4 = _konvi32;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x05,0x00,0x00,0x06,0x00,0x00,0x0E,
+		0xC7,0x03,0x00,0x00,0x13,0x59,0x12,0x00,0x00,0xC7,0x03,0x00,
+		0x00,0x14,0x05,0x00,0x04,0x00,0x13,0x67,0x12,0x00,0x00,0xC7,
+		0x03,0x00,0x00,0x14,0x05,0x00,0x04,0x00,0x13,0x75,0x12,0x00,
+		0x00,0xC7,0x03,0x00,0x00,0x14,0x04,0x00,0x03,0x00,0x13,0x83,
+		0x12,0x00,0x00,0xC7,0x03,0x00,0x00,0x14,0x05,0x00,0x04,0x00,
+		0x0E,0xFC,0x01,0x00,0x00,0x0E,0x96,0x01,0x00,0x00,0x00;
+.epcdebug.end:
+
+	.section .debug_line;
+
+	.align 1;
+	.type .epcline,STT_OBJECT;
+.epcline:
+	.inc/binary ".\src\process_data_IIR.sbn", 4488, 816;
+	.byte4 = .LN_Process_Data;
+	.byte =
+		0x04,0x01,0x05,0x01,0x34,0x00,0x05,0x02;
+	.byte4 = .LN0;
+	.byte =
+		0x05,0x02,0x0A,0x00,0x05,0x02;
+	.byte4 = .LN1;
+	.byte =
+		0x11,0x00,0x05,0x02;
+	.byte4 = .LN2;
+	.byte =
+		0x11,0x00,0x05,0x02;
+	.byte4 = .LN3;
+	.byte =
+		0x03,0x76,0x01,0x00,0x05,0x02;
+	.byte4 = .LN4;
+	.byte =
+		0x0B,0x00,0x05,0x02;
+	.byte4 = .LN5;
+	.byte =
+		0x11,0x00,0x05,0x02;
+	.byte4 = .LN6;
+	.byte =
+		0x0A,0x00,0x05,0x02;
+	.byte4 = .LN7;
+	.byte =
+		0x03,0x7F,0x01,0x00,0x05,0x02;
+	.byte4 = .LN8;
+	.byte =
+		0x05,0x03,0x0E,0x00,0x05,0x02;
+	.byte4 = .LN9;
+	.byte =
+		0x01,0x00,0x05,0x02;
+	.byte4 = .LN10;
+	.byte =
+		0x01,0x00,0x05,0x02;
+	.byte4 = .LN11;
+	.byte =
+		0x05,0x02,0x10,0x00,0x05,0x02;
+	.byte4 = .LN12;
+	.byte =
+		0x0B,0x00,0x05,0x02;
+	.byte4 = .LN13;
+	.byte =
+		0x0E,0x00,0x05,0x02;
+	.byte4 = .LN14;
+	.byte =
+		0x05,0x01,0x0A,0x00,0x05,0x02;
+	.byte4 = .LN15;
+	.byte =
+		0x05,0x03,0x03,0x5E,0x01,0x00,0x05,0x02;
+	.byte4 = .LN16;
+	.byte =
+		0x05,0x18,0x0A,0x00,0x05,0x02;
+	.byte4 = .LN17;
+	.byte =
+		0x05,0x0D,0x01,0x00,0x05,0x02;
+	.byte4 = .LN._Process_Data.end;
+	.byte =
+		0x00,0x01,0x01;
+.epcline.end:
+
+	.section .debug_pubnames;
+
+	.align 1;
+.epcpubnames:
+	.type .epcpubnames,STT_OBJECT;
+	.byte =
+		0x82,0x00,0x00,0x00,0x02,0x00;
+	.byte4 = .epcdebug;
+	.byte =
+		0x8E,0x12,0x00,0x00,0xA9,0x10,0x00,0x00,0x50,0x72,0x6F,0x63,
+		0x65,0x73,0x73,0x5F,0x44,0x61,0x74,0x61,0x00,0x5B,0x11,0x00,
+		0x00,0x63,0x6F,0x65,0x66,0x73,0x42,0x00,0x73,0x11,0x00,0x00,
+		0x63,0x6F,0x65,0x66,0x73,0x41,0x00,0x8B,0x11,0x00,0x00,0x69,
+		0x6E,0x70,0x75,0x74,0x00,0xA2,0x11,0x00,0x00,0x6F,0x75,0x74,
+		0x70,0x75,0x74,0x00,0xBA,0x11,0x00,0x00,0x6F,0x75,0x74,0x00,
+		0xCF,0x11,0x00,0x00,0x6F,0x75,0x74,0x56,0x61,0x6C,0x00,0xE7,
+		0x11,0x00,0x00,0x69,0x00,0xFA,0x11,0x00,0x00,0x6B,0x6F,0x6E,
+		0x76,0x00,0x10,0x12,0x00,0x00,0x6B,0x6F,0x6E,0x76,0x69,0x00,
+		0x27,0x12,0x00,0x00,0x6B,0x6F,0x6E,0x76,0x69,0x33,0x32,0x00,
+		0x00,0x00,0x00,0x00;
+.epcpubnames.end:
+
+	.section .debug_aranges;
+
+	.align 1;
+.epcaranges:
+	.type .epcaranges,STT_OBJECT;
+	.byte =
+		0x1C,0x00,0x00,0x00,0x02,0x00;
+	.byte4 = .epcdebug;
+	.byte =
+		0x04,0x00,0x00,0x00,0x00,0x00;
+	.byte4 = .LN_Process_Data;
+	.byte4 = .LN._Process_Data.end-.LN_Process_Data;
+	.byte =
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00;
+.epcaranges.end:
+
+	.section/DOUBLE32 L1_data_b;
+
+	.align 4;
+.epcdataL1_data_b:
+	.type .epcdataL1_data_b,STT_OBJECT;
+	.byte _coefsB[] =
+		0x7F,0x0C,0x00,0x00,0x02,0xE7,0x00,0x00,0x7F,0x0C;
+	.global _coefsB;
+	.type _coefsB,STT_OBJECT;
+.epcdataL1_data_b.end:
+
+	.section/DOUBLE32 L1_data_a;
+
+	.align 4;
+.epcdataL1_data_a:
+	.type .epcdataL1_data_a,STT_OBJECT;
+	.byte _input[10];
+	.global _input;
+	.type _input,STT_OBJECT;
+.epcdataL1_data_a.end:
+
+	.section/ZERO_INIT/DOUBLE32 bsz;
+
+	.align 2;
+	.global _outVal;
+	.type _outVal,STT_OBJECT;
+	.byte _outVal[2];
+
+	.section/DOUBLE32 data1;
+
+
+	.extern _uart_rx_flag;
+	.type _uart_rx_flag,STT_OBJECT;
+	.extern _iChannel0RightIn;
+	.type _iChannel0RightIn,STT_OBJECT;
+	.extern _iChannel0LeftOut;
+	.type _iChannel0LeftOut,STT_OBJECT;
+	.extern _iChannel0RightOut;
+	.type _iChannel0RightOut,STT_OBJECT;

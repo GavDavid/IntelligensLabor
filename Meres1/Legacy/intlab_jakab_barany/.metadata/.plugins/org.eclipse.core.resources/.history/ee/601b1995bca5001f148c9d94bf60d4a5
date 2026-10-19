@@ -1,0 +1,40 @@
+/*
+ * allapotgep.c
+ *
+ *  Created on: 18 Nov 2024
+ *      Author: student
+ */
+
+
+#include "allapotgep.h"
+
+elem vezerloTomb[LevelMenu+1][PB4+1];
+
+level_e frequencyParam = 0;
+
+#define NUMBER_OF_LEVELS 5
+
+// Array for amps
+fract possibleLevelValues[NUMBER_OF_LEVELS] = {
+	#include "amps.dat"
+};
+
+int indeces[3] = {0};
+section("L1_data_b") fract levels[3] = {0};
+
+
+
+void setFrequencyParamBass(param_t* c){
+    printf("Bass selected\n");
+    *c = Bass;
+}
+
+void setFrequencyParamMid(param_t* c){
+    printf("Mid selected\n");
+    *c = Mid;
+}
+
+void setFrequencyParamHigh(param_t* c){
+    printf("High selected\n");
+    *c = High;
+}

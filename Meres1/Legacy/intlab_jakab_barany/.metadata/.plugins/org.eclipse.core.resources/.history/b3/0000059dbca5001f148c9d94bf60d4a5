@@ -1,0 +1,38 @@
+/*
+ * allapotgep.h
+ *
+ *  Created on: 18 Nov 2024
+ *      Author: student
+ */
+
+#ifndef ALLAPOTGEP_H_
+#define ALLAPOTGEP_H_
+
+
+typedef enum {MainMenu,LevelMenu} allapot;
+typedef enum {PB1, PB2, PB3, PB4} esemeny;
+
+typedef enum {Bass, Mid, High} level_e;
+typedef level_e param_t;
+
+typedef void (*teendo)(param_t*);
+typedef struct{
+    esemeny e;
+    param_t* p;
+} esemenyEsParameter_t;
+
+typedef struct{
+    allapot uj_allapot;
+    teendo mit_tegyek;
+} elem;
+
+
+void setFrequencyParamBass(param_t* c);
+void setFrequencyParamMid(param_t* c);
+void setFrequencyParamHigh(param_t* c);
+
+
+void decreaseLevel(param_t* frequencyParameter);
+
+
+#endif /* ALLAPOTGEP_H_ */
