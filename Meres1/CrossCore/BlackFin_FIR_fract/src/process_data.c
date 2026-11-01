@@ -1,73 +1,122 @@
 #include "frame.h"
 
-#define N 5		    // number of filter coefficients
-section("L1_data_b") fract coefs[N] = {
+/* FILTER_IIR = 1: IIR szuro.
+ * FILTER_IIR = 0: FIR alulatereszto szuro.
+ * IIR_FILTER_TYPE = 0: 4. egyutthatokeszlet.
+ * IIR_FILTER_TYPE = 1: Butterworth, 12 kHz.
+ * IIR_FILTER_TYPE = 2: Csebisev I, 4 kHz.
+ */
+#define FILTER_IIR 1
+#define IIR_FILTER_TYPE 0
+
+#if FILTER_IIR
+#define IIR_B_COUNT 5
+#define IIR_A_COUNT 4
+
+#if IIR_FILTER_TYPE == 0
+#define IIR_COEF_SCALE 4
+section("L1_data_a") fract iir_b[IIR_B_COUNT] = {
+    0.1249537494, -0.4998149976, 0.7497224968,
+    -0.4998149976, 0.1249537494
+};
+section("L1_data_a") fract iir_a[IIR_A_COUNT] = {
+    -0.6596569359, 0.6923274466, -0.3348201903, 0.0624554175
+};
+#elif IIR_FILTER_TYPE == 1
+#define IIR_COEF_SCALE 1
+section("L1_data_a") fract iir_b[IIR_B_COUNT] = {
+#include "Butterworth_b.dat"
+};
+section("L1_data_a") fract iir_a[IIR_A_COUNT] = {
+#include "Butterworth_a.dat"
+};
+#elif IIR_FILTER_TYPE == 2
+#define IIR_COEF_SCALE 8
+section("L1_data_a") fract iir_b[IIR_B_COUNT] = {
+#include "Cheby1_b.dat"
+};
+section("L1_data_a") fract iir_a[IIR_A_COUNT] = {
+#include "Cheby1_a.dat"
+};
+#else
+#error IIR_FILTER_TYPE erteke csak 0, 1 vagy 2 lehet
+#endif
+
+section("L1_data_b") fract iir_x_history[IIR_B_COUNT] = {0};
+section("L1_data_b") fract iir_y_history[IIR_A_COUNT] = {0};
+#else
+section("L1_data_a") fract fir_coefs[] = {
 #include "FIR_lowpass_coef.dat"
 };
-// Set 3
-//fract coefs_b[5] = {0.152843243788085, -0.611372975152342, 0.917059462728512,  -0.611372975152342, 0.152843243788085};
-//fract coefs_a[4] = {-0.651471653594406, 0.620472122486497, -0.147379460605609, 0.0261686639228548};
-// Set 4
-//fract coefs_b[5] = {0.499814997569879, -1.99925999027952, 2.99888998541927, -1.99925999027952, 0.499814997569879};
-//fract coefs_a[4] = {-2.63862774389125, 2.76930978615149, -1.33928076126520, 0.249821669810126};
-// Set 4 / 2^2
-fract coefs_b[5] = {0.1250, -0.4998, 0.7497, -0.4998, 0.1250};
-fract coefs_a[4] = {-0.6597, 0.6923, -0.3348, 0.0625};
-fract section("L1_data_a") input[N];
-fract output[N];
-accum out = 0;
-volatile fract outVal;
-int i = 0;		
-
-fract konv;
-uint16_t *konvi;
-uint32_t konvi32;
+#define FIR_TAPS (sizeof(fir_coefs) / sizeof(fir_coefs[0]))
+section("L1_data_b") fract fir_history[FIR_TAPS] = {0};
+int fir_index = 0;
+#endif
 
 //--------------------------------------------------------------------------//
-// Function:	Process_Data()												//
-//																			//
-// Description: This function is called from inside the SPORT0 ISR every 	//
-//				time a complete audio frame has been received. The new 		//
-//				input samples can be found in the variables iChannel0LeftIn,//
-//				iChannel0RightIn, iChannel1LeftIn and iChannel1RightIn 		//
-//				respectively. The processed	data should be stored in 		//
-//				iChannel0LeftOut, iChannel0RightOut, iChannel1LeftOut,		//
-//				iChannel1RightOut, iChannel2LeftOut and	iChannel2RightOut	//
-//				respectively.												//
+// Function: Process_Data()
+//
+// Description: Called from the SPORT0 ISR for each received audio frame.
+// The left output carries the unfiltered input, while the right output
+// carries the filtered signal.
 //--------------------------------------------------------------------------//
 void Process_Data(void)
 {
-	if (uart_rx_flag)
-	{
-		uart_rx_flag = false;
-		uart_putch(uart_getch());
-	}
+    int j;
+    int index;
+    accum acc = 0;
+    fract x;
+    fract y;
 
-	iChannel0LeftOut = iChannel0RightIn;
+    if (uart_rx_flag)
+    {
+        uart_rx_flag = false;
+        uart_putch(uart_getch());
+    }
 
-	input[i] = rbits((iChannel0RightIn>>8));
-				
-	int j;
-	int ix;
+    iChannel0LeftOut = iChannel0RightIn;
+    x = rbits((iChannel0RightIn >> 8));
 
-	ix  = i;
-	out = 0;
-			
-	// Filter loop
-	for (j=0;j<N;j++)
-	{
-		out += input[ix%N]*coefs_b[j] +  (-coefs_a[j])*output[ix%N];
+#if FILTER_IIR
+    acc = x * iir_b[0];
+    for (j = 1; j < IIR_B_COUNT; j++)
+    {
+        acc += iir_x_history[j - 1] * iir_b[j];
+    }
+    for (j = 0; j < IIR_A_COUNT; j++)
+    {
+        acc -= iir_y_history[j] * iir_a[j];
+    }
 
-		ix++;
-	}
+    y = (fract)(acc * IIR_COEF_SCALE);
 
-	i--;
-	
-	if (i<0)
-	{
-		i = N-1;
-	}
-	output[i] = out * 2 * 2;
-	iChannel0RightOut = bitsr(out) << 8;
+    for (j = IIR_B_COUNT - 1; j > 0; j--)
+    {
+        iir_x_history[j] = iir_x_history[j - 1];
+    }
+    iir_x_history[0] = x;
+
+    for (j = IIR_A_COUNT - 1; j > 0; j--)
+    {
+        iir_y_history[j] = iir_y_history[j - 1];
+    }
+    iir_y_history[0] = y;
+#else
+    fir_history[fir_index] = x;
+    index = fir_index;
+    for (j = 0; j < FIR_TAPS; j++)
+    {
+        acc += fir_history[index] * fir_coefs[j];
+        index = (index == 0) ? FIR_TAPS - 1 : index - 1;
+    }
+    y = (fract)acc;
+
+    fir_index++;
+    if (fir_index >= FIR_TAPS)
+    {
+        fir_index = 0;
+    }
+#endif
+
+    iChannel0RightOut = bitsr(y) << 8;
 }
-

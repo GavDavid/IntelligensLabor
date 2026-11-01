@@ -143,15 +143,246 @@ BUDAPEST, \today
 \section{Bevezetés}
 
 \subsection*{A mérés célja}
-asd
-\subsection*{A méréshez használt eszközök}
 
+A mérés során FIR és IIR digitális szűrőket vizsgáltunk. Az első feladatban egy megadott frekvenciahatárokhoz tartozó FIR aluláteresztő szűrőt terveztünk MATLAB-ban. A második feladatban a megadott együtthatókészletből IIR szűrőt készítettünk, és megnéztük annak átviteli függvényét.
+
+\subsection*{A méréshez használt eszközök}
 \begin{itemize}
-	\item asd
+    \item Számítógép
+    \item MATLAB
+    \item CrossCore Embedded Studio
+    \item ADSP-BF537 EZ-KIT Lite fejlesztőpanel
+    \item Digitális függvénygenerátor
+    \item Oszcilloszkóp FFT funkcióval
+    \item Hangforrás és hangsugárzó
 \end{itemize}
 
+\newpage
+
+\section{Mérési feladatok}
+
+\feladat{1}
+
+\subsubsection*{Feladat leírása}
+
+Tervezzen FIR aluláteresztő szűrőt 5~kHz-es határfrekvenciával és 6~kHz-es stopfrekvenciával. A passzsávi hullámosság legyen 2~dB, a stop-sáv csillapítása pedig legalább 30~dB. A szűrő együtthatóit töltse be a Blackfin projektbe, majd söpört szinusz jellel és az oszcilloszkóp FFT-jével ellenőrizze a szűrőt.
+
+\subsubsection*{Feladat megoldása}
+
+Első lépésben a Blackfin panelt és az oszcilloszkópot kötöttük össze. A mérési összeállítás a(z) \abrara{fig:meresi-elrendezes} ábrán látható.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.52\textwidth]{../../Kepek/20261019_165007.jpg}
+    \caption{A Blackfin panel és az oszcilloszkóp a mérési összeállításban.}
+    \label{fig:meresi-elrendezes}
+\end{figure}
+
+A MATLAB-kódban először megadtuk a mintavételi frekvenciát és a szűrő határfrekvenciáit. A \texttt{firpmord} függvény megadta a tervezéshez szükséges szűrőfokot és súlyokat, az együtthatókat pedig a \texttt{firpm} függvénnyel számítottuk ki. Az átvitelt a \texttt{freqz} függvénnyel ábrázoltuk. Az ábrán a piros vonalak jelölik az előírt határértékeket.
+
+Az elkészült együtthatófájl 47 értéket tartalmaz, így a szűrő fokszáma 46. A MATLAB-ban számított válasz passzsávi értéke körülbelül $-1{,}22$ és $+1{,}07$~dB közé esett. A passzsávi hullámosság így körülbelül 2,29~dB lett, ami kissé meghaladja a 2~dB-es értéket. A stop-sáv legnagyobb értéke $-29{,}82$~dB volt, vagyis a 30~dB-es csillapítástól is kis mértékben elmaradt.
+
+Az együtthatókat a \texttt{FIR\_lowpass\_coef.dat} fájlba írtuk, ahonnan a CrossCore projekt FIR ága beolvassa azokat. A számított átviteli függvény a(z) \abrara{fig:fir-atvitel} ábrán látható.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../../Kepek/FIR_atvitel.jpg}
+    \caption{A FIR aluláteresztő szűrő átviteli függvénye.}
+    \label{fig:fir-atvitel}
+\end{figure}
+
+A Blackfin kimeneti jelét az oszcilloszkóp FFT funkciójával is megvizsgáltuk. A(z) \abrara{fig:fir-meres} ábrán az 5--6 kHz környéki átmenet látható; a magasabb frekvenciákon a mért szint alacsonyabb.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../Kepek/20261019_165015.jpg}
+    \caption{A FIR szűrő kimenetének oszcilloszkópos FFT-képe.}
+    \label{fig:fir-meres}
+\end{figure}
+
+\newpage
+
+\feladat{2}
+
+\subsubsection*{Feladat leírása}
+
+Készítsen IIR szűrő rutint a Blackfin FIR projekt alapján. A rutin tetszőleges rendű együtthatók kezelésére legyen alkalmas. Használja a mérési útmutatóban megadott együtthatókészletek egyikét.
+
+\subsubsection*{Feladat megoldása}
+
+A 4. együtthatókészletet használtuk. A szűrő különbségegyenlete:
+
+\begin{equation}
+    y[n] = \sum_{k=0}^{4} b_k x[n-k] - \sum_{k=1}^{4} a_k y[n-k].
+\end{equation}
+
+A kiválasztott együtthatók közelítő értékei:
+
+\begin{equation}
+    \begin{aligned}
+        \boldsymbol{b} &= [0{,}4998,\;-1{,}9993,\;2{,}9989,\;-1{,}9993,\;0{,}4998],\\
+        \boldsymbol{a} &= [1,\;-2{,}6386,\;2{,}7693,\;-1{,}3393,\;0{,}2498].
+    \end{aligned}
+\end{equation}
+
+A Blackfin programban az együtthatókat néggyel osztottuk, mert a nagyobb értékek nem férnek el a 16 bites \texttt{fract} formátumban. A szűrés végén az eredményt néggyel szoroztuk. A bemeneti és kimeneti mintákat külön tömbökben tároltuk, és a ciklusokkal összegeztük a megfelelő mintákat. A mérést az előző feladatnál bemutatott összeállításon végeztük.
+
+A MATLAB-ban a \texttt{freqz} függvénnyel ábrázoltuk a 4. együtthatókészlet átviteli függvényét. A görbe alapján a szűrő felüláteresztő jellegű: az alacsony frekvenciákat csillapítja, a nagyobbakat átengedi. A pólusok legnagyobb abszolút értéke 0,8239 lett. Mivel ez kisebb egynél, a szűrő stabil. Az átviteli függvény a(z) \abrara{fig:iir-atvitel}, az impulzusválasz a(z) \abrara{fig:iir-impulzus} ábrán látható.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../../Kepek/IIR_atvitel.jpg}
+    \caption{A 4. együtthatókészlet átviteli függvénye.}
+    \label{fig:iir-atvitel}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../../Kepek/IIR_impulzus.jpg}
+    \caption{A 4. együtthatókészlet impulzusválasza.}
+    \label{fig:iir-impulzus}
+\end{figure}
+
+Az impulzusválasz a minták növekedésével lecseng. A Blackfin kimenetét az oszcilloszkóp FFT funkciójával is megvizsgáltuk. A(z) \abrara{fig:iir-meres} ábrán kis frekvencián alacsonyabb, nagyobb frekvencián közel állandó kimeneti szint látható. Ez megfelel a MATLAB-ban kapott felüláteresztő jellegű válasznak.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../../Kepek/20261019_173704.jpg}
+    \caption{A 4. IIR együtthatókészlet oszcilloszkópos FFT-képe.}
+    \label{fig:iir-meres}
+\end{figure}
+
+
+\newpage
+\feladat{3}
+
+\subsubsection*{Feladat leírása}
+
+Tervezzen 4. rendű Butterworth IIR aluláteresztő szűrőt a \texttt{butter} MATLAB-függvénnyel. A határfrekvencia legyen 12~kHz. A szűrő együtthatóit skálázza a Blackfin formátumához, majd ellenőrizze az átviteli függvényt.
+
+\subsubsection*{Feladat megoldása}
+
+A tervezéshez 48~kHz-es mintavételi frekvenciát használtunk. A MATLAB-ban a határfrekvenciát a Nyquist-frekvenciával osztottuk, ezért a \texttt{butter} függvénynek $12000/(48000/2)=0{,}5$ normalizált frekvenciát adtunk meg. A kapott együtthatók:
+
+\begin{equation}
+    \begin{aligned}
+        \boldsymbol{b} &= [0{,}093981,\;0{,}375923,\;0{,}563885,\;0{,}375923,\;0{,}093981],\\
+        \boldsymbol{a} &= [1,\;0,\;0{,}486029,\;0,\;0{,}017665].
+    \end{aligned}
+\end{equation}
+
+A visszacsatoló együtthatók és a számláló együtthatói is elférnek a \texttt{fract} formátumban, ezért ennél a szűrőnél nem kellett osztást alkalmazni. Az átviteli függvény a(z) \abrara{fig:butterworth-atvitel} ábrán látható. A határfrekvencián az amplitúdó körülbelül $-3$~dB. A pólusok közül a legnagyobb abszolút értéke 0{,}6682, tehát a szűrő stabil.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=0.9\textwidth,
+        height=8cm,
+        xlabel={Frekvencia [Hz]},
+        ylabel={Amplitúdó [dB]},
+        xmin=0, xmax=24000,
+        ymin=-80, ymax=5,
+        grid=both
+    ]
+    \addplot table [x=f, y=db] {../../Kepek/Butterworth_atvitel.dat};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{A Butterworth szűrő átviteli függvénye.}
+    \label{fig:butterworth-atvitel}
+\end{figure}
+
+A MATLAB-kód a skálázott együtthatókat a \texttt{Butterworth\_b.dat} és \texttt{Butterworth\_a.dat} fájlokba írja. A \texttt{process\_data.c} fájlban az \texttt{IIR\_FILTER\_TYPE} értékét 1-re állítva választható ki ez a szűrő. A 3. feladathoz külön oszcilloszkópos felvétel nem volt a \texttt{Kepek} mappában, ezért itt a számított átviteli függvényt mutatom be.
+
+\newpage
+\feladat{4}
+
+\subsubsection*{Feladat leírása}
+
+Tervezzen 4. rendű Csebisev I IIR aluláteresztő szűrőt a \texttt{cheby1} MATLAB-függvénnyel. A határfrekvencia legyen 4~kHz, a passzsávi hullámosság pedig 2~dB. Hasonlítsa össze a szűrőt a Butterworth szűrővel, majd készítse elő az együtthatókat a Blackfin programhoz.
+
+\subsubsection*{Feladat megoldása}
+
+A mintavételi frekvencia most is 48~kHz volt. A \texttt{cheby1} függvény bemenetén a 4~kHz-es határfrekvenciát $4000/(48000/2)=0{,}1667$ értékkel adtuk meg, a passzsávi hullámosság pedig 2~dB lett. Az együtthatók:
+
+\begin{equation}
+    \begin{aligned}
+        \boldsymbol{b} &= [0{,}000652,\;0{,}002606,\;0{,}003909,\;0{,}002606,\;0{,}000652],\\
+        \boldsymbol{a} &= [1,\;-3{,}371443,\;4{,}505325,\;-2{,}808567,\;0{,}687808].
+    \end{aligned}
+\end{equation}
+
+A passzsávban a válasz 0 és $-2$~dB között változik. A legnagyobb pólusabszolútérték 0{,}9486, tehát a szűrő stabil. A nagyobb visszacsatoló együtthatók miatt az együtthatókat nyolccal osztottuk. A program a szűrés eredményét nyolccal visszaszorozza, így a különbségegyenlet eredeti együtthatóival számol. A skálázott értékeket a \texttt{Cheby1\_b.dat} és \texttt{Cheby1\_a.dat} fájlok tartalmazzák. A \texttt{process\_data.c} fájlban az \texttt{IIR\_FILTER\_TYPE} értékét 2-re állítva választható ki a Csebisev I szűrő.
+
+A Csebisev I szűrő passzsávjában látszik a megadott hullámosság, a Butterworth szűrő passzsávja viszont sima. A Csebisev I szűrő határfrekvenciája után a görbe meredekebben csökken. A két szűrő határfrekvenciája eltér, ezért az összehasonlító ábrán a frekvenciát a saját határfrekvenciához viszonyítottuk. A Csebisev I átviteli függvénye a(z) \abrara{fig:cheby1-atvitel}, az összehasonlítás a(z) \abrara{fig:iir-osszehasonlitas} ábrán látható.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=0.9\textwidth,
+        height=8cm,
+        xlabel={Frekvencia [Hz]},
+        ylabel={Amplitúdó [dB]},
+        xmin=0, xmax=24000,
+        ymin=-80, ymax=5,
+        grid=both
+    ]
+    \addplot table [x=f, y=db] {../../Kepek/Cheby1_atvitel.dat};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{A Csebisev I szűrő átviteli függvénye.}
+    \label{fig:cheby1-atvitel}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=0.9\textwidth,
+        height=8cm,
+        xlabel={Normalizált frekvencia ($f/f_c$)},
+        ylabel={Amplitúdó [dB]},
+        xmin=0, xmax=2,
+        ymin=-80, ymax=5,
+        grid=both,
+        legend pos=south west
+    ]
+    \addplot table [x=fn, y=butter] {../../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
+    \addplot table [x=fn, y=cheby] {../../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
+    \addplot[dashed, black] coordinates {(1,-80) (1,5)};
+    \legend{Butterworth, Csebisev I, $f/f_c=1$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{A Butterworth és a Csebisev I szűrő összehasonlítása, a saját határfrekvenciájukra normálva.}
+    \label{fig:iir-osszehasonlitas}
+\end{figure}
+
+A 4. feladathoz tartozó külön oszcilloszkópos felvétel sem volt a \texttt{Kepek} mappában, ezért az ábrákon a szűrők számított átviteli görbéi szerepelnek.
+
+\newpage
 \section*{Függelék}
 \subsection*{MATLAB kódok}
 
+\lstinputlisting[
+    caption={A FIR szűrő MATLAB-kódja},
+    label={lst:fir-matlab}
+]{../../MATLAB/feladat1.m}
+
+\lstinputlisting[
+    caption={Az IIR szűrő MATLAB-kódja},
+    label={lst:iir-matlab}
+]{../../MATLAB/feladat2.m}
+
+
+\lstinputlisting[
+    caption={A Butterworth szűrő MATLAB-kódja},
+    label={lst:butterworth-matlab}
+]{../../MATLAB/feladat3.m}
+
+\lstinputlisting[
+    caption={A Csebisev I szűrő MATLAB-kódja},
+    label={lst:cheby1-matlab}
+]{../../MATLAB/feladat4.m}
 
 \end{document}
