@@ -89,7 +89,7 @@
 \begin{titlepage}
 \centering
 
-\includegraphics[width=.8\textwidth]{../../Kepek/bme_logo_nagy.jpg}
+\includegraphics[width=.8\textwidth]{../Kepek/bme_logo_nagy.jpg}
 
 \vspace{1em}
 
@@ -151,10 +151,9 @@ A mérés során FIR és IIR digitális szűrőket vizsgáltunk. Az első felada
     \item Számítógép
     \item MATLAB
     \item CrossCore Embedded Studio
-    \item ADSP-BF537 EZ-KIT Lite fejlesztőpanel
-    \item Digitális függvénygenerátor
-    \item Oszcilloszkóp FFT funkcióval
-    \item Hangforrás és hangsugárzó
+    \item Blackkfin panel
+    \item Függvénygenerátor
+    \item Oszcilloszkóp
 \end{itemize}
 
 \newpage
@@ -173,7 +172,7 @@ Első lépésben a Blackfin panelt és az oszcilloszkópot kötöttük össze. A
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.52\textwidth]{../../Kepek/20261019_165007.jpg}
+    \includegraphics[width=0.52\textwidth]{../Kepek/20261019_165007.jpg}
     \caption{A Blackfin panel és az oszcilloszkóp a mérési összeállításban.}
     \label{fig:meresi-elrendezes}
 \end{figure}
@@ -184,7 +183,7 @@ Az együtthatókat a \texttt{FIR\_lowpass\_coef.dat} fájlba írtuk, ahonnan a C
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{../../Kepek/FIR_atvitel.jpg}
+    \includegraphics[width=\textwidth]{../Kepek/FIR_atvitel.jpg}
     \caption{A FIR aluláteresztő szűrő átviteli függvénye.}
     \label{fig:fir-atvitel}
 \end{figure}
@@ -193,7 +192,7 @@ A Blackfin kimeneti jelét az oszcilloszkóp FFT funkciójával is megvizsgáltu
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../../Kepek/20261019_165015.jpg}
+    \includegraphics[width=0.9\textwidth]{../Kepek/20261019_165015.jpg}
     \caption{A FIR szűrő kimenetének oszcilloszkópos FFT-képe.}
     \label{fig:fir-meres}
 \end{figure}
@@ -229,7 +228,7 @@ A Blackfin kimenetét az oszcilloszkóp FFT funkciójával ismét megvizsgáltuk
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{../../Kepek/20261019_173704.jpg}
+    \includegraphics[width=0.75\textwidth]{../Kepek/20261019_173704.jpg}
     \caption{A 4. IIR együtthatókészlet oszcilloszkópos FFT-képe.}
     \label{fig:iir-meres}
 \end{figure}
@@ -267,7 +266,7 @@ A visszacsatoló együtthatók és a számláló együtthatói is elférnek a \t
         ymin=-80, ymax=5,
         grid=both
     ]
-    \addplot table [x=f, y=db] {../../Kepek/Butterworth_atvitel.dat};
+    \addplot table [x=f, y=db] {../Kepek/Butterworth_atvitel.dat};
     \end{axis}
     \end{tikzpicture}
     \caption{A Butterworth szűrő átviteli függvénye.}
@@ -309,7 +308,7 @@ A passzsávban a válasz 0 és $-2$~dB között változik, látszik a megadott h
         ymin=-80, ymax=5,
         grid=both
     ]
-    \addplot table [x=f, y=db] {../../Kepek/Cheby1_atvitel.dat};
+    \addplot table [x=f, y=db] {../Kepek/Cheby1_atvitel.dat};
     \end{axis}
     \end{tikzpicture}
     \caption{A Csebisev I szűrő átviteli függvénye.}
@@ -329,8 +328,8 @@ A passzsávban a válasz 0 és $-2$~dB között változik, látszik a megadott h
         grid=both,
         legend pos=south west
     ]
-    \addplot table [x=fn, y=butter] {../../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
-    \addplot table [x=fn, y=cheby] {../../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
+    \addplot table [x=fn, y=butter] {../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
+    \addplot table [x=fn, y=cheby] {../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
     \addplot[dashed, black] coordinates {(1,-80) (1,5)};
     \legend{Butterworth, Csebisev I, $f/f_c=1$}
     \end{axis}
@@ -348,16 +347,16 @@ A szűrő a mérésvezetővel megbeszélve, nem lett implementálva a Blackfin p
 \lstinputlisting[
     caption={A FIR szűrő MATLAB-kódja},
     label={lst:fir-matlab}
-]{../../MATLAB/feladat1.m}
+]{../MATLAB/feladat1.m}
 
 \lstinputlisting[
     caption={A Butterworth szűrő MATLAB-kódja},
     label={lst:butterworth-matlab}
-]{../../MATLAB/feladat3.m}
+]{../MATLAB/feladat3.m}
 
 \lstinputlisting[
     caption={A Csebisev I szűrő MATLAB-kódja},
     label={lst:cheby1-matlab}
-]{../../MATLAB/feladat4.m}
+]{../MATLAB/feladat4.m}
 
 \end{document}
