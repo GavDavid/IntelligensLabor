@@ -144,7 +144,7 @@ BUDAPEST, \today
 
 \subsection*{A mérés célja}
 
-A mérés során FIR és IIR digitális szűrőket vizsgáltunk. Az első feladatban egy megadott frekvenciahatárokhoz tartozó FIR aluláteresztő szűrőt terveztünk MATLAB-ban. A második feladatban a megadott együtthatókészletből IIR szűrőt készítettünk, és megnéztük annak átviteli függvényét.
+A mérés során FIR és IIR digitális szűrőket vizsgáltunk. Az első feladatban egy megadott frekvenciahatárokhoz tartozó FIR aluláteresztő szűrőt terveztünk MATLAB-ban, amit beágyazott rendszerbe implementáltunk. A második feladatban a megadott együtthatókészletből IIR szűrőt készítettünk, ezzel kiegészítve a beágyazott rendszer kódját és megnéztük annak átviteli függvényét. Végül a harmadik és negyedik feladatban Butterworth és Csebisev aluláteresztő szűrőket terveztünk, majd összehasonlítottuk azokat.
 
 \subsection*{A méréshez használt eszközök}
 \begin{itemize}
@@ -172,7 +172,7 @@ Első lépésben a Blackfin panelt és az oszcilloszkópot kötöttük össze. A
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.52\textwidth]{../Kepek/20261019_165007.jpg}
+    \includegraphics[width=0.52\textwidth, angle=270]{../Kepek/20261019_165007.jpg}
     \caption{A Blackfin panel és az oszcilloszkóp a mérési összeállításban.}
     \label{fig:meresi-elrendezes}
 \end{figure}
@@ -281,7 +281,7 @@ A szűrő a mérésvezetővel megbeszélve, nem lett implementálva a Blackfin p
 
 \subsubsection*{Feladat leírása}
 
-Tervezzen 4. rendű Csebisev I IIR aluláteresztő szűrőt a \texttt{cheby1} MATLAB-függvénnyel. A határfrekvencia legyen 4~kHz, a passzsávi hullámosság pedig 2~dB. Hasonlítsa össze a szűrőt a Butterworth szűrővel!
+Tervezzen 4. rendű Csebisev IIR aluláteresztő szűrőt a \texttt{cheby1} MATLAB-függvénnyel. A határfrekvencia legyen 4~kHz, a passzsávi hullámosság pedig 2~dB. Hasonlítsa össze a szűrőt a Butterworth szűrővel!
 
 \subsubsection*{Feladat megoldása}
 
@@ -294,7 +294,7 @@ A mintavételi frekvencia most is 48~kHz volt. A \texttt{cheby1} függvény beme
     \end{aligned}
 \end{equation}
 
-A passzsávban a válasz 0 és $-2$~dB között változik, látszik a megadott hullámosság, a Butterworth szűrő passzsávja viszont sima. A Csebisev I szűrő határfrekvenciája után a görbe meredekebben csökken. A két szűrő határfrekvenciája eltér, ezért az összehasonlító ábrán a frekvenciát a saját határfrekvenciához viszonyítottuk. A Csebisev I átviteli függvénye a(z) \abrara{fig:cheby1-atvitel}, az összehasonlítás a(z) \abrara{fig:iir-osszehasonlitas}-n látható.
+A passzsávban a válasz 0 és $-2$~dB között változik, látszik a megadott hullámosság, a Butterworth szűrő passzsávja viszont sima. A Csebisev szűrő határfrekvenciája után a görbe meredekebben csökken. A két szűrő határfrekvenciája eltér, ezért az összehasonlító ábrán a frekvenciát a saját határfrekvenciához viszonyítottuk. A Csebisev átviteli függvénye a(z) \abrara{fig:cheby1-atvitel}, az összehasonlítás a(z) \abrara{fig:iir-osszehasonlitas}-n látható.
 
 \begin{figure}[H]
     \centering
@@ -311,7 +311,7 @@ A passzsávban a válasz 0 és $-2$~dB között változik, látszik a megadott h
     \addplot table [x=f, y=db] {../Kepek/Cheby1_atvitel.dat};
     \end{axis}
     \end{tikzpicture}
-    \caption{A Csebisev I szűrő átviteli függvénye.}
+    \caption{A Csebisev szűrő átviteli függvénye.}
     \label{fig:cheby1-atvitel}
 \end{figure}
 
@@ -331,10 +331,10 @@ A passzsávban a válasz 0 és $-2$~dB között változik, látszik a megadott h
     \addplot table [x=fn, y=butter] {../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
     \addplot table [x=fn, y=cheby] {../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
     \addplot[dashed, black] coordinates {(1,-80) (1,5)};
-    \legend{Butterworth, Csebisev I, $f/f_c=1$}
+    \legend{Butterworth, Csebisev, $f/f_c=1$}
     \end{axis}
     \end{tikzpicture}
-    \caption{A Butterworth és a Csebisev I szűrő összehasonlítása, a saját határfrekvenciájukra normálva.}
+    \caption{A Butterworth és a Csebisev szűrő összehasonlítása, a saját határfrekvenciájukra normálva.}
     \label{fig:iir-osszehasonlitas}
 \end{figure}
 
@@ -355,7 +355,7 @@ A szűrő a mérésvezetővel megbeszélve, nem lett implementálva a Blackfin p
 ]{../MATLAB/feladat3.m}
 
 \lstinputlisting[
-    caption={A Csebisev I szűrő MATLAB-kódja},
+    caption={A Csebisev szűrő MATLAB-kódja},
     label={lst:cheby1-matlab}
 ]{../MATLAB/feladat4.m}
 
