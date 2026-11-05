@@ -28,7 +28,3 @@ xlim([0 fs/2]);
 set(gcf, 'Color', 'w');
 set(gca, 'Color', 'w', 'XColor', 'k', 'YColor', 'k');
 saveas(gcf, '../Kepek/FIR_atvitel.jpg');
-
-file= fopen('../CrossCore/BlackFin_FIR_fract/src/FIR_lowpass_coef.dat', 'w');
-fprintf(file, '%f,\n', FIR_lowpass);
-fclose(file);
