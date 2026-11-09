@@ -32,3 +32,16 @@ fract sin2pi_01_fx16(fract x){
         return sin_fx16((FRACT_MIN + x) *4);
     }
 }
+
+fract square2pi_01_fx16(fract x){
+	if (x < 0.5r) {
+	        return FRACT_MAX;
+	    } else {
+	        return FRACT_MIN;
+	    }
+}
+
+fract saw2pi_01_fx16(fract x){
+	return x;
+}
+
