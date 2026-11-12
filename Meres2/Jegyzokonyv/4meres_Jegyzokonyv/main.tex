@@ -164,7 +164,7 @@ Első lépésben a Blackfin panelt és az oszcilloszkópot kötöttük össze, m
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = \textwidth]{../../Kepek/20260914_142213.jpg}	
+	\includegraphics[width = 300px]{../../Kepek/20261109_161705.jpg}	
 	\caption{A mérési elrendezés.}
 	\label{fig:meresi-elrendezes}
 \end{figure}
@@ -178,22 +178,22 @@ Első lépésben egy előre meghatározott frekvenciájú szinussz jel legenerá
 
 A kártya 48 kHz mintavételi frekvenciával rendelkezik, ezért a sampleFreq értékét 48000-ra állítottuk. A mask értéke pedig 32767 volt, hogy a 15 bites tartományon belül maradjunk.\\
 
-Amikor a fázis értékének növelése után telítettük a fract értéktartományát, akkor kiszámítottuk mennyit kellene még növelnünk az aktuális fázis értéken, ahhoz hogy elérjük a \texttt{FRACT\_MAX}-ot, majd a 0-ról indulva a deltaPhase és ennek a remainingPhsae értékek a különbségére léptettük a fázist, ezzel megoldva azt, hogy ne legyen töréspontunk az egyes érték átlépése esetén.\\
+Amikor a fázis értékének növelése után telítettük a fract értéktartományát, akkor kiszámítottuk mennyit kellene még növelnünk az aktuális fázis értéken, ahhoz hogy elérjük a \texttt{FRACT\_MAX}-ot, majd a 0-ról indulva a deltaPhase és ennek a phaseRemaining értékek a különbségére léptettük a fázist, ezzel megoldva azt, hogy ne legyen töréspontunk az 1-ről 0-ra wrappelés során.\\
 
 A szinusz jelet a \texttt{sin2pi\_01\_fx16} függvény segítségével generáltuk, ami a fázis értékét használva adta vissza a megfelelő szinusz értéket. Az így kapott értéket a \texttt{process\_data} függvényben a iChannel0RightOut változóba mentettük, ami így már oszcilloszkópon is láthatóvá vált, ahogy a \abrara{fig:szinuszjel} mutatja.\\% kepet cserelni kell
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = \textwidth]{../../Kepek/20260914_142213.jpg}	
+	\includegraphics[width = 300px]{../../Kepek/20261109_161609.jpg}	
 	\caption{A szinuszjel.}
 	\label{fig:szinuszjel}
 \end{figure}
 
-Ezt követően a az egyéb jelalakokat valósítottuk meg a \texttt{sin2pi\_fx.c} fájlban. A négyszög jel kirajzolása esetén, ha az aktuális fázis érték kisebb, mint a \texttt{FRACT\_MAX/2}, akkor a kimeneti érték \texttt{FRACT\_MAX}, egyébként pedig \texttt{FRACT\_MAX}. A fűrészjel esetén pedig a kimeneti érték a fázis értékével egyezett meg.\\ % nemtom kell e abra
+Ezt követően az egyéb jelalakokat valósítottuk meg a \texttt{sin2pi\_fx.c} fájlban. A négyszög jel kirajzolása esetén, ha az aktuális fázis érték kisebb, mint a \texttt{FRACT\_MAX/2}, akkor a kimeneti érték \texttt{FRACT\_MAX}, egyébként pedig \texttt{FRACT\_MIN}. A fűrészjel esetén pedig a kimeneti érték a fázis értékével egyezett meg.\\ % nemtom kell e abra
 
-Az egyes jelalakok közötti váltást UART kommunikáció segítségével valósítottuk meg. A soros porton csatlakoztattuk a számítógépet a Blackfin panelhez, és különöző billentyűket használtunk a jelalak kiválasztásához, egy switch struktúra segítségével.\\
+Az egyes jelalakok közötti váltást UART kommunikáció segítségével valósítottuk meg. A soros porton csatlakoztattuk a számítógépet a Blackfin panelhez, és különböző billentyűket használtunk a jelalak kiválasztásához, egy switch struktúra segítségével.\\
 
-A jelalak kiválasztását követően a kimeneti jel alapértelmezetten 1000 Hz frekvenciával generálódik, de a felhasználó a soros porton keresztül ezt tudja módosítani. A frekvencia léptethető 1 Hz, 10 Hz, 100 Hz és 1000 Hz értékekkel, a felhasználó által megadott karakterek alapján. A 'q' billentyű lenyomásával pedig a program kilép, és megváltoztatható a jelalak újra a fetebb leírt módon.\\
+A jelalak kiválasztását követően a kimeneti jel alapértelmezetten 1000 Hz frekvenciával generálódik, de a felhasználó a soros porton keresztül ezt tudja módosítani. A frekvencia léptethető 1 Hz, 10 Hz, 100 Hz és 1000 Hz értékekkel, a felhasználó által megadott karakterek alapján. Az 'e' billentyű lenyomásával pedig a program kilép, és kiválasztható a jelalak újra a fentebb leírt módon.\\
 
 \section*{Függelék}
 \subsection*{Felhasznált C kódok}
