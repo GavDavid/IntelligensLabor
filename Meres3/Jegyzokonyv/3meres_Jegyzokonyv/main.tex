@@ -1,0 +1,580 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{marvosym}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{multicol}
+\hypersetup{colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black}
+\usepackage{pdfpages}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{chemfig}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage[magyar]{babel}
+\usepackage{bm}
+\usepackage{tikz, tcolorbox}
+\usetikzlibrary{positioning}
+\usepackage{verbatim}
+\usepackage{amsmath,esint}
+\usepackage{setspace}
+\usepackage{qtree}
+\usepackage{multido}
+\usepackage{mathptmx} % Times New Roman betűtípus
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{xparse}
+\captionsetup[lstlisting]{labelformat=empty}
+
+\lstset{
+    language=Matlab,
+    inputencoding=utf8,
+    extendedchars=true,
+    basicstyle=\ttfamily\small,
+    frame=single,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny,
+    literate=
+        {á}{{\'a}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ö}{{\"o}}1
+        {ő}{{\H{o}}}1
+        {ú}{{\'u}}1
+        {ü}{{\"u}}1
+        {ű}{{\H{u}}}1
+        {Á}{{\'A}}1
+        {É}{{\'E}}1
+        {Í}{{\'I}}1
+        {Ó}{{\'O}}1
+        {Ö}{{\"O}}1
+        {Ő}{{\H{O}}}1
+        {Ú}{{\'U}}1
+        {Ü}{{\"U}}1
+        {Ű}{{\H{U}}}1
+}
+\renewcommand{\figureautorefname}{ábra}
+\newcommand{\abrara}[1]{\hyperref[#1]{\ref*{#1}.~ábra}}
+\NewDocumentCommand{\kep}{O{300px} O{0} m m m}{%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=#1, angle=#2]{#3}
+    \caption{#4}
+    \label{fig:#5}
+\end{figure}%
+}
+\newcommand{\Pointilles}[1]{%
+\par\nobreak
+\noindent\rule{0pt}{1.5\baselineskip}% Provides a larger gap between the
+\multido{}{#1}{\noindent\makebox[\linewidth]{\dotfill}\endgraf}
+\bigskip% Gap between dots and next paragraph
+}
+\newcommand{\feladat}[1]{%
+\phantomsection
+\subsection*{#1. feladat}%
+\addcontentsline{toc}{subsection}{#1. feladat}%
+}
+% Kitöltendő részek jelölése (leadás előtt ki kell venni!)
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{TODO:} #1}}
+\usepackage{pgfplots}
+\pgfplotsset{height = 10cm, width=15cm,compat=1.9}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0em}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage. oldal}
+
+% Másfeles sorköz beállítása
+\onehalfspacing
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+
+\includegraphics[width=.8\textwidth]{../../Kepek/bme_logo_nagy.jpg}
+
+\vspace{1em}
+
+{
+\large
+BUDAPESTI MŰSZAKI ÉS GAZDASÁGTUDOMÁNYI EGYETEM\\ VILLAMOSMÉRNÖKI ÉS INFORMATIKAI KAR\\ MESTERSÉGES INTELLIGENCIA ÉS RENDSZERTERVEZÉS TANSZÉK
+}
+
+\vspace{6em}
+
+{
+\Huge
+\textbf{Adaptív szűrők vizsgálata}
+}
+
+\vspace{3em}
+
+{
+\huge
+Intelligens beágyazott rendszerek laboratórium\\
+
+\vspace{.2em}
+
+\large
+(BMEVIMIMA21)
+}
+
+\vspace{9em}
+
+{
+\Large
+\textit{Készítette:}\\
+\vspace{.5em}
+\textbf{Pál Patrik, Gavallér Dávid}\\
+\vspace{.5em}
+\textbf{AIQTQW, ES02RO}
+}
+
+\vspace{12em}
+
+{
+\large
+BUDAPEST, \today
+}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Bevezetés}
+
+\subsection*{A mérés célja}
+
+A mérés célja a digitális jelfeldolgozás témakörébe tartozó adaptív szűrőkkel kapcsolatos ismeretek elmélyítése és azok gyakorlati vonatkozásainak megismerése. Az adaptív szűrők segítségével egy ismeretlen, akár időben változó átvitelű rendszer modellje állítható elő úgy, hogy a modell paramétereit a valós rendszer és a modell kimenetének eltérése alapján folyamatosan hangoljuk.\par\medskip
+
+Az első feladatrészben MATLAB szimulációk segítségével megvalósítjuk és megvizsgáljuk az LMS, az NLMS, valamint az FxLMS algoritmust. Az algoritmusokkal egy előre megtervezett IIR szűrőt identifikálunk, és megvizsgáljuk, hogyan befolyásolja a bátorsági tényező, a szűrőhossz és a gerjesztőjel teljesítménye a konvergenciát és az approximáció jóságát.\par\medskip
+
+A második feladatrészben egy ADSP-21364 jelfeldolgozó processzoron futó, előre elkészített programok segítségével, egy elektronikus hibrid áramkörön adaptív vonaljavítást, adaptív visszhangcsökkentést, valamint aktív zajcsökkentést valósítunk meg.
+
+\subsection*{A méréshez használt eszközök}
+\begin{itemize}
+	\item Számítógép
+	\item MATLAB
+	\item CrossCore Embedded Studio
+	\item ADSP-21364 EZ-KIT Lite (SHARC) fejlesztőkártya
+	\item Elektronikus hibrid áramkör
+	\item Függvény- és zajgenerátor
+	\item Audio jelforrás
+	\item Oszcilloszkóp
+	\item Fejhallgató
+\end{itemize}
+
+\todo{Az eszközlistát a mérés után pontosítani kell.}
+
+\newpage
+
+\section{Mérési feladatok}
+
+%==========================================================================
+\feladat{1}
+
+Az első feladat célja az LMS algoritmus megvalósítása MATLAB-ban és annak vizsgálata egy rendszeridentifikációs feladaton keresztül. Az LMS algoritmus a Wiener-szűrő optimális együtthatóit a legmeredekebb lejtő módszerével, a statisztikai jellemzők (autokorrelációs mátrix, keresztkorrelációs vektor) ismerete nélkül, a pillanatnyi hiba alapján közelíti.
+
+\feladat{1.1}
+
+\subsubsection*{Feladat leírása}
+
+Az elméleti áttekintésben szereplő (13) és (14) egyenleteknek megfelelően írjon MATLAB függvényt az LMS algoritmus rendszeridentifikációs feladatot ellátó megvalósítására! Az algoritmust megvalósító függvény váza:\\
+\texttt{function [e,w]=lms(mu,M,x,y)}
+
+\subsubsection*{Feladat megoldása}
+
+Az \texttt{lms.m} függvényben az adaptív FIR szűrő $\mathbf{x}(n) = [x(n),\, x(n-1),\, \ldots,\, x(n-M+1)]^T$ regressziós vektorát minden lépésben eltoljuk, és a legfrissebb bemeneti mintát a vektor elejére helyezzük. Ezt követően kiszámítjuk a becslési hibát, majd frissítjük a szűrőegyütthatókat az alábbi összefüggések szerint:
+
+\begin{equation}
+    e(n) = y(n) - \hat{\mathbf{w}}^T(n)\,\mathbf{x}(n),
+\end{equation}
+
+\begin{equation}
+    \hat{\mathbf{w}}(n+1) = \hat{\mathbf{w}}(n) + 2\mu\, e(n)\,\mathbf{x}(n).
+\end{equation}
+
+A szűrőegyütthatókat nulláról indítjuk. A függvény a teljes hibajelet és a szűrőegyütthatók végső értékét adja vissza. A függvény kódja a Függelékben található.
+
+\feladat{1.2}
+
+\subsubsection*{Feladat leírása}
+
+Tervezzen IIR szűrőt a mérésvezető utasításai szerint!
+
+\subsubsection*{Feladat megoldása}
+
+\todo{A mérésvezető által megadott paramétereket beírni, és a \texttt{tervezIIR.m} függvényben átállítani!}\par\medskip
+
+Az IIR szűrőt a \texttt{tervezIIR.m} függvényben terveztük meg, így a későbbi feladatokban is mindig ugyanazt a szűrőt használtuk. A szűrő ideiglenesen egy 48~kHz-es mintavételi frekvenciához tervezett, negyedrendű, 4~kHz határfrekvenciájú Butterworth aluláteresztő szűrő, amit a MATLAB \texttt{butter} függvényével állítottunk elő. A szűrő amplitúdómenete a(z) \abrara{fig:iir-atvitel}-n látható.
+
+\kep[0.8\textwidth]{../../Kepek/IIR_atvitel.jpg}{A tervezett IIR szűrő amplitúdómenete.}{iir-atvitel}
+
+\feladat{1.3}
+
+\subsubsection*{Feladat leírása}
+
+Az IIR szűrőt az LMS algoritmus segítségével identifikálja! Gerjesztésként használjon Gauss-\hspace{0pt}eloszlású fehér zajt! Vesse össze az IIR szűrő és az identifikáció eredményeként kiadódó FIR szűrő átvitelét!
+
+\subsubsection*{Feladat megoldása}
+
+Gerjesztésként a \texttt{randn} függvénnyel egységnyi szórású, $N = 20000$ mintából álló Gauss-eloszlású fehér zajt állítottunk elő, amit a \texttt{filter} függvénnyel átvezettünk a tervezett IIR szűrőn. A gerjesztést és az IIR szűrő kimenetét az \texttt{lms} függvény bemenetére adtuk $M = 32$ együtthatóval és $\mu = 0{,}005$ bátorsági tényezővel.\par\medskip
+
+Az algoritmus konvergenciáját a négyzetes hiba mozgóátlagával (tanulási görbe) jellemeztük, ami a(z) \abrara{fig:lms-tanulasi-gorbe}-n látható.
+
+\kep[0.8\textwidth]{../../Kepek/LMS_tanulasi_gorbe.jpg}{Az LMS algoritmus tanulási görbéje.}{lms-tanulasi-gorbe}
+
+Az IIR szűrő és az identifikált FIR szűrő átvitelét a(z) \abrara{fig:lms-atvitel}-n, az IIR szűrő impulzusválaszát és az identifikált FIR szűrő együtthatóit pedig a(z) \abrara{fig:lms-impulzus}-n hasonlítottuk össze.
+
+\kep[0.8\textwidth]{../../Kepek/LMS_atvitel_osszehasonlitas.jpg}{Az IIR szűrő és az identifikált FIR szűrő átvitele.}{lms-atvitel}
+
+\kep[0.8\textwidth]{../../Kepek/LMS_impulzusvalasz.jpg}{Az IIR szűrő impulzusválasza és az identifikált FIR szűrő együtthatói.}{lms-impulzus}
+
+\todo{Az eredmények kiértékelése (állandósult hiba, átviteli hiba, a záró sávban látható eltérés oka).}
+
+\feladat{1.4}
+
+\subsubsection*{Feladat leírása}
+
+Próbáljon ki különféle $\mu$ és $M$ értékeket, és vizsgálja meg, hogyan befolyásolják az adaptív szűrő konvergenciáját, illetve az IIR szűrő approximációjának jóságát!
+
+\subsubsection*{Feladat megoldása}
+
+Először rögzített $M = 32$ szűrőhossz mellett különböző bátorsági tényezőkkel futtattuk le az identifikációt. A tanulási görbéket a(z) \abrara{fig:lms-mu}-n ábrázoltuk.
+
+\kep[0.8\textwidth]{../../Kepek/LMS_mu_hatasa.jpg}{A bátorsági tényező hatása az LMS algoritmus konvergenciájára.}{lms-mu}
+
+\todo{Kiértékelés: a nagyobb $\mu$ gyorsabb beállást, de nagyobb állandósult hibát (misadjustment) okoz, túl nagy $\mu$ esetén az algoritmus instabil.}\par\medskip
+
+Ezt követően rögzített $\mu = 0{,}002$ bátorsági tényező mellett a szűrőhosszat változtattuk. A tanulási görbék a(z) \abrara{fig:lms-m}-n, az identifikált FIR szűrők átvitele pedig a(z) \abrara{fig:lms-m-atvitel}-n látható.
+
+\kep[0.8\textwidth]{../../Kepek/LMS_M_hatasa.jpg}{A szűrőhossz hatása az LMS algoritmus konvergenciájára.}{lms-m}
+
+\kep[0.8\textwidth]{../../Kepek/LMS_M_atvitel.jpg}{Különböző hosszúságú identifikált FIR szűrők átvitele.}{lms-m-atvitel}
+
+\todo{Kiértékelés: rövid szűrő nem képes az IIR szűrő impulzusválaszát leírni (nagy modellhiba), hosszú szűrőnél kisebb a modellhiba, de lassabb a beállás és nagyobb a gradienszaj.}
+
+\newpage
+
+%==========================================================================
+\feladat{2}
+
+A második feladatban az NLMS algoritmust valósítottuk meg és hasonlítottuk össze az LMS algoritmussal. Az NLMS a bátorsági tényezőt a bemeneti jel energiájával normálja, így a konvergencia sebessége független a gerjesztés amplitúdójától.
+
+\feladat{2.1}
+
+\subsubsection*{Feladat leírása}
+
+Az elméleti áttekintésben szereplő (15) és (16) egyenleteknek megfelelően írjon MATLAB függvényt az NLMS algoritmus rendszeridentifikációs feladatot ellátó megvalósítására! Az algoritmust megvalósító függvény váza:\\
+\texttt{function [e,w]=nlms(mu,a,M,x,y)}
+
+\subsubsection*{Feladat megoldása}
+
+Az \texttt{nlms.m} függvény felépítése megegyezik az \texttt{lms.m} függvényével, csak az együtthatók frissítése tér el:
+
+\begin{equation}
+    e(n) = y(n) - \hat{\mathbf{w}}^T(n)\,\mathbf{x}(n),
+\end{equation}
+
+\begin{equation}
+    \hat{\mathbf{w}}(n+1) = \hat{\mathbf{w}}(n) + \frac{\tilde{\mu}}{a + \mathbf{x}^T(n)\,\mathbf{x}(n)}\, e(n)\,\mathbf{x}(n).
+\end{equation}
+
+Az $a$ regularizációs konstans megakadályozza, hogy kis bemeneti jel esetén a nevező nullához közeli értékű, így a lépésköz túl nagy legyen. A MATLAB függvényben a $\tilde{\mu}$ lépésközt az előírt függvényváznak megfelelően a \texttt{mu} paraméter jelöli.
+
+\feladat{2.2}
+
+\subsubsection*{Feladat leírása}
+
+Próbáljon ki különféle gerjesztőjel-teljesítményt, illetve $\mu$ értékeket, és vizsgálja meg, hogyan befolyásolják az adaptív szűrő konvergenciáját! Az előző feladatban tervezett IIR szűrőt identifikálja, és az eredményeket vesse össze az ott kapottakkal!
+
+\subsubsection*{Feladat megoldása}
+
+Az 1.3 feladatban használt fehér zajt különböző szórásokkal skáláztuk, majd mind az LMS, mind az NLMS algoritmussal elvégeztük az identifikációt. Az összehasonlíthatóság érdekében a négyzetes hibát az IIR szűrő kimenetének teljesítményére normáltuk. Az eredmény a(z) \abrara{fig:nlms-teljesitmeny}-n látható.
+
+\kep[0.9\textwidth]{../../Kepek/NLMS_teljesitmeny.jpg}{A gerjesztőjel teljesítményének hatása az LMS és az NLMS algoritmus konvergenciájára.}{nlms-teljesitmeny}
+
+\todo{Kiértékelés: az LMS beállási sebessége a gerjesztés teljesítményétől függ, az NLMS-é nem.}\par\medskip
+
+Az NLMS algoritmus esetén is megvizsgáltuk a bátorsági tényező hatását, ami a(z) \abrara{fig:nlms-mu}-n látható.
+
+\kep[0.8\textwidth]{../../Kepek/NLMS_mu_hatasa.jpg}{A bátorsági tényező hatása az NLMS algoritmus konvergenciájára.}{nlms-mu}
+
+\todo{Kiértékelés: stabilitási tartomány $0 < \tilde{\mu} < 2$, a beállási sebesség és az állandósult hiba közötti kompromisszum.}\par\medskip
+
+Végül az LMS és az NLMS algoritmussal identifikált FIR szűrők átvitelét vetettük össze az IIR szűrő átvitelével, ami a(z) \abrara{fig:nlms-lms}-n látható.
+
+\kep[0.8\textwidth]{../../Kepek/NLMS_LMS_osszehasonlitas.jpg}{Az LMS és az NLMS algoritmussal identifikált FIR szűrők átvitele.}{nlms-lms}
+
+\todo{Kiértékelés, összevetés az 1.3 feladat eredményeivel.}
+
+\newpage
+
+%==========================================================================
+\feladat{3}
+
+\textit{(kiegészítő mérési feladat)} A harmadik feladatban az FxLMS algoritmust valósítottuk meg és vizsgáltuk. Az FxLMS algoritmust olyan esetekben kell alkalmazni, amikor az adaptív szűrő kimenete és a hibajel képzése közé egy nem egységnyi átvitelű, ún. másodlagos út ($S(z)$) iktatódik be, ami például aktív zajcsökkentés esetén a beavatkozó hangszóró és a hibamikrofon közötti átvitel.
+
+\feladat{3.1}
+
+\subsubsection*{Feladat leírása}
+
+Az elméleti áttekintésben szereplő (17), (18), (19) és (20) egyenleteknek megfelelően írjon MATLAB függvényt az FxLMS algoritmus megvalósítására! Az $S(z)$ átvitel egy erre a feladatra tervezett egyszerű FIR szűrő legyen! Az algoritmust megvalósító függvény váza:\\
+\texttt{function [e,w]=fxlms(mu,M,s,c,x,y)}
+
+\subsubsection*{Feladat megoldása}
+
+Mivel az $S(z)$ másodlagos út is része az adaptációs huroknak, az \texttt{fxlms.m} függvényben a számítást mintánként végeztük. Minden lépésben kiszámítottuk az adaptív szűrő $\hat{y}(n)$ kimenetét, amit átvezettünk az $S(z)$ másodlagos úton, így kaptuk a $\hat{y}_s(n)$ jelet. A hibajel:
+
+\begin{equation}
+    e(n) = y(n) - \hat{y}_s(n).
+\end{equation}
+
+A referenciajelet a másodlagos út $C(z)$ becslőjével szűrtük, és a szűrt referenciajel utolsó $M$ mintájából képeztük az $\mathbf{x}_c(n)$ vektort:
+
+\begin{equation}
+    \mathbf{x}_c(n) = \left[\sum_{i=0}^{I-1} c_i x(n-i),\; \sum_{i=0}^{I-1} c_i x(n-i-1),\; \ldots,\; \sum_{i=0}^{I-1} c_i x(n-i-(M-1))\right]^T.
+\end{equation}
+
+Az együtthatók frissítése:
+
+\begin{equation}
+    \hat{\mathbf{w}}(n+1) = \hat{\mathbf{w}}(n) + \mu\, e(n)\,\mathbf{x}_c(n).
+\end{equation}
+
+\feladat{3.2}
+
+\subsubsection*{Feladat leírása}
+
+Identifikálja az $S(z)$ átvitelt az előzőleg megírt LMS algoritmussal, az identifikált együtthatókat használja fel a $C(z)$ szűrőben!
+
+\subsubsection*{Feladat megoldása}
+
+Az $S(z)$ másodlagos utat egy 5 mintás késleltetésből és egy tizedrendű, \texttt{fir1} függvénnyel tervezett aluláteresztő FIR szűrőből állítottuk össze, ezzel modellezve az AD- és DA-átalakítók késleltetését és sávkorlátozását. Az $S(z)$ átvitelt fehér zaj gerjesztéssel, az \texttt{lms} függvénnyel identifikáltuk $M = 24$ együtthatóval, és az eredményt a $C(z)$ szűrő együtthatóiként használtuk fel. Az identifikáció eredménye a(z) \abrara{fig:fxlms-masodlagos}-n látható.
+
+\kep[0.8\textwidth]{../../Kepek/FxLMS_masodlagos_ut.jpg}{A másodlagos út és az identifikált modelljének együtthatói és átvitele.}{fxlms-masodlagos}
+
+\feladat{3.3}
+
+\subsubsection*{Feladat leírása}
+
+Tesztelje az FxLMS algoritmust többféle referenciajellel (szinuszjel, háromszögjel stb.)! A $P(z)$ átvitel legyen az előzőekben használt IIR szűrő!
+
+\subsubsection*{Feladat megoldása}
+
+A $P(z)$ elsődleges út az 1.2 feladatban tervezett IIR szűrő volt. Referenciajelként 500~Hz-es szinusz-, háromszög- és négyszögjelet használtunk, az elnyomandó jelet a referenciajel $P(z)$-n való átvezetésével állítottuk elő. Az algoritmust $M = 64$ együtthatóval és $\mu = 0{,}0005$ bátorsági tényezővel futtattuk. Az elnyomandó jel és a hibajel a(z) \abrara{fig:fxlms-referencia}-n látható.
+
+\kep[0.9\textwidth]{../../Kepek/FxLMS_referenciajelek.jpg}{Az FxLMS algoritmus működése különböző referenciajelekkel.}{fxlms-referencia}
+
+\todo{Kiértékelés, az elnyomás mértéke az egyes referenciajelekre.}
+
+\feladat{3.4}
+
+\subsubsection*{Feladat leírása}
+
+Készítsen szimulációt, amely demonstrálja, hogy $S(z)$ elégtelen identifikációja esetén az algoritmus nem konvergens, még $\mu$ minden határon túl történő csökkentése esetén sem!
+
+\subsubsection*{Feladat megoldása}
+
+Szinuszos referenciajel esetén az FxLMS algoritmus akkor konvergens, ha a referenciajel frekvenciáján az $S(z)$ másodlagos út és annak $C(z)$ modellje közötti fáziseltérés kisebb $90^\circ$-nál. Az elégtelen identifikációt úgy modelleztük, hogy a 3.2 feladatban kapott $C(z)$ modellt 20 mintával tovább késleltettük, így az 1~kHz-es referenciajel frekvenciáján a fáziseltérés meghaladja a $90^\circ$-ot, ahogy azt a(z) \abrara{fig:fxlms-fazis} mutatja.
+
+\kep[0.8\textwidth]{../../Kepek/FxLMS_faziselteres.jpg}{Az $S(z)$ másodlagos út és a hibás $C(z)$ modell fáziseltérése.}{fxlms-fazis}
+
+Az algoritmust a hibás modellel több, egyre kisebb bátorsági tényezővel is lefuttattuk, és összevetettük a helyes modellel kapott eredménnyel. Az eredmény a(z) \abrara{fig:fxlms-divergencia}-n látható.
+
+\kep[0.8\textwidth]{../../Kepek/FxLMS_divergencia.jpg}{Az FxLMS algoritmus divergenciája hibás másodlagosút-modell esetén.}{fxlms-divergencia}
+
+\todo{Kiértékelés: $\mu$ csökkentése csak a divergencia sebességét csökkenti, a hiba minden esetben korlátlanul nő.}
+
+\newpage
+
+%==========================================================================
+\feladat{4}
+
+A negyedik feladattól kezdve az ADSP-21364 EZ-KIT Lite fejlesztőkártyával és az elektronikus hibrid áramkörrel végeztünk kísérleteket. A kártyára az előre elkészített projekteket a CrossCore Embedded Studio segítségével töltöttük le, a paramétereket pedig a memória tartalmának módosításával állítottuk.\par\medskip
+
+A negyedik feladatban az adaptív vonaljavító (ALE) struktúrát vizsgáltuk. A struktúra a bemeneti jel $\Delta$ mintával késleltetett változatából egy lineáris prediktor segítségével becsüli a bemeneti jelet, amivel a hasznos jel és a zaj szétválasztható.
+
+\feladat{4.1}
+
+\subsubsection*{Feladat leírása}
+
+A hibrid segítségével összegezze a hasznos jelet és a zajt! Ügyeljen arra, hogy se az áramkört, se a forrást ne terhelje jelentősen!
+
+\subsubsection*{Feladat megoldása}
+
+A DSP kártyára a \texttt{SHARC\_Lab\_ALE} projektet töltöttük le. A projektben a kodek 48~kHz-es mintavételezése után 6-szoros decimálás történik (\texttt{INTERP\_RAT = 6} a \texttt{tt.h} állományban), így a feldolgozás tényleges mintavételi frekvenciája $f_s = 8~\mathrm{kHz}$. Az ALE struktúra $y(n)$ bemeneti jelét a kártya bemenetének bal (piros) csatornájára kötöttük. A kártya kimenetein a következő jelek érhetők el (a 4. kimenetre a \texttt{FLG1} ($x$), \texttt{FLG2} ($e$), \texttt{DAI\_P19} ($\hat{y}$) és \texttt{DAI\_P20} ($y$) gombokkal is átkapcsolható a kívánt jel):
+
+\begin{itemize}
+    \item $y(n)$: 1. kimenet bal és jobb csatornája,
+    \item $\hat{y}(n)$: 2. kimenet bal és jobb csatornája,
+    \item $e(n)$: 3. kimenet bal és jobb csatornája,
+    \item $x(n)$: 4. kimenet bal és jobb csatornája.
+\end{itemize}
+
+\todo{A hasznos jel és a zaj összegzésének módja a hibriden, a mérési elrendezés leírása.}
+
+% \kep{../../Kepek/XXXXXXXX_XXXXXX.jpg}{A mérési elrendezés.}{meresi-elrendezes-ale}
+
+\feladat{4.2}
+
+\subsubsection*{Feladat leírása}
+
+Periodikus zajt alkalmazva működtesse a struktúrát! Vizsgálja meg, milyen $\Delta$ késleltetésre van szükség!
+
+\subsubsection*{Feladat megoldása}
+
+\todo{Mérési eredmények. A projektben a késleltetés a \texttt{D} (alapértelmezetten 1), a szűrőhossz az \texttt{N} (alapértelmezetten 100) konstanssal állítható a \texttt{processALE.c} fájlban. Keskenysávú zaj esetén a kimenet az $e(n)$ jel.}
+
+\feladat{4.3}
+
+\subsubsection*{Feladat leírása}
+
+Véletlenszerű zajt alkalmazva működtesse a struktúrát! Vizsgálja meg, milyen $\Delta$ késleltetésre van szükség!
+
+\subsubsection*{Feladat megoldása}
+
+\todo{Mérési eredmények. Szélessávú zaj esetén a kimenet a $\hat{y}(n)$ jel.}
+
+\feladat{4.4}
+
+\subsubsection*{Feladat leírása}
+
+Próbáljon ki különféle $\mu$ értékeket, és vizsgálja a rendszer beállási és stabilitási tulajdonságait! Milyen hatással van $\mu$ változtatása a hasznos jelre?
+
+\subsubsection*{Feladat megoldása}
+
+\todo{Mérési eredmények. A bátorsági tényező a \texttt{mu} változóval állítható (alapértelmezetten 0,01).}
+
+\newpage
+
+%==========================================================================
+\feladat{5}
+
+Az ötödik feladatban az adaptív visszhangcsökkentést vizsgáltuk. A visszhangcsökkentés a hallgató oldalán elhelyezkedő hibrid átvitelének rendszeridentifikációs feladata, amit a beszélő oldalán elérhető $x(n)$ referenciajel és $e(n)$ hibajel alapján végzünk.
+
+\feladat{5.1}
+
+\subsubsection*{Feladat leírása}
+
+Állítsa össze az adaptív visszhangcsökkentő rendszert, a potenciométert állítsa el a teljes kioltást megvalósító állásából! Tesztelje az algoritmus működését!
+
+\subsubsection*{Feladat megoldása}
+
+A DSP kártyára a \texttt{SHARC\_Lab\_LMS} projektet töltöttük le. Az $y(n)$ bemeneti jelet a kártya bemenetének bal (piros) csatornájára (a programban egy \texttt{Y\_DELAY\_BUFF\_SIZE = 80} mintás késleltető pufferen keresztül), az $x(n)$ referenciajelet a jobb (fehér) csatornájára kötöttük. A kimenetek kiosztása megegyezik a 4. feladatban leírtakkal.
+
+\todo{A mérési elrendezés és a jelforrások leírása, a mérési eredmények.}
+
+% \kep{../../Kepek/XXXXXXXX_XXXXXX.jpg}{A visszhangcsökkentés mérési elrendezése.}{meresi-elrendezes-lms}
+
+\feladat{5.2}
+
+\subsubsection*{Feladat leírása}
+
+Próbáljon ki különféle $\mu$ értékeket, és vizsgálja a rendszer beállási és stabilitási tulajdonságait! Milyen hatással van $\mu$ változtatása a hasznos jelre?
+
+\subsubsection*{Feladat megoldása}
+
+\todo{Mérési eredmények. A bátorsági tényező a \texttt{processLMS.c} fájlban a \texttt{mu} változóval állítható (alapértelmezetten 0,01), a szűrő hossza $N = 100$.}
+
+\newpage
+
+%==========================================================================
+\feladat{6}
+
+\textit{(kiegészítő mérési feladat)} A hatodik feladatban az aktív zajcsökkentést vizsgáltuk. A DSP kártyára a \texttt{SHARC\_Lab\_ANC} projektet töltöttük le, ami identifikációs és zajcsökkentési üzemmódban működhet. Identifikációs módban (\texttt{FLAG1 / SW1} nyomva tartása) a másodlagos út identifikációja történik a kártya által generált álvéletlen zaj gerjesztéssel, zajcsökkentési módban pedig az FxLMS algoritmus fut. A \texttt{FLAG2 / SW2} gombbal a $\hat{W}(z)$ (\texttt{coef\_w}), a \texttt{DAI\_P19 / SW3} gombbal a $C(z)$ (\texttt{coef\_s}) együtthatói nullázhatók, míg a \texttt{DAI\_P20 / SW4} gombbal a kimenet tiltható (ekkor $\hat{W}(z)$ adaptálása is szünetel). A be- és kimenetek kiosztása a következő:
+
+\begin{itemize}
+    \item 1. bemenet (fehér): referenciajel ($x$ ANC módban; identifikációs módban nincs használatban),
+    \item 2. bemenet (piros): hibaérzékelő jele ($e$ ANC módban; $y$ identifikációs módban),
+    \item 1. és 3. kimenet: beavatkozó jel ($-\hat{y}$ ANC módban; fehér zaj identifikációs módban),
+    \item 2. és 4. kimenet: hibajel ($e$).
+\end{itemize}
+
+A zavarjelet a hibrid NOISE IN bemenetére, a beavatkozó jelet az IN bemenetre adtuk, a hibajelet pedig a hibrid kiegyenlítésének megszüntetése után az OUT kimeneten érzékeltük.
+
+\feladat{6.1}
+
+\subsubsection*{Feladat leírása}
+
+Identifikálja a másodlagos utat! A blokkvázlat alapján határozza meg, milyen elemek vannak a jelútban, és az identifikáció eredményét vesse össze ezzel! (Használja a memória grafikus megjelenítését!)
+
+\subsubsection*{Feladat megoldása}
+
+\todo{Mérési eredmények. A másodlagos út modelljének együtthatói a \texttt{coef\_s} tömbben ($I = 200$ elem) találhatók.}
+
+\feladat{6.2}
+
+\subsubsection*{Feladat leírása}
+
+Periodikus zavarjelet alkalmazva tesztelje az algoritmust!
+
+\subsubsection*{Feladat megoldása}
+
+\todo{Mérési eredmények.}
+
+\feladat{6.3}
+
+\subsubsection*{Feladat leírása}
+
+Milyen hatása van az elnyomás mértékére, illetve a beállási, stabilitási tulajdonságokra $W(z)$, illetve $C(z)$ fokszáma, valamint $\mu$ értéke változtatásának?
+
+\subsubsection*{Feladat megoldása}
+
+\todo{Mérési eredmények. A projektben $W(z)$ hossza $N = 100$, $C(z)$ hossza $I = 200$, a bátorsági tényezők \texttt{mu} $= 0{,}0001$ (zajcsökkentés) és \texttt{mu\_i} $= 0{,}005$ (identifikáció).}
+
+\newpage
+\section*{Függelék}
+\subsection*{MATLAB kódok}
+
+\lstinputlisting[
+    caption={Az 1.1 feladat MATLAB-kódja (LMS algoritmus)},
+    label={lst:lms-matlab}
+]{../../MATLAB/lms.m}
+
+\lstinputlisting[
+    caption={Az 1.2 feladat MATLAB-kódja (IIR szűrő tervezése)},
+    label={lst:iir-matlab}
+]{../../MATLAB/tervezIIR.m}
+
+\lstinputlisting[
+    caption={Az 1.2-1.3 feladat MATLAB-kódja},
+    label={lst:meres1-23-matlab}
+]{../../MATLAB/Meres1_23.m}
+
+\lstinputlisting[
+    caption={Az 1.4 feladat MATLAB-kódja},
+    label={lst:meres1-4-matlab}
+]{../../MATLAB/Meres1_4.m}
+
+\lstinputlisting[
+    caption={A 2.1 feladat MATLAB-kódja (NLMS algoritmus)},
+    label={lst:nlms-matlab}
+]{../../MATLAB/nlms.m}
+
+\lstinputlisting[
+    caption={A 2.2 feladat MATLAB-kódja},
+    label={lst:meres2-2-matlab}
+]{../../MATLAB/Meres2_2.m}
+
+\lstinputlisting[
+    caption={A 3.1 feladat MATLAB-kódja (FxLMS algoritmus)},
+    label={lst:fxlms-matlab}
+]{../../MATLAB/fxlms.m}
+
+\lstinputlisting[
+    caption={A 3.2-3.4 feladat MATLAB-kódja},
+    label={lst:meres3-234-matlab}
+]{../../MATLAB/Meres3_234.m}
+
+\end{document}
