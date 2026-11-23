@@ -56,6 +56,9 @@
 <stringAttribute key="AutomaticBreakpointPublic6" value="false"/>
 <stringAttribute key="AutomaticBreakpointPublic7" value="true"/>
 <stringAttribute key="AutomaticBreakpointPublic8" value="true"/>
+<stringAttribute key="AutomaticBreakpointSetAtLocation0" value="___lib_prog_term"/>
+<stringAttribute key="AutomaticBreakpointSetAtLocation3" value="__fatal_error"/>
+<stringAttribute key="AutomaticBreakpointSetAtLocation4" value="0x904e3"/>
 <stringAttribute key="AutomaticBreakpointUser0" value="false"/>
 <stringAttribute key="AutomaticBreakpointUser1" value="false"/>
 <stringAttribute key="AutomaticBreakpointUser2" value="false"/>
@@ -80,6 +83,7 @@
 <stringAttribute key="com.analog.crosscore.debug.debugModel.ATTR_PROJECT_CORE.0" value="0"/>
 <stringAttribute key="com.analog.crosscore.debug.debugModel.ATTR_PROJECT_NAME.0" value="SHARC_Lab_ALE"/>
 <stringAttribute key="com.analog.crosscore.debug.debugModel.ATTR_WORKING_DIR.0" value=""/>
+<stringAttribute key="com.analog.crosscore.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;Context string&quot;/&gt;&#13;&#10;"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="SHARC_Lab_ALE"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="sharc.toolchain.configuration.debug.1333546926"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">

@@ -25,7 +25,7 @@ int j = 0;
 int k = 0;
 int kd;
 
-float mu = 0.01;
+float mu = 0.000001;
 
 float xDCfilt      = 0.0;
 float xDCfiltParam = 0.99999;
