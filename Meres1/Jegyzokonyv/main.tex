@@ -73,7 +73,13 @@
 \addcontentsline{toc}{subsection}{#1. feladat}%
 }
 \usepackage{pgfplots}
-\pgfplotsset{height = 10cm, width=15cm,compat=1.9}
+\pgfplotsset{
+    height=10cm,
+    width=15cm,
+    compat=1.9,
+    every axis plot/.append style={line width=0.25pt},
+    every axis grid/.append style={line width=0.25pt}
+}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0em}
@@ -266,7 +272,7 @@ A visszacsatoló együtthatók és a számláló együtthatói is elférnek a \t
         ymin=-80, ymax=5,
         grid=both
     ]
-    \addplot table [x=f, y=db] {../Kepek/Butterworth_atvitel.dat};
+    \addplot[blue, line width=0.25pt] table [x=f, y=db] {../Kepek/Butterworth_atvitel.dat};
     \end{axis}
     \end{tikzpicture}
     \caption{A Butterworth szűrő átviteli függvénye.}
@@ -308,7 +314,7 @@ A passzsávban a válasz 0 és $-2$~dB között változik, látszik a megadott h
         ymin=-80, ymax=5,
         grid=both
     ]
-    \addplot table [x=f, y=db] {../Kepek/Cheby1_atvitel.dat};
+    \addplot[red, line width=0.25pt] table [x=f, y=db] {../Kepek/Cheby1_atvitel.dat};
     \end{axis}
     \end{tikzpicture}
     \caption{A Csebisev szűrő átviteli függvénye.}
@@ -328,9 +334,9 @@ A passzsávban a válasz 0 és $-2$~dB között változik, látszik a megadott h
         grid=both,
         legend pos=south west
     ]
-    \addplot table [x=fn, y=butter] {../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
-    \addplot table [x=fn, y=cheby] {../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
-    \addplot[dashed, black] coordinates {(1,-80) (1,5)};
+    \addplot[blue, line width=0.25pt] table [x=fn, y=butter] {../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
+    \addplot[red, line width=0.25pt] table [x=fn, y=cheby] {../Kepek/Butterworth_Cheby1_osszehasonlitas.dat};
+    \addplot[dashed, black, line width=0.25pt] coordinates {(1,-80) (1,5)};
     \legend{Butterworth, Csebisev, $f/f_c=1$}
     \end{axis}
     \end{tikzpicture}
@@ -359,4 +365,11 @@ A szűrő a mérésvezetővel megbeszélve, nem lett implementálva a Blackfin p
     label={lst:cheby1-matlab}
 ]{../MATLAB/feladat4.m}
 
+\subsection*{Implementált IIR szűrő C-kódja}
+
+\lstinputlisting[
+    language=C,
+    caption={A szűrő C-kódja},
+    label={lst:szuro-c}
+]{../CrossCore/BlackFin_FIR_fract/src/process_data.c}
 \end{document}
