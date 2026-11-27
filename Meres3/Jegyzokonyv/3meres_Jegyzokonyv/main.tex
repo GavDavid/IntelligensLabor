@@ -256,7 +256,8 @@ Először rögzített $M = 64$ szűrőhossz mellett változtattuk a bátorsági 
 
 \kep[0.8\textwidth]{../../Kepek/LMS_ellip_mu_hatasa.jpg}{A bátorsági tényező hatása az LMS algoritmus konvergenciájára ($M = 64$).}{lms-mu}
 
-Az ábráról jól látszik a beállási sebesség és a stabilitás közötti kompromisszum. Kis lépésköznél ($\mu = 0{,}0005$) a rendszer lassan, több mint $4~\mathrm{s}$ alatt áll be, viszont itt a legkisebb az állandósult hiba ($-75{,}81~\mathrm{dB}$). A $\mu$ növelésével a konvergencia gyorsul: $\mu = 0{,}002$-nél kb.~$1{,}1~\mathrm{s}$ ($-75{,}34~\mathrm{dB}$), $\mu = 0{,}005$-nél kb.~$0{,}5~\mathrm{s}$ ($-74{,}26~\mathrm{dB}$) a beállási idő. Ha tovább növeljük, $\mu = 0{,}012$-nél már megemelkedik az állandósult hibaszint ($-69{,}29~\mathrm{dB}$) és nagyobbak az ingadozások. A $\mu = 0{,}015$-ös görbe már a stabilitási határa felett van, itt erős túllövések jelennek meg ($+20~\mathrm{dB}$ fölé is felszökik a hiba) és még a $10~\mathrm{s}$ végére sem áll be rendesen ($-51{,}43~\mathrm{dB}$).\par\medskip
+Az ábráról jól látszik a beállási sebesség és a stabilitás közötti kompromisszum. Kis lépésköznél ($\mu = 0{,}0005$) a rendszer lassan, több mint $4~\mathrm{s}$ alatt áll be, viszont itt adódott a legkisebb az állandósult hiba. A $\mu$ növelésével a konvergencia gyorsul: $\mu = 0{,}002$-nél kb.~$1~\mathrm{s}$, $\mu = 0{,}005$-nél kb.~$0{,}5~\mathrm{s}$ a beállási idő, és nem jelentkezik lényeges eltérés az állandósult hibák között. Ha tovább növeljük a $\mu$ értékét, $\mu = 0{,}012$-nél már jobban láthatóan megemelkedik az állandósult hibaszint és jobban is ingadozik az értéke. A $\mu = 0{,}015$-ös görbe már a stabilitási határa felett van, itt erős túllövések jelennek meg és a szimuláció végére sem áll be az állandósult hibaszint.\par\medskip
+\newpage
 
 Ezután rögzített $\mu = 0{,}002$ mellett a szűrőhosszat változtattuk ($M = 8$, $16$, $32$, $64$ és $128$). A tanulási görbék a(z) \abrara{fig:lms-m}-n, a hozzájuk tartozó átviteli függvények pedig a(z) \abrara{fig:lms-m-atvitel}-n láthatóak.
 
@@ -391,7 +392,7 @@ Próbáljon ki különféle $\mu$ értékeket és vizsgálja a rendszer beállá
 
 A \texttt{processALE.c} fájlban a bátorsági tényező alapértéke $\mu = 0{,}01$, emellett több nagyságrenddel kisebb és nagyobb értékeket is kipróbáltunk.\par\medskip
 
-Nagyon kicsi $\mu$-nél (például $\mu = 0{,}000001$) a rendszer teljesen stabil volt és nem torzította a hasznos hangot, viszont az adaptáció annyira lelassult, hogy a zaj elnyomása alig vagy csak nagyon hosszú idő után jelentkezett. Közepes értékeknél ($\mu \approx 0{,}001\text{--}0{,}01$) a szűrő már megfelelő sebességgel állt be és elfogadható minősé.
+Nagyon kicsi $\mu$-nél (például $\mu = 0{,}000001$) a rendszer teljesen stabil volt és nem torzította a hasznos hangot, viszont az adaptáció annyira lelassult, hogy a zaj elnyomása alig vagy csak nagyon hosszú idő után jelentkezett. Nagy $\mu$esetén a rendszer instabil lett, így torzulás jeletnkezett a hasznos jelben. Közepes értékeknél ($\mu \approx 0{,}001\text{--}0{,}01$) a szűrő már megfelelő sebességgel állt be és elfogadható minőség.
 
 \newpage
 
