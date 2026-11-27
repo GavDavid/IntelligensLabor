@@ -178,7 +178,7 @@ A második alkalmon az ADSP-21364 (SHARC) fejlesztőkártyán és egy elektronik
 %==========================================================================
 \feladat{1}
 
-Az első feladatban az LMS (Least Mean Squares) algoritmust valósítottuk meg MATLAB-ban, és egy IIR szűrő rendszeridentifikációján keresztül vizsgáltuk a működését.
+Az első feladatban az LMS (Least Mean Squares) algoritmust valósítottuk meg MATLAB-ban és egy IIR szűrő rendszeridentifikációján keresztül vizsgáltuk a működését.
 
 \feladat{1.1}
 
@@ -248,7 +248,7 @@ Az átviteli függvények az áteresztősávban és az átmeneti tartományban t
 
 \subsubsection*{Feladat leírása}
 
-Próbáljon ki különféle $\mu$ és $M$ értékeket, és vizsgálja meg, hogyan befolyásolják az adaptív szűrő konvergenciáját, illetve az IIR szűrő approximációjának jóságát!
+Próbáljon ki különféle $\mu$ és $M$ értékeket és vizsgálja meg, hogyan befolyásolják az adaptív szűrő konvergenciáját, illetve az IIR szűrő approximációjának jóságát!
 
 \subsubsection*{Feladat megoldása}
 
@@ -271,7 +271,7 @@ Természetesen a szűrő együtthatók növelésével csökken az állandósult 
 %==========================================================================
 \feladat{2}
 
-A második feladatban az NLMS (Normalised LMS) algoritmust valósítottuk meg, és összehasonlítottuk a hagyományos LMS-sel. Az NLMS minden lépésben a regressziós vektor pillanatnyi energiájával normálja a lépésközt, így a konvergencia sebessége és stabilitása függetlenné válik a bemeneti jel amplitúdójától.
+A második feladatban az NLMS (Normalised LMS) algoritmust valósítottuk meg és összehasonlítottuk a hagyományos LMS-sel. Az NLMS minden lépésben a regressziós vektor pillanatnyi energiájával normálja a lépésközt, így a konvergencia sebessége és stabilitása függetlenné válik a bemeneti jel amplitúdójától.
 
 \feladat{2.1}
 
@@ -298,7 +298,7 @@ Az $a$ regularizációs konstans azért kell a nevezőbe, hogy kis bemeneti jele
 
 \subsubsection*{Feladat leírása}
 
-Próbáljon ki különféle gerjesztőjel-teljesítményt, illetve $\mu$ értékeket, és vizsgálja meg, hogyan befolyásolják az adaptív szűrő konvergenciáját! Az előző feladatban tervezett IIR szűrőt identifikálja, és az eredményeket vesse össze az ott kapottakkal!
+Próbáljon ki különféle gerjesztőjel-teljesítményt, illetve $\mu$ értékeket és vizsgálja meg, hogyan befolyásolják az adaptív szűrő konvergenciáját! Az előző feladatban tervezett IIR szűrőt identifikálja és az eredményeket vesse össze az ott kapottakkal!
 
 \subsubsection*{Feladat megoldása}
 
@@ -312,7 +312,7 @@ Ezután az NLMS bátorsági tényezőjét változtattuk ($\tilde{\mu} = 0{,}05$,
 
 \kep[0.65\textwidth]{../../Kepek/NLMS_ellip_mu_hatasa.jpg}{A bátorsági tényező hatása az NLMS konvergenciájára ($M = 64$, $a = 0{,}01$).}{nlms-mu}
 
- $\tilde{\mu} = 0{,}05$-től felfelé gyorsult a konvergencia ($\tilde{\mu} = 0{,}05$-nél kb.~$5{,}4~\mathrm{s}$, $\tilde{\mu} = 0{,}5$-nél kb.~$0{,}55~\mathrm{s}$), és $\tilde{\mu} = 1$-nél volt a leggyorsabb (kb.~$0{,}35~\mathrm{s}$). Tovább növelve ($\tilde{\mu} = 1{,}8$), a stabilitási határ közelében a beállás már újra lassult (kb.~$1{,}3~\mathrm{s}$), és a hibaszint is megemelkedett. A legkisebb állandósult hibát itt is a legkisebb lépésköz ($\tilde{\mu} = 0{,}05$) adta.\par\medskip
+ $\tilde{\mu} = 0{,}05$-től felfelé gyorsult a konvergencia ($\tilde{\mu} = 0{,}05$-nél kb.~$5{,}4~\mathrm{s}$, $\tilde{\mu} = 0{,}5$-nél kb.~$0{,}55~\mathrm{s}$) és $\tilde{\mu} = 1$-nél volt a leggyorsabb (kb.~$0{,}35~\mathrm{s}$). Tovább növelve ($\tilde{\mu} = 1{,}8$), a stabilitási határ közelében a beállás már újra lassult (kb.~$1{,}3~\mathrm{s}$) és a hibaszint is megemelkedett. A legkisebb állandósult hibát itt is a legkisebb lépésköz ($\tilde{\mu} = 0{,}05$) adta.\par\medskip
 
 Végül névleges gerjesztésnél ($\sigma_x = 1$) egy ábrán is összevetettük az LMS ($\mu = 0{,}005$) és az NLMS ($\tilde{\mu} = 0{,}5$, $a = 0{,}01$) által becsült FIR szűrők átvitelét az eredeti elliptikus szűrővel (\abrara{fig:nlms-lms}).
 
@@ -327,7 +327,7 @@ Stabil, jól megválasztott paramétereknél a két módszer gyakorlatilag azono
 
 A harmadik és negyedik feladatban az ADSP-21364 EZ-KIT Lite fejlesztőkártyán és az elektronikus hibrid áramkörön végeztünk valós idejű méréseket. A projekteket CrossCore Embedded Studio segítségével töltöttük le a kártyára, a paramétereket pedig a kódban módosítottuk.\par\medskip
 
-A harmadik feladatban az adaptív vonaljavító (ALE, Adaptive Line Enhancer) struktúrát vizsgáltuk, amely a bemeneti jel $\Delta$ mintával késleltetett változatából lineáris prediktorral becsüli a jelet, és így szét tudja választani a hasznos audio jelet a zajtól.
+A harmadik feladatban az adaptív vonaljavító (ALE, Adaptive Line Enhancer) struktúrát vizsgáltuk, amely a bemeneti jel $\Delta$ mintával késleltetett változatából lineáris prediktorral becsüli a jelet és így szét tudja választani a hasznos audio jelet a zajtól.
 
 \feladat{3.1}
 
@@ -340,7 +340,7 @@ A hibrid segítségével összegezze a hasznos jelet és a zajt! Ügyeljen arra,
 
 A mérési elrendezés a(z) \abrara{fig:meresi-elrendezes}-n látható. Hasznos jelforrásként a számítógépről az Audacity programból lejátszott audio jelet (\abrara{fig:audacity}) használtuk és itt állítottunk elő zajt is a jelre. A két jelet az elektronikus hibrid áramkör segítségével összegeztük és az összegzett kimenetet kötöttük a DSP kártya bemenetére ($y(n)$).\par\medskip
 
-A kártya kimenetein a következő jelek jelentek meg, és a 4.~kimenetre csatlakoztatott fejhallgatóra a panel nyomógombjaival is át tudtuk kapcsolni bármelyik jelet:
+A kártya kimenetein a következő jelek jelentek meg és a 4.~kimenetre csatlakoztatott fejhallgatóra a panel nyomógombjaival is át tudtuk kapcsolni bármelyik jelet:
 \begin{itemize}
     \item $y(n)$
     \item $\hat{y}(n)$
@@ -379,19 +379,19 @@ Véletlenszerű zajt alkalmazva működtesse a struktúrát! Vizsgálja meg, mil
 
 Ezután fehér zajra váltottunk. A fehér zaj szomszédos mintái elvileg már egyetlen mintányi eltolás mellett is korrelálatlanok egymással, a hasznos audio jel viszont rövid időtávon korrelált. Emiatt itt éppen fordítva működik a struktúra: a prediktor nem a zajt, hanem a hasznos audio jelet tudja megbecsülni, tehát a zajtól megtisztított jel most a $\hat{y}(n)$ kimeneten (2.~kimenet) hallható, míg a zaj főleg az $e(n)$ hibajelben marad.\par\medskip
 
-Ehhez az esethez már az kicsi késleltetés is elegendő volt: a $\hat{y}(n)$ kimeneten érezhetően csökkent a háttérzaj, miközben a hasznos jel megmaradt. Ha $\Delta$-t túl nagyra növeltük volna, akkor a hasznos hang mintái is dekorrelálódtak volna egymástól, és a prediktor már nem tudta volna visszaadni a hasznos jelet sem.
+Ehhez az esethez már az kicsi késleltetés is elegendő volt: a $\hat{y}(n)$ kimeneten érezhetően csökkent a háttérzaj, miközben a hasznos jel megmaradt. Ha $\Delta$-t túl nagyra növeltük volna, akkor a hasznos hang mintái is dekorrelálódtak volna egymástól és a prediktor már nem tudta volna visszaadni a hasznos jelet sem.
 
 \feladat{3.4}
 
 \subsubsection*{Feladat leírása}
 
-Próbáljon ki különféle $\mu$ értékeket, és vizsgálja a rendszer beállási és stabilitási tulajdonságait! Milyen hatással van $\mu$ változtatása a hasznos jelre?
+Próbáljon ki különféle $\mu$ értékeket és vizsgálja a rendszer beállási és stabilitási tulajdonságait! Milyen hatással van $\mu$ változtatása a hasznos jelre?
 
 \subsubsection*{Feladat megoldása}
 
 A \texttt{processALE.c} fájlban a bátorsági tényező alapértéke $\mu = 0{,}01$, emellett több nagyságrenddel kisebb és nagyobb értékeket is kipróbáltunk.\par\medskip
 
-Nagyon kicsi $\mu$-nél (például $\mu = 0{,}000001$) a rendszer teljesen stabil volt és nem torzította a hasznos hangot, viszont az adaptáció annyira lelassult, hogy a zaj elnyomása alig vagy csak nagyon hosszú idő után jelentkezett. Közepes értékeknél ($\mu \approx 0{,}001\text{--}0{,}01$) a szűrő már megfelelő sebességgel állt be, és elfogadható minősé.
+Nagyon kicsi $\mu$-nél (például $\mu = 0{,}000001$) a rendszer teljesen stabil volt és nem torzította a hasznos hangot, viszont az adaptáció annyira lelassult, hogy a zaj elnyomása alig vagy csak nagyon hosszú idő után jelentkezett. Közepes értékeknél ($\mu \approx 0{,}001\text{--}0{,}01$) a szűrő már megfelelő sebességgel állt be és elfogadható minősé.
 
 \newpage
 
@@ -410,19 +410,19 @@ A negyedik feladatban az adaptív visszhangcsökkentést vizsgáltuk.
 
 A DSP kártyára a \texttt{SHARC\_Lab\_LMS} projektet töltöttük le. Az egyik jelet a kártya piros, a másik jelet a fehér bemenetére kötöttük, a kimenetek kiosztása pedig megegyezett az előző feladatban leírtakkal.\par\medskip
 
-A hibrid áramkörön a két oldal \texttt{IN} bemenetére két különböző beszédhangot kapcsoltunk. Első lépésben a hibriden lévő potenciométerek tekerésével megkerestük azt a kiegyenlített állást, ahol a saját oldali bemenet jele kioltódott a kimeneten, így a fejhallgatón csak a másik hang hallatszott. Ezután a feladatnak megfelelően elállítottuk a potenciométert ebből a kiegyenlített helyzetből, amitől megjelent a "visszhang" a kimeneten. A DSP-n futó adaptív szűrő ekkor automatikusan ráállt az elhangolt hibrid átvitelére és az egyik "visszhang" elnyomódott, és megint érthetően hallható lett a másik oldali beszédhang.
+A hibrid áramkörön a két oldal \texttt{IN} bemenetére két különböző beszédhangot kapcsoltunk. Első lépésben a hibriden lévő potenciométerek tekerésével megkerestük azt a kiegyenlített állást, ahol a saját oldali bemenet jele kioltódott a kimeneten, így a fejhallgatón csak a másik hang hallatszott. Ezután a feladatnak megfelelően elállítottuk a potenciométert ebből a kiegyenlített helyzetből, amitől megjelent a "visszhang" a kimeneten. A DSP-n futó adaptív szűrő ekkor automatikusan ráállt az elhangolt hibrid átvitelére és az egyik "visszhang" elnyomódott és megint érthetően hallható lett a másik oldali beszédhang.
 
 \feladat{4.2}
 
 \subsubsection*{Feladat leírása}
 
-Próbáljon ki különféle $\mu$ értékeket, és vizsgálja a rendszer beállási és stabilitási tulajdonságait! Milyen hatással van $\mu$ változtatása a hasznos jelre?
+Próbáljon ki különféle $\mu$ értékeket és vizsgálja a rendszer beállási és stabilitási tulajdonságait! Milyen hatással van $\mu$ változtatása a hasznos jelre?
 
 \subsubsection*{Feladat megoldása}
 
 A \texttt{processLMS.c} programban a bátorsági tényező alapértéke $\mu = 0{,}01$, de a mérés során több nagyságrendben is változtattuk ezt a paramétert. A két beszédhanggal végzett meghallgatás során azt tapasztaltuk, hogy a $\mu$ megválasztásánál meg kellett keresni az aranyközéputat. Kis $\mu$ értékeknél (kb.~$0{,}001$ környékén és az alatt) a szűrő beállása után a másik, visszhangként megjelenő hangot teljesen kiszűrte a rendszer az $e(n)$ kimenetről, viszont a beállás ilyenkor lassabb volt. Nagyobb $\mu$-nél (például $0{,}01$ és fölötte) a szűrő gyorsabban reagált, de áthallatszott a másik hang az $e(n)$ kimeneten. A legjobb kompromisszumot $\mu \approx 0{,}001$ környékén kaptuk, ahol még gyorsan beállt a visszhangcsökkentés, de az áthallás már nem volt zavaró.\par\medskip
 
-A beállási időt pontosabban, vizuálisan is megvizsgáltuk az oszcilloszkópon. Ehhez a $70~\mathrm{Hz}$-es szinuszjelet használtuk gerjesztésként, és a $\hat{y}(n)$ becsült visszhangjel felfutását rögzítettük két, több nagyságrenddel eltérő $\mu$ értéknél. A két felvétel a(z) \abrara{fig:beallas-gyors}-n és a(z) \abrara{fig:beallas-lassu}-n látható.
+A beállási időt pontosabban, vizuálisan is megvizsgáltuk az oszcilloszkópon. Ehhez a $70~\mathrm{Hz}$-es szinuszjelet használtuk gerjesztésként és a $\hat{y}(n)$ becsült visszhangjel felfutását rögzítettük két, több nagyságrenddel eltérő $\mu$ értéknél. A két felvétel a(z) \abrara{fig:beallas-gyors}-n és a(z) \abrara{fig:beallas-lassu}-n látható.
 
 \kep[0.78\textwidth]{../../Kepek/20261123_160755.jpg}{A $\hat{y}(n)$ becsült jel beállása nagyobb bátorsági tényezőnél} {beallas-gyors}
 
