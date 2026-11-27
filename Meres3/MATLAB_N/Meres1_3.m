@@ -13,9 +13,9 @@ grid on;
 xlim([0 fs/2]);
 ylim([-80 5]);
 
-N  = 20000;     % a gerjesztÈs hossza [minta]
-M  = 64;        % az adaptÌv FIR sz?r? egy¸tthatÛinak sz·ma
-mu = 0.005;     % b·tors·gi tÈnyez?
+N  = 20000;     % a gerjeszt√©s hossza [minta]
+M  = 64;        % az adapt√≠v FIR sz≈±r≈ë egy√ºtthat√≥inak sz√°ma
+mu = 0.005;     % b√°tors√°gi t√©nyez≈ë
 
 x = randn(N, 1);          
 y = filter(b, a, x);      
@@ -27,8 +27,8 @@ subplot(2,1,1);
 plot((0:N-1)/fs, 10*log10(movmean(e.^2, 200)));
 grid on;
 xlabel("Ido [s]");
-ylabel("NÈgyzetes hiba [dB]");
-title(sprintf("Az LMS algoritmus tanul·si gˆrbÈje (\\mu = %g, M = %d) - BASELINE", mu, M));
+ylabel("N√©gyzetes hiba [dB]");
+title(sprintf("Az LMS algoritmus tanul√°si g√∂rb√©je (\\mu = %g, M = %d) - BASELINE", mu, M));
 
 subplot(2,1,2);
 Hfir = freqz(w, 1, 4096, fs);
@@ -37,9 +37,9 @@ plot(W, 20*log10(abs(Hiir)), W, 20*log10(abs(Hfir)));
 grid on;
 xlim([0 fs/2]);
 ylim([-100 5]);
-legend("IIR sz?r?", "Identifik·lt FIR sz?r?");
+legend("IIR sz≈±r≈ë", "Identifik√°lt FIR sz≈±r≈ë");
 xlabel("Frekvencia [Hz]");
-ylabel("AmplitudÛ [dB]");
+ylabel("Amplit√∫d√≥ [dB]");
 
 alfa = 0.01;
 mu_nlms = 0.5;
@@ -50,8 +50,8 @@ subplot(2,1,1);
 plot((0:N-1)/fs, 10*log10(movmean(e.^2, 200)));
 grid on;
 xlabel("Ido [s]");
-ylabel("NÈgyzetes hiba [dB]");
-title(sprintf("Az NLMS algoritmus tanul·si gˆrbÈje (\\mu = %g, M = %d) - BASELINE", mu_nlms, M));
+ylabel("N√©gyzetes hiba [dB]");
+title(sprintf("Az NLMS algoritmus tanul√°si g√∂rb√©je (\\mu = %g, M = %d) - BASELINE", mu_nlms, M));
 
 subplot(2,1,2);
 Hfir = freqz(w, 1, 4096, fs);
@@ -60,9 +60,9 @@ plot(W, 20*log10(abs(Hiir)), W, 20*log10(abs(Hfir)));
 grid on;
 xlim([0 fs/2]);
 ylim([-100 5]);
-legend("IIR sz?r?", "Identifik·lt FIR sz?r?");
+legend("IIR sz≈±r≈ë", "Identifik√°lt FIR sz≈±r≈ë");
 xlabel("Frekvencia [Hz]");
-ylabel("AmplitudÛ [dB]");
+ylabel("Amplit√∫d√≥ [dB]");
 
 %% Fele bemenet
 
@@ -76,8 +76,8 @@ subplot(2,1,1);
 plot((0:N-1)/fs, 10*log10(movmean(e.^2, 200)));
 grid on;
 xlabel("Ido [s]");
-ylabel("NÈgyzetes hiba [dB]");
-title(sprintf("Az LMS algoritmus tanul·si gˆrbÈje (\\mu = %g, M = %d) - FELE BEMENET", mu, M));
+ylabel("N√©gyzetes hiba [dB]");
+title(sprintf("Az LMS algoritmus tanul√°si g√∂rb√©je (\\mu = %g, M = %d) - FELE BEMENET", mu, M));
 
 subplot(2,1,2);
 Hfir = freqz(w, 1, 4096, fs);
@@ -86,9 +86,9 @@ plot(W, 20*log10(abs(Hiir)), W, 20*log10(abs(Hfir)));
 grid on;
 xlim([0 fs/2]);
 ylim([-100 5]);
-legend("IIR sz?r?", "Identifik·lt FIR sz?r?");
+legend("IIR sz≈±r≈ë", "Identifik√°lt FIR sz≈±r≈ë");
 xlabel("Frekvencia [Hz]");
-ylabel("AmplitudÛ [dB]");
+ylabel("Amplit√∫d√≥ [dB]");
 
 
 mu_nlms = 0.5;
@@ -99,8 +99,8 @@ subplot(2,1,1);
 plot((0:N-1)/fs, 10*log10(movmean(e.^2, 200)));
 grid on;
 xlabel("Ido [s]");
-ylabel("NÈgyzetes hiba [dB]");
-title(sprintf("Az NLMS algoritmus tanul·si gˆrbÈje (\\mu = %g, M = %d) - FELE BEMENET", mu_nlms, M));
+ylabel("N√©gyzetes hiba [dB]");
+title(sprintf("Az NLMS algoritmus tanul√°si g√∂rb√©je (\\mu = %g, M = %d) - FELE BEMENET", mu_nlms, M));
 
 subplot(2,1,2);
 Hfir = freqz(w, 1, 4096, fs);
@@ -109,11 +109,11 @@ plot(W, 20*log10(abs(Hiir)), W, 20*log10(abs(Hfir)));
 grid on;
 xlim([0 fs/2]);
 ylim([-100 5]);
-legend("IIR sz?r?", "Identifik·lt FIR sz?r?");
+legend("IIR sz≈±r≈ë", "Identifik√°lt FIR sz≈±r≈ë");
 xlabel("Frekvencia [Hz]");
-ylabel("AmplitudÛ [dB]");
+ylabel("Amplit√∫d√≥ [dB]");
 
-%% Dupl·ja bemenet
+%% Dupl√°ja bemenet
 
 
 x = 2 * randn(N, 1);          
@@ -126,8 +126,8 @@ subplot(2,1,1);
 plot((0:N-1)/fs, 10*log10(movmean(e.^2, 200)));
 grid on;
 xlabel("Ido [s]");
-ylabel("NÈgyzetes hiba [dB]");
-title(sprintf("Az LMS algoritmus tanul·si gˆrbÈje (\\mu = %g, M = %d) - DUPLA BEMENET", mu, M));
+ylabel("N√©gyzetes hiba [dB]");
+title(sprintf("Az LMS algoritmus tanul√°si g√∂rb√©je (\\mu = %g, M = %d) - DUPLA BEMENET", mu, M));
 
 subplot(2,1,2);
 Hfir = freqz(w, 1, 4096, fs);
@@ -136,9 +136,9 @@ plot(W, 20*log10(abs(Hiir)), W, 20*log10(abs(Hfir)));
 grid on;
 xlim([0 fs/2]);
 ylim([-100 5]);
-legend("IIR sz?r?", "Identifik·lt FIR sz?r?");
+legend("IIR sz≈±r≈ë", "Identifik√°lt FIR sz≈±r≈ë");
 xlabel("Frekvencia [Hz]");
-ylabel("AmplitudÛ [dB]");
+ylabel("Amplit√∫d√≥ [dB]");
 
 
 mu_nlms = 0.5;
@@ -149,8 +149,8 @@ subplot(2,1,1);
 plot((0:N-1)/fs, 10*log10(movmean(e.^2, 200)));
 grid on;
 xlabel("Ido [s]");
-ylabel("NÈgyzetes hiba [dB]");
-title(sprintf("Az NLMS algoritmus tanul·si gˆrbÈje (\\mu = %g, M = %d) - DUPLA BEMENET", mu_nlms, M));
+ylabel("N√©gyzetes hiba [dB]");
+title(sprintf("Az NLMS algoritmus tanul√°si g√∂rb√©je (\\mu = %g, M = %d) - DUPLA BEMENET", mu_nlms, M));
 
 subplot(2,1,2);
 Hfir = freqz(w, 1, 4096, fs);
@@ -159,6 +159,6 @@ plot(W, 20*log10(abs(Hiir)), W, 20*log10(abs(Hfir)));
 grid on;
 xlim([0 fs/2]);
 ylim([-100 5]);
-legend("IIR sz?r?", "Identifik·lt FIR sz?r?");
+legend("IIR sz≈±r≈ë", "Identifik√°lt FIR sz≈±r≈ë");
 xlabel("Frekvencia [Hz]");
-ylabel("AmplitudÛ [dB]");
+ylabel("Amplit√∫d√≥ [dB]");

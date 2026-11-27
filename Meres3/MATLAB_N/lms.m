@@ -1,13 +1,13 @@
 function [e, w] = lms(mu, M, x, y)
-% bemeneti paraméterek:
-% mu: lépésköz (bátorsági tényez?) 1x1
-% M: sz?r? együtthatóinak száma 1x1
-% x: a sz?r? bemenete Nx1
-% y: a sz?r? kimenete Nx1
+% bemeneti paramÃ©terek:
+% mu: lÃ©pÃ©skÃ¶z (bÃ¡torsÃ¡gi tÃ©nyezÅ‘) 1x1
+% M: szÅ±rÅ‘ egyÃ¼tthatÃ³inak szÃ¡ma 1x1
+% x: a szÅ±rÅ‘ bemenete Nx1
+% y: a szÅ±rÅ‘ kimenete Nx1
 
-% kimeneti változók:
-% e: becslési hiba Nx1
-% w: sz?r?együtthatók Mx1
+% kimeneti vÃ¡ltozÃ³k:
+% e: becslÃ©si hiba Nx1
+% w: szÅ±rÅ‘egyÃ¼tthatÃ³k Mx1
 
 N = length(x);
 
